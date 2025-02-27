@@ -1,10 +1,11 @@
 import 'package:job_manager_server/get_current_user.dart';
-import 'package:job_manager_server/src/generated/protocol.dart';
 import 'package:serverpod/server.dart';
+import 'package:serverpod_auth_server/module.dart';
 
 class UserEndpoints extends Endpoint {
-  Future<List<User>> searchByName(Session session, String key) async {
+  Future<List<UserInfo>> searchByName(Session session, String key) async {
     await getCurrentUser(session);
-    return User.db.find(session, where: (user) => user.name.ilike("%$key%"));
+    return UserInfo.db
+        .find(session, where: (user) => user.userName.ilike("%$key%"));
   }
 }

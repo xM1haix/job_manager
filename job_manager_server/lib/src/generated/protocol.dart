@@ -18,18 +18,15 @@ import 'simple_team.ymal.dart' as _i6;
 import 'stage.ymal.dart' as _i7;
 import 'team.ymal.dart' as _i8;
 import 'team_user.ymal.dart' as _i9;
-import 'user.ymal.dart' as _i10;
-import 'user_permission.ymal.dart' as _i11;
-import 'package:job_manager_server/src/generated/team.ymal.dart' as _i12;
-import 'package:job_manager_server/src/generated/simple_team.ymal.dart' as _i13;
-import 'package:job_manager_server/src/generated/user.ymal.dart' as _i14;
+import 'user_permission.ymal.dart' as _i10;
+import 'package:job_manager_server/src/generated/team.ymal.dart' as _i11;
+import 'package:job_manager_server/src/generated/simple_team.ymal.dart' as _i12;
 export 'custom_exception.ymal.dart';
 export 'job.ymal.dart';
 export 'simple_team.ymal.dart';
 export 'stage.ymal.dart';
 export 'team.ymal.dart';
 export 'team_user.ymal.dart';
-export 'user.ymal.dart';
 export 'user_permission.ymal.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
@@ -227,7 +224,7 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ForeignKeyDefinition(
           constraintName: 'team_users_fk_1',
           columns: ['userId'],
-          referenceTable: 'users',
+          referenceTable: 'serverpod_user_info',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.noAction,
@@ -312,67 +309,6 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ForeignKeyDefinition(
           constraintName: 'teams_fk_0',
           columns: ['ownerId'],
-          referenceTable: 'users',
-          referenceTableSchema: 'public',
-          referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.noAction,
-          matchType: null,
-        )
-      ],
-      indexes: [
-        _i2.IndexDefinition(
-          indexName: 'teams_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            )
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        )
-      ],
-      managed: true,
-    ),
-    _i2.TableDefinition(
-      name: 'users',
-      dartName: 'User',
-      schema: 'public',
-      module: 'job_manager',
-      columns: [
-        _i2.ColumnDefinition(
-          name: 'id',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: false,
-          dartType: 'int?',
-          columnDefault: 'nextval(\'users_id_seq\'::regclass)',
-        ),
-        _i2.ColumnDefinition(
-          name: 'userId',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: false,
-          dartType: 'int',
-        ),
-        _i2.ColumnDefinition(
-          name: 'name',
-          columnType: _i2.ColumnType.text,
-          isNullable: false,
-          dartType: 'String',
-        ),
-        _i2.ColumnDefinition(
-          name: 'deletedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: true,
-          dartType: 'DateTime?',
-        ),
-      ],
-      foreignKeys: [
-        _i2.ForeignKeyDefinition(
-          constraintName: 'users_fk_0',
-          columns: ['userId'],
           referenceTable: 'serverpod_user_info',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -383,7 +319,7 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'users_pkey',
+          indexName: 'teams_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -426,11 +362,8 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i9.TeamUser) {
       return _i9.TeamUser.fromJson(data) as T;
     }
-    if (t == _i10.User) {
-      return _i10.User.fromJson(data) as T;
-    }
-    if (t == _i11.UserPermission) {
-      return _i11.UserPermission.fromJson(data) as T;
+    if (t == _i10.UserPermission) {
+      return _i10.UserPermission.fromJson(data) as T;
     }
     if (t == _i1.getType<_i4.CustomException?>()) {
       return (data != null ? _i4.CustomException.fromJson(data) : null) as T;
@@ -450,22 +383,19 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i9.TeamUser?>()) {
       return (data != null ? _i9.TeamUser.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.User?>()) {
-      return (data != null ? _i10.User.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.UserPermission?>()) {
+      return (data != null ? _i10.UserPermission.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.UserPermission?>()) {
-      return (data != null ? _i11.UserPermission.fromJson(data) : null) as T;
-    }
-    if (t == List<_i12.Team>) {
-      return (data as List).map((e) => deserialize<_i12.Team>(e)).toList()
+    if (t == List<_i11.Team>) {
+      return (data as List).map((e) => deserialize<_i11.Team>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i13.SimpleTeam>) {
-      return (data as List).map((e) => deserialize<_i13.SimpleTeam>(e)).toList()
+    if (t == List<_i12.SimpleTeam>) {
+      return (data as List).map((e) => deserialize<_i12.SimpleTeam>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i14.User>) {
-      return (data as List).map((e) => deserialize<_i14.User>(e)).toList()
+    if (t == List<_i3.UserInfo>) {
+      return (data as List).map((e) => deserialize<_i3.UserInfo>(e)).toList()
           as dynamic;
     }
     try {
@@ -499,10 +429,7 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i9.TeamUser) {
       return 'TeamUser';
     }
-    if (data is _i10.User) {
-      return 'User';
-    }
-    if (data is _i11.UserPermission) {
+    if (data is _i10.UserPermission) {
       return 'UserPermission';
     }
     className = _i2.Protocol().getClassNameForObject(data);
@@ -540,11 +467,8 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName == 'TeamUser') {
       return deserialize<_i9.TeamUser>(data['data']);
     }
-    if (dataClassName == 'User') {
-      return deserialize<_i10.User>(data['data']);
-    }
     if (dataClassName == 'UserPermission') {
-      return deserialize<_i11.UserPermission>(data['data']);
+      return deserialize<_i10.UserPermission>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -580,8 +504,6 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i8.Team.t;
       case _i9.TeamUser:
         return _i9.TeamUser.t;
-      case _i10.User:
-        return _i10.User.t;
     }
     return null;
   }

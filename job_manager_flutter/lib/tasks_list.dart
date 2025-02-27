@@ -137,63 +137,66 @@ class _TasksListState extends State<TasksList> {
       ),
       body: RefreshIndicator(
         onRefresh: _onRefresh,
-        child: ListView.builder(
-          itemCount: 20,
-          itemBuilder: (context, i) => Padding(
-            padding: const EdgeInsets.all(5),
-            child: Tooltip(
-              message: "Work $i",
-              child: InkWell(
-                hoverColor: Color(0xFFC0C0C0),
-                splashColor: Colors.green,
-                onTap: () => _openWork(i),
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  margin: const EdgeInsets.all(5),
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xAA121212),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Work $i",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            "$i% DONE",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      AnimatedSwitcher(
-                        duration: Duration(seconds: 1),
-                        child: _selected == null
-                            ? SizedBox(height: 20)
-                            : Text(
-                                "Team $i",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
+        child: CustomFutureBuilder(
+          future: ,
+          success:(x)=> ListView.builder(
+            itemCount: x.lenght,
+            itemBuilder: (context, i) => Padding(
+              padding: const EdgeInsets.all(5),
+              child: Tooltip(
+                message: "Work $i",
+                child: InkWell(
+                  hoverColor: Color(0xFFC0C0C0),
+                  splashColor: Colors.green,
+                  onTap: () => _openWork(i),
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    margin: const EdgeInsets.all(5),
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color(0xAA121212),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Work $i",
+                              style: TextStyle(
+                                color: Colors.white,
                               ),
-                      ),
-                      LinearProgressIndicator(
-                        borderRadius: BorderRadius.circular(10),
-                        value: i * 1 / 10,
-                        minHeight: 5,
-                        backgroundColor: Colors.black,
-                        color: Colors.green.withAlpha((0xFF * i / 10).ceil()),
-                      ),
-                    ],
+                            ),
+                            Text(
+                              "$i% DONE",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        AnimatedSwitcher(
+                          duration: Duration(seconds: 1),
+                          child: _selected == null
+                              ? SizedBox(height: 20)
+                              : Text(
+                                  "Team $i",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                        ),
+                        LinearProgressIndicator(
+                          borderRadius: BorderRadius.circular(10),
+                          value: i * 1 / 10,
+                          minHeight: 5,
+                          backgroundColor: Colors.black,
+                          color: Colors.green.withAlpha((0xFF * i / 10).ceil()),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

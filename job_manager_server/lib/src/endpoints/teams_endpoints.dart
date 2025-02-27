@@ -3,6 +3,7 @@ import 'package:job_manager_server/get_current_user.dart';
 import 'package:job_manager_server/src/generated/protocol.dart';
 import 'package:job_manager_server/team_to_simple_team.dart';
 import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_auth_server/serverpod_auth_server.dart';
 
 class TeamsEndpoints extends Endpoint {
   Future<bool> create(Session session, String name, bool isPrivate) async {
@@ -105,16 +106,16 @@ class TeamsEndpoints extends Endpoint {
     return teams;
   }
 
-  Future<List<User>> userList(Session session, int id) async {
+  Future<List<UserInfo>> userList(Session session, int id) async {
     final userId = (await getCurrentUser(session)).userId;
     final currentTeam = await Team.db.findById(session, id);
     if (currentTeam == null) throwErr("Cannot find the team");
     final teamUsers = await TeamUser.db.find(session);
     if (teamUsers.isEmpty) throwErr("Somethign went wrong");
     bool isPermited = false;
-    final List<User> users = [];
+    final List<UserInfo> users = [];
     for (var teamUser in teamUsers) {
-      final user = await User.db.findById(session, teamUser.userId);
+      final user = await UserInfo.db.findById(session, teamUser.userId);
       if (user == null) {
         throwErr(
             "Something went wrong with teamUser.userId: ${teamUser.userId}");

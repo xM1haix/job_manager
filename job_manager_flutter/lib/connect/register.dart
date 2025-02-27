@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:job_manager_flutter/main.dart';
+import 'package:job_manager_flutter/nav.dart';
 
-import '../nav.dart';
 import '../popup.dart';
 
 class Register extends StatefulWidget {
@@ -53,32 +53,57 @@ class _RegisterState extends State<Register> {
                   _username.text, _email.text, _password.text);
               if (!x) throw "Failed x is $x";
               if (!context.mounted) return;
-              final code = await showDialog<String?>(
+              await showDialog<void>(
+                barrierDismissible: false,
                 context: context,
                 builder: (context) {
+                  String? errorText;
                   final code = TextEditingController();
                   return AlertDialog(
                     title: const Text("Insert the code from email"),
                     content: SizedBox(
                       width: 100,
-                      child: TextField(
-                        controller: code,
-                        decoration: const InputDecoration(labelText: 'Code'),
+                      child: StatefulBuilder(
+                        builder: (context, setState) {
+                          return TextField(
+                            controller: code,
+                            decoration: InputDecoration(
+                              errorText: errorText,
+                              labelText: 'Code',
+                              suffixIcon: IconButton(
+                                onPressed: () async {
+                                  setState(() {
+                                    errorText = null;
+                                  });
+                                  if (code.text.isEmpty) {
+                                    setState(() {
+                                      errorText = 'No code provided!';
+                                    });
+                                    return;
+                                  }
+                                  final sendCode = await client
+                                      .modules.auth.email
+                                      .createAccount(_email.text, code.text);
+                                  if (sendCode == null) {
+                                    setState(() {
+                                      errorText = 'No code provided!';
+                                    });
+                                    return;
+                                  }
+                                  if (!context.mounted) return;
+                                  back(context);
+                                  widget.goBack();
+                                },
+                                icon: Icon(Icons.send_outlined),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => back(context, code.text),
-                        child: const Text('Send'),
-                      ),
-                    ],
                   );
                 },
               );
-              if (code == null) throw 'No code provided';
-              final sendCode = await client.modules.auth.email
-                  .createAccount(_email.text, code);
-              print(sendCode);
             } catch (e) {
               if (!context.mounted) return;
               errorPopup(context, e);

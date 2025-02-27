@@ -16,19 +16,16 @@ import 'simple_team.ymal.dart' as _i4;
 import 'stage.ymal.dart' as _i5;
 import 'team.ymal.dart' as _i6;
 import 'team_user.ymal.dart' as _i7;
-import 'user.ymal.dart' as _i8;
-import 'user_permission.ymal.dart' as _i9;
-import 'package:job_manager_client/src/protocol/team.ymal.dart' as _i10;
-import 'package:job_manager_client/src/protocol/simple_team.ymal.dart' as _i11;
-import 'package:job_manager_client/src/protocol/user.ymal.dart' as _i12;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
+import 'user_permission.ymal.dart' as _i8;
+import 'package:job_manager_client/src/protocol/team.ymal.dart' as _i9;
+import 'package:job_manager_client/src/protocol/simple_team.ymal.dart' as _i10;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i11;
 export 'custom_exception.ymal.dart';
 export 'job.ymal.dart';
 export 'simple_team.ymal.dart';
 export 'stage.ymal.dart';
 export 'team.ymal.dart';
 export 'team_user.ymal.dart';
-export 'user.ymal.dart';
 export 'user_permission.ymal.dart';
 export 'client.dart';
 
@@ -63,11 +60,8 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i7.TeamUser) {
       return _i7.TeamUser.fromJson(data) as T;
     }
-    if (t == _i8.User) {
-      return _i8.User.fromJson(data) as T;
-    }
-    if (t == _i9.UserPermission) {
-      return _i9.UserPermission.fromJson(data) as T;
+    if (t == _i8.UserPermission) {
+      return _i8.UserPermission.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.CustomException?>()) {
       return (data != null ? _i2.CustomException.fromJson(data) : null) as T;
@@ -87,26 +81,23 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i7.TeamUser?>()) {
       return (data != null ? _i7.TeamUser.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.User?>()) {
-      return (data != null ? _i8.User.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.UserPermission?>()) {
+      return (data != null ? _i8.UserPermission.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.UserPermission?>()) {
-      return (data != null ? _i9.UserPermission.fromJson(data) : null) as T;
-    }
-    if (t == List<_i10.Team>) {
-      return (data as List).map((e) => deserialize<_i10.Team>(e)).toList()
+    if (t == List<_i9.Team>) {
+      return (data as List).map((e) => deserialize<_i9.Team>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i11.SimpleTeam>) {
-      return (data as List).map((e) => deserialize<_i11.SimpleTeam>(e)).toList()
+    if (t == List<_i10.SimpleTeam>) {
+      return (data as List).map((e) => deserialize<_i10.SimpleTeam>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i12.User>) {
-      return (data as List).map((e) => deserialize<_i12.User>(e)).toList()
+    if (t == List<_i11.UserInfo>) {
+      return (data as List).map((e) => deserialize<_i11.UserInfo>(e)).toList()
           as dynamic;
     }
     try {
-      return _i13.Protocol().deserialize<T>(data, t);
+      return _i11.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -133,13 +124,10 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i7.TeamUser) {
       return 'TeamUser';
     }
-    if (data is _i8.User) {
-      return 'User';
-    }
-    if (data is _i9.UserPermission) {
+    if (data is _i8.UserPermission) {
       return 'UserPermission';
     }
-    className = _i13.Protocol().getClassNameForObject(data);
+    className = _i11.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -170,15 +158,12 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'TeamUser') {
       return deserialize<_i7.TeamUser>(data['data']);
     }
-    if (dataClassName == 'User') {
-      return deserialize<_i8.User>(data['data']);
-    }
     if (dataClassName == 'UserPermission') {
-      return deserialize<_i9.UserPermission>(data['data']);
+      return deserialize<_i8.UserPermission>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i13.Protocol().deserializeByClassName(data);
+      return _i11.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }

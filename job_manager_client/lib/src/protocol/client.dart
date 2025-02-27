@@ -13,9 +13,8 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:job_manager_client/src/protocol/team.ymal.dart' as _i3;
 import 'package:job_manager_client/src/protocol/simple_team.ymal.dart' as _i4;
-import 'package:job_manager_client/src/protocol/user.ymal.dart' as _i5;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i6;
-import 'protocol.dart' as _i7;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i5;
+import 'protocol.dart' as _i6;
 
 /// {@category Endpoint}
 class EndpointTeamsEndpoints extends _i1.EndpointRef {
@@ -69,8 +68,8 @@ class EndpointTeamsEndpoints extends _i1.EndpointRef {
         {},
       );
 
-  _i2.Future<List<_i5.User>> userList(int id) =>
-      caller.callServerEndpoint<List<_i5.User>>(
+  _i2.Future<List<_i5.UserInfo>> userList(int id) =>
+      caller.callServerEndpoint<List<_i5.UserInfo>>(
         'teamsEndpoints',
         'userList',
         {'id': id},
@@ -98,8 +97,8 @@ class EndpointUserEndpoints extends _i1.EndpointRef {
   @override
   String get name => 'userEndpoints';
 
-  _i2.Future<List<_i5.User>> searchByName(String key) =>
-      caller.callServerEndpoint<List<_i5.User>>(
+  _i2.Future<List<_i5.UserInfo>> searchByName(String key) =>
+      caller.callServerEndpoint<List<_i5.UserInfo>>(
         'userEndpoints',
         'searchByName',
         {'key': key},
@@ -108,10 +107,10 @@ class EndpointUserEndpoints extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i6.Caller(client);
+    auth = _i5.Caller(client);
   }
 
-  late final _i6.Caller auth;
+  late final _i5.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -130,7 +129,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i7.Protocol(),
+          _i6.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
