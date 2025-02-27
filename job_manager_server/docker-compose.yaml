@@ -1,0 +1,54 @@
+services:
+  # Development services
+  postgres:
+    image: postgres:16.3
+    ports:
+      - '8090:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: job_manager
+      POSTGRES_PASSWORD: "n7DKUVL1pSXCJVZEy-GTQoYCc3ZySpp_"
+    volumes:
+      - job_manager_data:/var/lib/postgresql/data
+    profiles:
+      - '' # Default profile
+      - dev
+  redis:
+    image: redis:6.2.6
+    ports:
+      - '8091:6379'
+    command: redis-server --requirepass "5xuS1TPq1JhJkAre1Ie7uG4e12LtVTFD"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    profiles:
+      - '' # Default profile
+      - dev
+
+  # Test services
+  postgres_test:
+    image: postgres:16.3
+    ports:
+      - '9090:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: job_manager_test
+      POSTGRES_PASSWORD: "O-iNZZD4iGCuP1Gumbk1rgCj8q5zqGZ2"
+    volumes:
+      - job_manager_test_data:/var/lib/postgresql/data
+    profiles:
+      - '' # Default profile
+      - test
+  redis_test:
+    image: redis:6.2.6
+    ports:
+      - '9091:6379'
+    command: redis-server --requirepass "BwW6swUMUeyJQYKGiKJHfbE8QR3EYTa1"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    profiles:
+      - '' # Default profile
+      - test
+
+volumes:
+  job_manager_data:
+  job_manager_test_data:
