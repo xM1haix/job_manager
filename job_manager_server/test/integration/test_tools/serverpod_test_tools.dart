@@ -14,9 +14,10 @@
 import 'package:serverpod_test/serverpod_test.dart' as _i1;
 import 'package:serverpod/serverpod.dart' as _i2;
 import 'dart:async' as _i3;
-import 'package:job_manager_server/src/generated/team.ymal.dart' as _i4;
-import 'package:job_manager_server/src/generated/simple_team.ymal.dart' as _i5;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i6;
+import 'package:job_manager_server/src/generated/job.ymal.dart' as _i4;
+import 'package:job_manager_server/src/generated/team.ymal.dart' as _i5;
+import 'package:job_manager_server/src/generated/simple_team.ymal.dart' as _i6;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i7;
 import 'package:job_manager_server/src/generated/protocol.dart';
 import 'package:job_manager_server/src/generated/endpoints.dart';
 export 'package:serverpod_test/serverpod_test_public_exports.dart';
@@ -66,12 +67,15 @@ export 'package:serverpod_test/serverpod_test_public_exports.dart';
 /// [testGroupTagsOverride] By default Serverpod test tools tags the `withServerpod` test group with `"integration"`.
 /// This is to provide a simple way to only run unit or integration tests.
 /// This property allows this tag to be overridden to something else. Defaults to `['integration']`.
+///
+/// [experimentalFeatures] Optionally specify experimental features. See [Serverpod] for more information.
 @_i1.isTestGroup
 void withServerpod(
   String testGroupName,
   _i1.TestClosure<TestEndpoints> testClosure, {
   bool? applyMigrations,
   bool? enableSessionLogging,
+  _i2.ExperimentalFeatures? experimentalFeatures,
   _i1.RollbackDatabase? rollbackDatabase,
   String? runMode,
   _i2.ServerpodLoggingMode? serverpodLoggingMode,
@@ -88,6 +92,7 @@ void withServerpod(
       applyMigrations: applyMigrations,
       isDatabaseEnabled: true,
       serverpodLoggingMode: serverpodLoggingMode,
+      experimentalFeatures: experimentalFeatures,
     ),
     maybeRollbackDatabase: rollbackDatabase,
     maybeEnableSessionLogging: enableSessionLogging,
@@ -97,9 +102,11 @@ void withServerpod(
 }
 
 class TestEndpoints {
+  late final _JobEndpoint job;
+
   late final _TeamsEndpoints teamsEndpoints;
 
-  late final _UserData userData;
+  late final _UserInfoEndpoint userInfo;
 
   late final _UserEndpoints userEndpoints;
 }
@@ -111,11 +118,15 @@ class _InternalTestEndpoints extends TestEndpoints
     _i2.SerializationManager serializationManager,
     _i2.EndpointDispatch endpoints,
   ) {
+    job = _JobEndpoint(
+      endpoints,
+      serializationManager,
+    );
     teamsEndpoints = _TeamsEndpoints(
       endpoints,
       serializationManager,
     );
-    userData = _UserData(
+    userInfo = _UserInfoEndpoint(
       endpoints,
       serializationManager,
     );
@@ -123,6 +134,46 @@ class _InternalTestEndpoints extends TestEndpoints
       endpoints,
       serializationManager,
     );
+  }
+}
+
+class _JobEndpoint {
+  _JobEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _i2.EndpointDispatch _endpointDispatch;
+
+  final _i2.SerializationManager _serializationManager;
+
+  _i3.Future<List<_i4.Job>> readJobs(
+    _i1.TestSessionBuilder sessionBuilder,
+    int? teamId,
+  ) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+        endpoint: 'job',
+        method: 'readJobs',
+      );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'job',
+          methodName: 'readJobs',
+          parameters: _i1.testObjectToJson({'teamId': teamId}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue = await (_localCallContext.method.call(
+          _localUniqueSession,
+          _localCallContext.arguments,
+        ) as _i3.Future<List<_i4.Job>>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
   }
 }
 
@@ -227,7 +278,7 @@ class _TeamsEndpoints {
     });
   }
 
-  _i3.Future<_i4.Team> read(
+  _i3.Future<_i5.Team> read(
     _i1.TestSessionBuilder sessionBuilder,
     int id,
   ) async {
@@ -248,7 +299,7 @@ class _TeamsEndpoints {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<_i4.Team>);
+        ) as _i3.Future<_i5.Team>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -256,7 +307,7 @@ class _TeamsEndpoints {
     });
   }
 
-  _i3.Future<List<_i4.Team>> readList(
+  _i3.Future<List<_i5.Team>> readList(
       _i1.TestSessionBuilder sessionBuilder) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -275,7 +326,7 @@ class _TeamsEndpoints {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<List<_i4.Team>>);
+        ) as _i3.Future<List<_i5.Team>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -283,7 +334,7 @@ class _TeamsEndpoints {
     });
   }
 
-  _i3.Future<List<_i5.SimpleTeam>> simpleRead(
+  _i3.Future<List<_i6.SimpleTeam>> simpleRead(
       _i1.TestSessionBuilder sessionBuilder) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -302,7 +353,7 @@ class _TeamsEndpoints {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<List<_i5.SimpleTeam>>);
+        ) as _i3.Future<List<_i6.SimpleTeam>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -310,7 +361,7 @@ class _TeamsEndpoints {
     });
   }
 
-  _i3.Future<List<_i6.UserInfo>> userList(
+  _i3.Future<List<_i7.UserInfo>> userList(
     _i1.TestSessionBuilder sessionBuilder,
     int id,
   ) async {
@@ -331,7 +382,7 @@ class _TeamsEndpoints {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<List<_i6.UserInfo>>);
+        ) as _i3.Future<List<_i7.UserInfo>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -340,8 +391,8 @@ class _TeamsEndpoints {
   }
 }
 
-class _UserData {
-  _UserData(
+class _UserInfoEndpoint {
+  _UserInfoEndpoint(
     this._endpointDispatch,
     this._serializationManager,
   );
@@ -354,13 +405,13 @@ class _UserData {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
           (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
-        endpoint: 'userData',
+        endpoint: 'userInfo',
         method: 'getUsername',
       );
       try {
         var _localCallContext = await _endpointDispatch.getMethodCallContext(
           createSessionCallback: (_) => _localUniqueSession,
-          endpointPath: 'userData',
+          endpointPath: 'userInfo',
           methodName: 'getUsername',
           parameters: _i1.testObjectToJson({}),
           serializationManager: _serializationManager,
@@ -387,7 +438,7 @@ class _UserEndpoints {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i3.Future<List<_i6.UserInfo>> searchByName(
+  _i3.Future<List<_i7.UserInfo>> searchByName(
     _i1.TestSessionBuilder sessionBuilder,
     String key,
   ) async {
@@ -408,7 +459,7 @@ class _UserEndpoints {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<List<_i6.UserInfo>>);
+        ) as _i3.Future<List<_i7.UserInfo>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();

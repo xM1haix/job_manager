@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:job_manager_client/job_manager_client.dart';
+import 'package:job_manager_flutter/connect/connect.dart';
+import 'package:job_manager_flutter/job_list.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
-
-import 'connect/connect.dart';
-import 'tasks_list.dart';
 
 void main() async {
   sessionManager = SessionManager(caller: client.modules.auth);
@@ -45,7 +44,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: sessionManager.isSignedIn ? const TasksList() : const Connect(),
+      home: sessionManager.isSignedIn ? const JobList() : const Connect(),
     );
   }
 

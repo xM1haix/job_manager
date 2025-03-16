@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:job_manager_flutter/job_list.dart';
+import 'package:job_manager_flutter/nav.dart';
+import 'package:job_manager_flutter/popup.dart';
 
 import '/main.dart';
-import '../tasks_list.dart';
-import '../nav.dart';
-import '../popup.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -64,7 +64,7 @@ class _LoginState extends State<Login> {
         x.key!,
       );
       if (!mounted) return;
-      nav(context, const TasksList(), true);
+      nav(context, const JobList(), true);
     } catch (e) {
       errorPopup(context, e);
     }

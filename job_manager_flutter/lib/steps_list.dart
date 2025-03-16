@@ -17,7 +17,7 @@ class _StepsListState extends State<StepsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Task #${widget.id}"),
+        title: Text("Job #${widget.id}"),
       ),
       floatingActionButton: FabAdd(
         tooltip: "Create new step",

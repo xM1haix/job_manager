@@ -10,34 +10,65 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import '../endpoints/teams_endpoints.dart' as _i2;
-import '../endpoints/user_data_endpoints.dart' as _i3;
-import '../endpoints/user_endpoints.dart' as _i4;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i5;
+import '../endpoints/job_endpoint.dart' as _i2;
+import '../endpoints/teams_endpoints.dart' as _i3;
+import '../endpoints/user_data_endpoints.dart' as _i4;
+import '../endpoints/user_endpoints.dart' as _i5;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i6;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
   void initializeEndpoints(_i1.Server server) {
     var endpoints = <String, _i1.Endpoint>{
-      'teamsEndpoints': _i2.TeamsEndpoints()
+      'job': _i2.JobEndpoint()
+        ..initialize(
+          server,
+          'job',
+          null,
+        ),
+      'teamsEndpoints': _i3.TeamsEndpoints()
         ..initialize(
           server,
           'teamsEndpoints',
           null,
         ),
-      'userData': _i3.UserData()
+      'userInfo': _i4.UserInfoEndpoint()
         ..initialize(
           server,
-          'userData',
+          'userInfo',
           null,
         ),
-      'userEndpoints': _i4.UserEndpoints()
+      'userEndpoints': _i5.UserEndpoints()
         ..initialize(
           server,
           'userEndpoints',
           null,
         ),
     };
+    connectors['job'] = _i1.EndpointConnector(
+      name: 'job',
+      endpoint: endpoints['job']!,
+      methodConnectors: {
+        'readJobs': _i1.MethodConnector(
+          name: 'readJobs',
+          params: {
+            'teamId': _i1.ParameterDescription(
+              name: 'teamId',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['job'] as _i2.JobEndpoint).readJobs(
+            session,
+            params['teamId'],
+          ),
+        )
+      },
+    );
     connectors['teamsEndpoints'] = _i1.EndpointConnector(
       name: 'teamsEndpoints',
       endpoint: endpoints['teamsEndpoints']!,
@@ -60,7 +91,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i2.TeamsEndpoints).create(
+              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).create(
             session,
             params['name'],
             params['isPrivate'],
@@ -79,7 +110,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i2.TeamsEndpoints).delete(
+              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).delete(
             session,
             params['id'],
           ),
@@ -97,7 +128,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i2.TeamsEndpoints).hide(
+              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).hide(
             session,
             params['id'],
           ),
@@ -115,7 +146,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i2.TeamsEndpoints).read(
+              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).read(
             session,
             params['id'],
           ),
@@ -127,7 +158,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i2.TeamsEndpoints)
+              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints)
                   .readList(session),
         ),
         'simpleRead': _i1.MethodConnector(
@@ -137,7 +168,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i2.TeamsEndpoints)
+              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints)
                   .simpleRead(session),
         ),
         'userList': _i1.MethodConnector(
@@ -153,16 +184,16 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i2.TeamsEndpoints).userList(
+              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).userList(
             session,
             params['id'],
           ),
         ),
       },
     );
-    connectors['userData'] = _i1.EndpointConnector(
-      name: 'userData',
-      endpoint: endpoints['userData']!,
+    connectors['userInfo'] = _i1.EndpointConnector(
+      name: 'userInfo',
+      endpoint: endpoints['userInfo']!,
       methodConnectors: {
         'getUsername': _i1.MethodConnector(
           name: 'getUsername',
@@ -171,7 +202,8 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['userData'] as _i3.UserData).getUsername(session),
+              (endpoints['userInfo'] as _i4.UserInfoEndpoint)
+                  .getUsername(session),
         )
       },
     );
@@ -192,13 +224,13 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['userEndpoints'] as _i4.UserEndpoints).searchByName(
+              (endpoints['userEndpoints'] as _i5.UserEndpoints).searchByName(
             session,
             params['key'],
           ),
         )
       },
     );
-    modules['serverpod_auth'] = _i5.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i6.Endpoints()..initializeEndpoints(server);
   }
 }

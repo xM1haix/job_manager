@@ -19,8 +19,9 @@ import 'stage.ymal.dart' as _i7;
 import 'team.ymal.dart' as _i8;
 import 'team_user.ymal.dart' as _i9;
 import 'user_permission.ymal.dart' as _i10;
-import 'package:job_manager_server/src/generated/team.ymal.dart' as _i11;
-import 'package:job_manager_server/src/generated/simple_team.ymal.dart' as _i12;
+import 'package:job_manager_server/src/generated/job.ymal.dart' as _i11;
+import 'package:job_manager_server/src/generated/team.ymal.dart' as _i12;
+import 'package:job_manager_server/src/generated/simple_team.ymal.dart' as _i13;
 export 'custom_exception.ymal.dart';
 export 'job.ymal.dart';
 export 'simple_team.ymal.dart';
@@ -386,17 +387,19 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i10.UserPermission?>()) {
       return (data != null ? _i10.UserPermission.fromJson(data) : null) as T;
     }
-    if (t == List<_i11.Team>) {
-      return (data as List).map((e) => deserialize<_i11.Team>(e)).toList()
-          as dynamic;
+    if (t == List<_i11.Job>) {
+      return (data as List).map((e) => deserialize<_i11.Job>(e)).toList() as T;
     }
-    if (t == List<_i12.SimpleTeam>) {
-      return (data as List).map((e) => deserialize<_i12.SimpleTeam>(e)).toList()
-          as dynamic;
+    if (t == List<_i12.Team>) {
+      return (data as List).map((e) => deserialize<_i12.Team>(e)).toList() as T;
+    }
+    if (t == List<_i13.SimpleTeam>) {
+      return (data as List).map((e) => deserialize<_i13.SimpleTeam>(e)).toList()
+          as T;
     }
     if (t == List<_i3.UserInfo>) {
       return (data as List).map((e) => deserialize<_i3.UserInfo>(e)).toList()
-          as dynamic;
+          as T;
     }
     try {
       return _i3.Protocol().deserialize<T>(data, t);

@@ -11,10 +11,26 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:job_manager_client/src/protocol/team.ymal.dart' as _i3;
-import 'package:job_manager_client/src/protocol/simple_team.ymal.dart' as _i4;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i5;
-import 'protocol.dart' as _i6;
+import 'package:job_manager_client/src/protocol/job.ymal.dart' as _i3;
+import 'package:job_manager_client/src/protocol/team.ymal.dart' as _i4;
+import 'package:job_manager_client/src/protocol/simple_team.ymal.dart' as _i5;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i6;
+import 'protocol.dart' as _i7;
+
+/// {@category Endpoint}
+class EndpointJob extends _i1.EndpointRef {
+  EndpointJob(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'job';
+
+  _i2.Future<List<_i3.Job>> readJobs(int? teamId) =>
+      caller.callServerEndpoint<List<_i3.Job>>(
+        'job',
+        'readJobs',
+        {'teamId': teamId},
+      );
+}
 
 /// {@category Endpoint}
 class EndpointTeamsEndpoints extends _i1.EndpointRef {
@@ -48,28 +64,28 @@ class EndpointTeamsEndpoints extends _i1.EndpointRef {
         {'id': id},
       );
 
-  _i2.Future<_i3.Team> read(int id) => caller.callServerEndpoint<_i3.Team>(
+  _i2.Future<_i4.Team> read(int id) => caller.callServerEndpoint<_i4.Team>(
         'teamsEndpoints',
         'read',
         {'id': id},
       );
 
-  _i2.Future<List<_i3.Team>> readList() =>
-      caller.callServerEndpoint<List<_i3.Team>>(
+  _i2.Future<List<_i4.Team>> readList() =>
+      caller.callServerEndpoint<List<_i4.Team>>(
         'teamsEndpoints',
         'readList',
         {},
       );
 
-  _i2.Future<List<_i4.SimpleTeam>> simpleRead() =>
-      caller.callServerEndpoint<List<_i4.SimpleTeam>>(
+  _i2.Future<List<_i5.SimpleTeam>> simpleRead() =>
+      caller.callServerEndpoint<List<_i5.SimpleTeam>>(
         'teamsEndpoints',
         'simpleRead',
         {},
       );
 
-  _i2.Future<List<_i5.UserInfo>> userList(int id) =>
-      caller.callServerEndpoint<List<_i5.UserInfo>>(
+  _i2.Future<List<_i6.UserInfo>> userList(int id) =>
+      caller.callServerEndpoint<List<_i6.UserInfo>>(
         'teamsEndpoints',
         'userList',
         {'id': id},
@@ -77,14 +93,14 @@ class EndpointTeamsEndpoints extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointUserData extends _i1.EndpointRef {
-  EndpointUserData(_i1.EndpointCaller caller) : super(caller);
+class EndpointUserInfo extends _i1.EndpointRef {
+  EndpointUserInfo(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'userData';
+  String get name => 'userInfo';
 
   _i2.Future<String> getUsername() => caller.callServerEndpoint<String>(
-        'userData',
+        'userInfo',
         'getUsername',
         {},
       );
@@ -97,8 +113,8 @@ class EndpointUserEndpoints extends _i1.EndpointRef {
   @override
   String get name => 'userEndpoints';
 
-  _i2.Future<List<_i5.UserInfo>> searchByName(String key) =>
-      caller.callServerEndpoint<List<_i5.UserInfo>>(
+  _i2.Future<List<_i6.UserInfo>> searchByName(String key) =>
+      caller.callServerEndpoint<List<_i6.UserInfo>>(
         'userEndpoints',
         'searchByName',
         {'key': key},
@@ -107,10 +123,10 @@ class EndpointUserEndpoints extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i5.Caller(client);
+    auth = _i6.Caller(client);
   }
 
-  late final _i5.Caller auth;
+  late final _i6.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -129,7 +145,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i6.Protocol(),
+          _i7.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -139,15 +155,18 @@ class Client extends _i1.ServerpodClientShared {
           disconnectStreamsOnLostInternetConnection:
               disconnectStreamsOnLostInternetConnection,
         ) {
+    job = EndpointJob(this);
     teamsEndpoints = EndpointTeamsEndpoints(this);
-    userData = EndpointUserData(this);
+    userInfo = EndpointUserInfo(this);
     userEndpoints = EndpointUserEndpoints(this);
     modules = Modules(this);
   }
 
+  late final EndpointJob job;
+
   late final EndpointTeamsEndpoints teamsEndpoints;
 
-  late final EndpointUserData userData;
+  late final EndpointUserInfo userInfo;
 
   late final EndpointUserEndpoints userEndpoints;
 
@@ -155,8 +174,9 @@ class Client extends _i1.ServerpodClientShared {
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
+        'job': job,
         'teamsEndpoints': teamsEndpoints,
-        'userData': userData,
+        'userInfo': userInfo,
         'userEndpoints': userEndpoints,
       };
 

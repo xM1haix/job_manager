@@ -8,8 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  serverpod_auth_shared_flutter: 2.3.1
-  serverpod_flutter: 2.3.1
+  serverpod_auth_shared_flutter: 2.4.0
+  serverpod_flutter: 2.4.0
   job_manager_client:
     path: ../job_manager_client
 dev_dependencies:

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class CreateTask extends StatefulWidget {
+class CreateJob extends StatefulWidget {
   final int? teamId;
-  const CreateTask(this.teamId, {super.key});
+  const CreateJob(this.teamId, {super.key});
 
   @override
-  State<CreateTask> createState() => _CreateTaskState();
+  State<CreateJob> createState() => _CreateJobState();
 }
 
-class _CreateTaskState extends State<CreateTask> {
+class _CreateJobState extends State<CreateJob> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

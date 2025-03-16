@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:job_manager_client/job_manager_client.dart';
+import 'package:job_manager_flutter/connect/connect.dart';
+import 'package:job_manager_flutter/create_job.dart';
+import 'package:job_manager_flutter/fab_add.dart';
+import 'package:job_manager_flutter/future_builder.dart';
+import 'package:job_manager_flutter/main.dart';
 import 'package:job_manager_flutter/nav.dart';
+import 'package:job_manager_flutter/popup.dart';
 import 'package:job_manager_flutter/settings.dart';
 import 'package:job_manager_flutter/steps_list.dart';
 import 'package:job_manager_flutter/teams.dart';
 
-import 'connect/connect.dart';
-import 'create_task.dart';
-import 'fab_add.dart';
-import 'future_builder.dart';
-import 'main.dart';
-import 'popup.dart';
-
-class TasksList extends StatefulWidget {
-  const TasksList({super.key});
+class JobList extends StatefulWidget {
+  const JobList({super.key});
 
   @override
-  State<TasksList> createState() => _TasksListState();
+  State<JobList> createState() => _JobListState();
 }
 
-class _TasksListState extends State<TasksList> {
+class _JobListState extends State<JobList> {
   late Future<List<SimpleTeam>> _getTeams;
   late Future<String> _getUsername;
-  int? _selected;
+  late Future<List<Job>> _getJobs;
+  SimpleTeam? _selected;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${_selected ?? "All"} your work"),
+        title: Text("${_selected?.name ?? "All your"} jobs"),
       ),
       drawer: Drawer(
         child: Column(
@@ -73,7 +73,7 @@ class _TasksListState extends State<TasksList> {
                               child: InkWell(
                                 splashColor:
                                     selected ? Colors.black : Colors.green,
-                                onTap: () => _changeTeam(teams[i].id),
+                                onTap: () => _changeTeam(teams[i]),
                                 borderRadius: BorderRadius.circular(10),
                                 child: Container(
                                   margin: const EdgeInsets.all(3),
@@ -133,14 +133,14 @@ class _TasksListState extends State<TasksList> {
       ),
       floatingActionButton: FabAdd(
         tooltip: "Create new work",
-        onPressed: _createNewTask,
+        onPressed: _createNewJob,
       ),
       body: RefreshIndicator(
         onRefresh: _onRefresh,
         child: CustomFutureBuilder(
-          future: ,
-          success:(x)=> ListView.builder(
-            itemCount: x.lenght,
+          future: _getJobs,
+          success: (x) => ListView.builder(
+            itemCount: x.length,
             itemBuilder: (context, i) => Padding(
               padding: const EdgeInsets.all(5),
               child: Tooltip(
@@ -213,19 +213,20 @@ class _TasksListState extends State<TasksList> {
     _init();
   }
 
-  void _changeTeam(int i) {
+  void _changeTeam(SimpleTeam i) {
     setState(() {
       _selected = _selected == i ? null : i;
     });
   }
 
-  void _createNewTask() => nav(context, CreateTask(_selected));
+  void _createNewJob() => nav(context, CreateJob(_selected?.id));
 
   void _goToSettings() => nav(context, Settings());
   void _init() {
     setState(() {
       _getTeams = client.teamsEndpoints.simpleRead();
-      _getUsername = client.userData.getUsername();
+      _getUsername = client.userInfo.getUsername();
+      _getJobs = client.job.readJobs(_selected?.id);
     });
   }
 
@@ -246,7 +247,18 @@ class _TasksListState extends State<TasksList> {
     }
   }
 
-  void _manageTeams() => nav(context, Teams());
-  Future<void> _onRefresh() async {}
+  Future<void> _manageTeams() async {
+    await nav(context, Teams());
+    setState(() {
+      _getTeams = client.teamsEndpoints.simpleRead();
+    });
+  }
+
+  Future<void> _onRefresh() async {
+    setState(() {
+      _getJobs = client.job.readJobs(_selected?.id);
+    });
+  }
+
   void _openWork(int i) => nav(context, StepsList(i));
 }
