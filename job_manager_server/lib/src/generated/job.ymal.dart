@@ -11,13 +11,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Job implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Job implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Job._({
     this.id,
     required this.name,
     this.status,
     required this.teamId,
-    this.deletedAt,
   });
 
   factory Job({
@@ -25,7 +24,6 @@ abstract class Job implements _i1.TableRow, _i1.ProtocolSerialization {
     required String name,
     bool? status,
     required int teamId,
-    DateTime? deletedAt,
   }) = _JobImpl;
 
   factory Job.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -34,9 +32,6 @@ abstract class Job implements _i1.TableRow, _i1.ProtocolSerialization {
       name: jsonSerialization['name'] as String,
       status: jsonSerialization['status'] as bool?,
       teamId: jsonSerialization['teamId'] as int,
-      deletedAt: jsonSerialization['deletedAt'] == null
-          ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
     );
   }
 
@@ -53,10 +48,8 @@ abstract class Job implements _i1.TableRow, _i1.ProtocolSerialization {
 
   int teamId;
 
-  DateTime? deletedAt;
-
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Job]
   /// with some or all fields replaced by the given arguments.
@@ -66,7 +59,6 @@ abstract class Job implements _i1.TableRow, _i1.ProtocolSerialization {
     String? name,
     bool? status,
     int? teamId,
-    DateTime? deletedAt,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -75,7 +67,6 @@ abstract class Job implements _i1.TableRow, _i1.ProtocolSerialization {
       'name': name,
       if (status != null) 'status': status,
       'teamId': teamId,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
     };
   }
 
@@ -86,7 +77,6 @@ abstract class Job implements _i1.TableRow, _i1.ProtocolSerialization {
       'name': name,
       if (status != null) 'status': status,
       'teamId': teamId,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
     };
   }
 
@@ -128,13 +118,11 @@ class _JobImpl extends Job {
     required String name,
     bool? status,
     required int teamId,
-    DateTime? deletedAt,
   }) : super._(
           id: id,
           name: name,
           status: status,
           teamId: teamId,
-          deletedAt: deletedAt,
         );
 
   /// Returns a shallow copy of this [Job]
@@ -146,19 +134,17 @@ class _JobImpl extends Job {
     String? name,
     Object? status = _Undefined,
     int? teamId,
-    Object? deletedAt = _Undefined,
   }) {
     return Job(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
       status: status is bool? ? status : this.status,
       teamId: teamId ?? this.teamId,
-      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
     );
   }
 }
 
-class JobTable extends _i1.Table {
+class JobTable extends _i1.Table<int> {
   JobTable({super.tableRelation}) : super(tableName: 'jobs') {
     name = _i1.ColumnString(
       'name',
@@ -172,10 +158,6 @@ class JobTable extends _i1.Table {
       'teamId',
       this,
     );
-    deletedAt = _i1.ColumnDateTime(
-      'deletedAt',
-      this,
-    );
   }
 
   late final _i1.ColumnString name;
@@ -184,15 +166,12 @@ class JobTable extends _i1.Table {
 
   late final _i1.ColumnInt teamId;
 
-  late final _i1.ColumnDateTime deletedAt;
-
   @override
   List<_i1.Column> get columns => [
         id,
         name,
         status,
         teamId,
-        deletedAt,
       ];
 }
 
@@ -203,7 +182,7 @@ class JobInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Job.t;
+  _i1.Table<int> get table => Job.t;
 }
 
 class JobIncludeList extends _i1.IncludeList {
@@ -223,7 +202,7 @@ class JobIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Job.t;
+  _i1.Table<int> get table => Job.t;
 }
 
 class JobRepository {

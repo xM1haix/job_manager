@@ -11,20 +11,18 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Stage implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Stage implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Stage._({
     this.id,
     required this.name,
-    this.status,
-    this.deletedAt,
+    bool? status,
     required this.jobId,
-  });
+  }) : status = status ?? false;
 
   factory Stage({
     int? id,
     required String name,
     bool? status,
-    DateTime? deletedAt,
     required int jobId,
   }) = _StageImpl;
 
@@ -32,10 +30,7 @@ abstract class Stage implements _i1.TableRow, _i1.ProtocolSerialization {
     return Stage(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
-      status: jsonSerialization['status'] as bool?,
-      deletedAt: jsonSerialization['deletedAt'] == null
-          ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
+      status: jsonSerialization['status'] as bool,
       jobId: jsonSerialization['jobId'] as int,
     );
   }
@@ -49,14 +44,12 @@ abstract class Stage implements _i1.TableRow, _i1.ProtocolSerialization {
 
   String name;
 
-  bool? status;
-
-  DateTime? deletedAt;
+  bool status;
 
   int jobId;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Stage]
   /// with some or all fields replaced by the given arguments.
@@ -65,7 +58,6 @@ abstract class Stage implements _i1.TableRow, _i1.ProtocolSerialization {
     int? id,
     String? name,
     bool? status,
-    DateTime? deletedAt,
     int? jobId,
   });
   @override
@@ -73,8 +65,7 @@ abstract class Stage implements _i1.TableRow, _i1.ProtocolSerialization {
     return {
       if (id != null) 'id': id,
       'name': name,
-      if (status != null) 'status': status,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
+      'status': status,
       'jobId': jobId,
     };
   }
@@ -84,8 +75,7 @@ abstract class Stage implements _i1.TableRow, _i1.ProtocolSerialization {
     return {
       if (id != null) 'id': id,
       'name': name,
-      if (status != null) 'status': status,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
+      'status': status,
       'jobId': jobId,
     };
   }
@@ -127,13 +117,11 @@ class _StageImpl extends Stage {
     int? id,
     required String name,
     bool? status,
-    DateTime? deletedAt,
     required int jobId,
   }) : super._(
           id: id,
           name: name,
           status: status,
-          deletedAt: deletedAt,
           jobId: jobId,
         );
 
@@ -144,21 +132,19 @@ class _StageImpl extends Stage {
   Stage copyWith({
     Object? id = _Undefined,
     String? name,
-    Object? status = _Undefined,
-    Object? deletedAt = _Undefined,
+    bool? status,
     int? jobId,
   }) {
     return Stage(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
-      status: status is bool? ? status : this.status,
-      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
+      status: status ?? this.status,
       jobId: jobId ?? this.jobId,
     );
   }
 }
 
-class StageTable extends _i1.Table {
+class StageTable extends _i1.Table<int> {
   StageTable({super.tableRelation}) : super(tableName: 'stages') {
     name = _i1.ColumnString(
       'name',
@@ -167,10 +153,7 @@ class StageTable extends _i1.Table {
     status = _i1.ColumnBool(
       'status',
       this,
-    );
-    deletedAt = _i1.ColumnDateTime(
-      'deletedAt',
-      this,
+      hasDefault: true,
     );
     jobId = _i1.ColumnInt(
       'jobId',
@@ -182,8 +165,6 @@ class StageTable extends _i1.Table {
 
   late final _i1.ColumnBool status;
 
-  late final _i1.ColumnDateTime deletedAt;
-
   late final _i1.ColumnInt jobId;
 
   @override
@@ -191,7 +172,6 @@ class StageTable extends _i1.Table {
         id,
         name,
         status,
-        deletedAt,
         jobId,
       ];
 }
@@ -203,7 +183,7 @@ class StageInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Stage.t;
+  _i1.Table<int> get table => Stage.t;
 }
 
 class StageIncludeList extends _i1.IncludeList {
@@ -223,7 +203,7 @@ class StageIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Stage.t;
+  _i1.Table<int> get table => Stage.t;
 }
 
 class StageRepository {

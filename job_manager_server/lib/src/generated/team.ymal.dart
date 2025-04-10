@@ -11,32 +11,21 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Team implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Team implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Team._({
     this.id,
     required this.name,
-    bool? isPrivate,
-    this.deletedAt,
-    required this.ownerId,
-  }) : isPrivate = isPrivate ?? false;
+  });
 
   factory Team({
     int? id,
     required String name,
-    bool? isPrivate,
-    DateTime? deletedAt,
-    required int ownerId,
   }) = _TeamImpl;
 
   factory Team.fromJson(Map<String, dynamic> jsonSerialization) {
     return Team(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
-      isPrivate: jsonSerialization['isPrivate'] as bool,
-      deletedAt: jsonSerialization['deletedAt'] == null
-          ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
-      ownerId: jsonSerialization['ownerId'] as int,
     );
   }
 
@@ -49,14 +38,8 @@ abstract class Team implements _i1.TableRow, _i1.ProtocolSerialization {
 
   String name;
 
-  bool isPrivate;
-
-  DateTime? deletedAt;
-
-  int ownerId;
-
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Team]
   /// with some or all fields replaced by the given arguments.
@@ -64,18 +47,12 @@ abstract class Team implements _i1.TableRow, _i1.ProtocolSerialization {
   Team copyWith({
     int? id,
     String? name,
-    bool? isPrivate,
-    DateTime? deletedAt,
-    int? ownerId,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
-      'isPrivate': isPrivate,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
-      'ownerId': ownerId,
     };
   }
 
@@ -84,9 +61,6 @@ abstract class Team implements _i1.TableRow, _i1.ProtocolSerialization {
     return {
       if (id != null) 'id': id,
       'name': name,
-      'isPrivate': isPrivate,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
-      'ownerId': ownerId,
     };
   }
 
@@ -126,15 +100,9 @@ class _TeamImpl extends Team {
   _TeamImpl({
     int? id,
     required String name,
-    bool? isPrivate,
-    DateTime? deletedAt,
-    required int ownerId,
   }) : super._(
           id: id,
           name: name,
-          isPrivate: isPrivate,
-          deletedAt: deletedAt,
-          ownerId: ownerId,
         );
 
   /// Returns a shallow copy of this [Team]
@@ -144,56 +112,28 @@ class _TeamImpl extends Team {
   Team copyWith({
     Object? id = _Undefined,
     String? name,
-    bool? isPrivate,
-    Object? deletedAt = _Undefined,
-    int? ownerId,
   }) {
     return Team(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
-      isPrivate: isPrivate ?? this.isPrivate,
-      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
-      ownerId: ownerId ?? this.ownerId,
     );
   }
 }
 
-class TeamTable extends _i1.Table {
+class TeamTable extends _i1.Table<int> {
   TeamTable({super.tableRelation}) : super(tableName: 'teams') {
     name = _i1.ColumnString(
       'name',
-      this,
-    );
-    isPrivate = _i1.ColumnBool(
-      'isPrivate',
-      this,
-      hasDefault: true,
-    );
-    deletedAt = _i1.ColumnDateTime(
-      'deletedAt',
-      this,
-    );
-    ownerId = _i1.ColumnInt(
-      'ownerId',
       this,
     );
   }
 
   late final _i1.ColumnString name;
 
-  late final _i1.ColumnBool isPrivate;
-
-  late final _i1.ColumnDateTime deletedAt;
-
-  late final _i1.ColumnInt ownerId;
-
   @override
   List<_i1.Column> get columns => [
         id,
         name,
-        isPrivate,
-        deletedAt,
-        ownerId,
       ];
 }
 
@@ -204,7 +144,7 @@ class TeamInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Team.t;
+  _i1.Table<int> get table => Team.t;
 }
 
 class TeamIncludeList extends _i1.IncludeList {
@@ -224,7 +164,7 @@ class TeamIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Team.t;
+  _i1.Table<int> get table => Team.t;
 }
 
 class TeamRepository {

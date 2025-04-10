@@ -12,82 +12,182 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:job_manager_client/src/protocol/job.ymal.dart' as _i3;
-import 'package:job_manager_client/src/protocol/team.ymal.dart' as _i4;
-import 'package:job_manager_client/src/protocol/simple_team.ymal.dart' as _i5;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i6;
-import 'protocol.dart' as _i7;
+import 'package:job_manager_client/src/protocol/stage.ymal.dart' as _i4;
+import 'package:job_manager_client/src/protocol/stage_view.ymal.dart' as _i5;
+import 'package:job_manager_client/src/protocol/user_role_enum.ymal.dart'
+    as _i6;
+import 'package:job_manager_client/src/protocol/team.ymal.dart' as _i7;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i8;
+import 'protocol.dart' as _i9;
 
 /// {@category Endpoint}
-class EndpointJob extends _i1.EndpointRef {
-  EndpointJob(_i1.EndpointCaller caller) : super(caller);
+class EndpointJobs extends _i1.EndpointRef {
+  EndpointJobs(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'job';
+  String get name => 'jobs';
 
-  _i2.Future<List<_i3.Job>> readJobs(int? teamId) =>
+  _i2.Future<bool> create(
+    int teamId,
+    String name,
+  ) =>
+      caller.callServerEndpoint<bool>(
+        'jobs',
+        'create',
+        {
+          'teamId': teamId,
+          'name': name,
+        },
+      );
+
+  _i2.Future<List<_i3.Job>> readJobs(int teamId) =>
       caller.callServerEndpoint<List<_i3.Job>>(
-        'job',
+        'jobs',
         'readJobs',
         {'teamId': teamId},
+      );
+
+  _i2.Future<String> readNameOnly(
+    int teamId,
+    int id,
+  ) =>
+      caller.callServerEndpoint<String>(
+        'jobs',
+        'readNameOnly',
+        {
+          'teamId': teamId,
+          'id': id,
+        },
       );
 }
 
 /// {@category Endpoint}
-class EndpointTeamsEndpoints extends _i1.EndpointRef {
-  EndpointTeamsEndpoints(_i1.EndpointCaller caller) : super(caller);
+class EndpointStages extends _i1.EndpointRef {
+  EndpointStages(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'teamsEndpoints';
+  String get name => 'stages';
 
-  _i2.Future<bool> create(
-    String name,
-    bool isPrivate,
+  _i2.Future<bool> check(
+    int teamId,
+    int jobId,
+    _i4.Stage stage,
   ) =>
       caller.callServerEndpoint<bool>(
-        'teamsEndpoints',
-        'create',
+        'stages',
+        'check',
         {
-          'name': name,
-          'isPrivate': isPrivate,
+          'teamId': teamId,
+          'jobId': jobId,
+          'stage': stage,
         },
       );
 
+  _i2.Future<bool> create(
+    int teamId,
+    int jobId,
+    String name,
+  ) =>
+      caller.callServerEndpoint<bool>(
+        'stages',
+        'create',
+        {
+          'teamId': teamId,
+          'jobId': jobId,
+          'name': name,
+        },
+      );
+
+  _i2.Future<bool> delete(
+    int teamId,
+    int jobId,
+    int id,
+  ) =>
+      caller.callServerEndpoint<bool>(
+        'stages',
+        'delete',
+        {
+          'teamId': teamId,
+          'jobId': jobId,
+          'id': id,
+        },
+      );
+
+  _i2.Future<_i5.StageView> readStages(
+    int teamId,
+    int jobId,
+  ) =>
+      caller.callServerEndpoint<_i5.StageView>(
+        'stages',
+        'readStages',
+        {
+          'teamId': teamId,
+          'jobId': jobId,
+        },
+      );
+}
+
+/// {@category Endpoint}
+class EndpointTeams extends _i1.EndpointRef {
+  EndpointTeams(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'teams';
+
+  _i2.Future<bool> addUser(
+    int id,
+    int userId,
+  ) =>
+      caller.callServerEndpoint<bool>(
+        'teams',
+        'addUser',
+        {
+          'id': id,
+          'userId': userId,
+        },
+      );
+
+  _i2.Future<bool> checkPerms(
+    int id,
+    _i6.UserRoleEnum userRoleEnum,
+  ) =>
+      caller.callServerEndpoint<bool>(
+        'teams',
+        'checkPerms',
+        {
+          'id': id,
+          'userRoleEnum': userRoleEnum,
+        },
+      );
+
+  _i2.Future<bool> create(String name) => caller.callServerEndpoint<bool>(
+        'teams',
+        'create',
+        {'name': name},
+      );
+
   _i2.Future<bool> delete(int id) => caller.callServerEndpoint<bool>(
-        'teamsEndpoints',
+        'teams',
         'delete',
         {'id': id},
       );
 
-  _i2.Future<bool> hide(int id) => caller.callServerEndpoint<bool>(
-        'teamsEndpoints',
-        'hide',
-        {'id': id},
-      );
-
-  _i2.Future<_i4.Team> read(int id) => caller.callServerEndpoint<_i4.Team>(
-        'teamsEndpoints',
+  _i2.Future<_i7.Team> read(int id) => caller.callServerEndpoint<_i7.Team>(
+        'teams',
         'read',
         {'id': id},
       );
 
-  _i2.Future<List<_i4.Team>> readList() =>
-      caller.callServerEndpoint<List<_i4.Team>>(
-        'teamsEndpoints',
+  _i2.Future<List<_i7.Team>> readList(String? seach) =>
+      caller.callServerEndpoint<List<_i7.Team>>(
+        'teams',
         'readList',
-        {},
+        {'seach': seach},
       );
 
-  _i2.Future<List<_i5.SimpleTeam>> simpleRead() =>
-      caller.callServerEndpoint<List<_i5.SimpleTeam>>(
-        'teamsEndpoints',
-        'simpleRead',
-        {},
-      );
-
-  _i2.Future<List<_i6.UserInfo>> userList(int id) =>
-      caller.callServerEndpoint<List<_i6.UserInfo>>(
-        'teamsEndpoints',
-        'userList',
+  _i2.Future<String> readNameOnly(int id) => caller.callServerEndpoint<String>(
+        'teams',
+        'readNameOnly',
         {'id': id},
       );
 }
@@ -113,8 +213,8 @@ class EndpointUserEndpoints extends _i1.EndpointRef {
   @override
   String get name => 'userEndpoints';
 
-  _i2.Future<List<_i6.UserInfo>> searchByName(String key) =>
-      caller.callServerEndpoint<List<_i6.UserInfo>>(
+  _i2.Future<List<_i8.UserInfo>> searchByName(String key) =>
+      caller.callServerEndpoint<List<_i8.UserInfo>>(
         'userEndpoints',
         'searchByName',
         {'key': key},
@@ -123,10 +223,10 @@ class EndpointUserEndpoints extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i6.Caller(client);
+    auth = _i8.Caller(client);
   }
 
-  late final _i6.Caller auth;
+  late final _i8.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -145,7 +245,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i7.Protocol(),
+          _i9.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -155,16 +255,19 @@ class Client extends _i1.ServerpodClientShared {
           disconnectStreamsOnLostInternetConnection:
               disconnectStreamsOnLostInternetConnection,
         ) {
-    job = EndpointJob(this);
-    teamsEndpoints = EndpointTeamsEndpoints(this);
+    jobs = EndpointJobs(this);
+    stages = EndpointStages(this);
+    teams = EndpointTeams(this);
     userInfo = EndpointUserInfo(this);
     userEndpoints = EndpointUserEndpoints(this);
     modules = Modules(this);
   }
 
-  late final EndpointJob job;
+  late final EndpointJobs jobs;
 
-  late final EndpointTeamsEndpoints teamsEndpoints;
+  late final EndpointStages stages;
+
+  late final EndpointTeams teams;
 
   late final EndpointUserInfo userInfo;
 
@@ -174,8 +277,9 @@ class Client extends _i1.ServerpodClientShared {
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
-        'job': job,
-        'teamsEndpoints': teamsEndpoints,
+        'jobs': jobs,
+        'stages': stages,
+        'teams': teams,
         'userInfo': userInfo,
         'userEndpoints': userEndpoints,
       };

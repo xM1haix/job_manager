@@ -15,16 +15,14 @@ abstract class Stage implements _i1.SerializableModel {
   Stage._({
     this.id,
     required this.name,
-    this.status,
-    this.deletedAt,
+    bool? status,
     required this.jobId,
-  });
+  }) : status = status ?? false;
 
   factory Stage({
     int? id,
     required String name,
     bool? status,
-    DateTime? deletedAt,
     required int jobId,
   }) = _StageImpl;
 
@@ -32,10 +30,7 @@ abstract class Stage implements _i1.SerializableModel {
     return Stage(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
-      status: jsonSerialization['status'] as bool?,
-      deletedAt: jsonSerialization['deletedAt'] == null
-          ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
+      status: jsonSerialization['status'] as bool,
       jobId: jsonSerialization['jobId'] as int,
     );
   }
@@ -47,9 +42,7 @@ abstract class Stage implements _i1.SerializableModel {
 
   String name;
 
-  bool? status;
-
-  DateTime? deletedAt;
+  bool status;
 
   int jobId;
 
@@ -60,7 +53,6 @@ abstract class Stage implements _i1.SerializableModel {
     int? id,
     String? name,
     bool? status,
-    DateTime? deletedAt,
     int? jobId,
   });
   @override
@@ -68,8 +60,7 @@ abstract class Stage implements _i1.SerializableModel {
     return {
       if (id != null) 'id': id,
       'name': name,
-      if (status != null) 'status': status,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
+      'status': status,
       'jobId': jobId,
     };
   }
@@ -87,13 +78,11 @@ class _StageImpl extends Stage {
     int? id,
     required String name,
     bool? status,
-    DateTime? deletedAt,
     required int jobId,
   }) : super._(
           id: id,
           name: name,
           status: status,
-          deletedAt: deletedAt,
           jobId: jobId,
         );
 
@@ -104,15 +93,13 @@ class _StageImpl extends Stage {
   Stage copyWith({
     Object? id = _Undefined,
     String? name,
-    Object? status = _Undefined,
-    Object? deletedAt = _Undefined,
+    bool? status,
     int? jobId,
   }) {
     return Stage(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
-      status: status is bool? ? status : this.status,
-      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
+      status: status ?? this.status,
       jobId: jobId ?? this.jobId,
     );
   }

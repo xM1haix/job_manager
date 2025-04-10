@@ -1,0 +1,5 @@
+class: StagePerms
+fields:
+    update: bool
+    delete: bool
+    progress: bool

@@ -1,0 +1,24 @@
+class: UserRole
+table: roles
+fields:
+  name: String
+  teamId: int, relation(parent=teams)
+  jobCreate: bool, default = false
+  jobRead: bool, default = false
+  jobUpdate: bool, default = false
+  jobDelete: bool, default = false
+  stageCreate: bool, default = false
+  stageRead: bool, default = false
+  stageUpdate: bool, default = false
+  stageDelete: bool, default = false
+  stageProgressUpdate: bool, default = false
+  teamUpdate: bool, default = false
+  teamDelete: bool, default = false
+  roleCreate: bool, default = false
+  roleRead: bool, default = false
+  roleUpdate: bool, default = false
+  roleDelete: bool, default = false
+  teamUserCreate: bool, default = false
+  teamUserRead: bool, default = false
+  teamUserUpdate: bool, default = false
+  teamUserDelete: bool, default = false

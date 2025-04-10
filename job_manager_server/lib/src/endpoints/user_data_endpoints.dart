@@ -1,4 +1,4 @@
-import 'package:job_manager_server/error.dart';
+import 'package:job_manager_server/tools/error.dart';
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/serverpod_auth_server.dart';
 

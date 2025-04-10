@@ -1,4 +1,4 @@
-import 'package:job_manager_server/get_current_user.dart';
+import 'package:job_manager_server/all.dart';
 import 'package:serverpod/server.dart';
 import 'package:serverpod_auth_server/module.dart';
 

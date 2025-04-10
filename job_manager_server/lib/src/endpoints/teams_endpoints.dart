@@ -1,26 +1,77 @@
-import 'package:job_manager_server/error.dart';
-import 'package:job_manager_server/get_current_user.dart';
+import 'package:job_manager_server/all.dart';
 import 'package:job_manager_server/src/generated/protocol.dart';
-import 'package:job_manager_server/team_to_simple_team.dart';
+import 'package:job_manager_server/tools/error.dart';
+import 'package:job_manager_server/tools/user_role.dart';
 import 'package:serverpod/serverpod.dart';
-import 'package:serverpod_auth_server/serverpod_auth_server.dart';
 
-class TeamsEndpoints extends Endpoint {
-  Future<bool> create(Session session, String name, bool isPrivate) async {
+class TeamsEndpoint extends Endpoint {
+  Future<bool> addUser(Session session, int id, int userId) async {
+    final x = await isInTeam(session, id);
+    if (!x.userRole.teamUserCreate) throwErr("ACCESS DENIED");
+    final userRole = await UserRole.db.insertRow(
+      session,
+      UserRole(teamId: id, name: "Default"),
+    );
+    if (userRole.id == null) throwErr("the new user role has no id");
+    await TeamUser.db.insertRow(
+      session,
+      TeamUser(
+        teamId: id,
+        userId: userId,
+        roleId: userRole.id!,
+      ),
+    );
+    return true;
+  }
+
+  Future<bool> checkPerms(
+      Session session, int id, UserRoleEnum userRoleEnum) async {
+    final x = (await isInTeam(session, id)).userRole;
+    return switch (userRoleEnum) {
+      UserRoleEnum.jobCreate => x.jobCreate,
+      UserRoleEnum.jobRead => x.jobRead,
+      UserRoleEnum.jobUpdate => x.jobUpdate,
+      UserRoleEnum.jobDelete => x.jobDelete,
+      UserRoleEnum.stageCreate => x.stageCreate,
+      UserRoleEnum.stageRead => x.stageRead,
+      UserRoleEnum.stageUpdate => x.stageUpdate,
+      UserRoleEnum.stageDelete => x.stageDelete,
+      UserRoleEnum.teamUpdate => x.teamUpdate,
+      UserRoleEnum.teamDelete => x.teamDelete,
+      UserRoleEnum.roleCreate => x.roleCreate,
+      UserRoleEnum.roleRead => x.roleRead,
+      UserRoleEnum.roleUpdate => x.roleUpdate,
+      UserRoleEnum.roleDelete => x.roleDelete,
+      UserRoleEnum.teamUserCreate => x.teamUserCreate,
+      UserRoleEnum.teamUserRead => x.teamUserRead,
+      UserRoleEnum.teamUserUpdate => x.teamUserUpdate,
+      UserRoleEnum.teamUserDelete => x.teamUserDelete,
+    };
+  }
+
+  Future<bool> create(Session session, String name) async {
     final userId = (await getCurrentUser(session)).userId;
     final createdTeam = await Team.db.insertRow(
       session,
-      Team(
-        name: name,
-        ownerId: userId,
-        isPrivate: isPrivate,
-      ),
+      Team(name: name),
     );
     if (createdTeam.id == null) {
       throwErr("Something wrong while creating team: Team id is null");
     }
-    final newTeamUser = await TeamUser.db
-        .insertRow(session, TeamUser(teamId: createdTeam.id!, userId: userId));
+    final userRoleOwner = await UserRole.db.insertRow(
+      session,
+      getOwnerUserRole(createdTeam.id!),
+    );
+
+    if (userRoleOwner.id == null) throwErr("the owner user role has no id");
+    final newTeamUser = await TeamUser.db.insertRow(
+      session,
+      TeamUser(
+        teamId: createdTeam.id!,
+        userId: userId,
+        roleId: userRoleOwner.id!,
+      ),
+    );
     if (newTeamUser.id == null) {
       throwErr("Something wrong while creating TeamUser: TeamUser id is null");
     }
@@ -28,105 +79,45 @@ class TeamsEndpoints extends Endpoint {
   }
 
   Future<bool> delete(Session session, int id) async {
-    final userId = (await getCurrentUser(session)).userId;
-    final users = await TeamUser.db.findFirstRow(session,
-        where: (teamUser) =>
-            teamUser.teamId.equals(id) & teamUser.userId.equals(userId));
-    if (users == null) throwErr("You are not included in this team");
-    final deletedTeam =
-        await Team.db.deleteWhere(session, where: (team) => team.id.equals(id));
-    final currentTeam = await Team.db.findById(session, id);
-    if (currentTeam == null) throwErr("Team doesn't exist");
-    if (currentTeam.deletedAt != null) throwErr("Team already hidden");
-    await Team.db
-        .updateRow(session, currentTeam.copyWith(deletedAt: DateTime.now()));
-    return true;
-  }
-
-  Future<bool> hide(Session session, int id) async {
-    final userId = (await getCurrentUser(session)).userId;
-    final users = await TeamUser.db.findFirstRow(session,
-        where: (teamUser) =>
-            teamUser.teamId.equals(id) & teamUser.userId.equals(userId));
-    if (users == null) throwErr("You are not included in this team");
-    final currentTeam = await Team.db.findById(session, id);
-    if (currentTeam == null) throwErr("Team doesn't exist");
-    if (currentTeam.deletedAt != null) throwErr("Team already hidden");
-    await Team.db
-        .updateRow(session, currentTeam.copyWith(deletedAt: DateTime.now()));
+    final x = await isInTeam(session, id);
+    if (!x.userRole.teamDelete) throwErr("ACCESS DENIED");
+    await TeamUser.db.deleteWhere(
+      session,
+      where: (teamUser) => teamUser.teamId.equals(id),
+    );
+    final currentTeam = await existTeam(session, id);
+    await Team.db.deleteRow(session, currentTeam);
     return true;
   }
 
   Future<Team> read(Session session, int id) async {
-    final userId = (await getCurrentUser(session)).userId;
-    final team = await Team.db.findById(session, id);
-    if (team == null) throwErr("Cannot find the team");
-    final users = await TeamUser.db.findFirstRow(session,
-        where: (teamUser) =>
-            teamUser.teamId.equals(id) & teamUser.userId.equals(userId));
-    if (users == null) throwErr("You are not included in this team");
+    final team = await existTeam(session, id);
+    await isInTeam(session, id);
     return team;
   }
 
-  Future<List<Team>> readList(Session session) async {
-    final currentUser = await session.authenticated;
-    if (currentUser == null) throwErr("User not sign in!");
-    final teamUserCombos = await TeamUser.db
-        .find(session, where: (e) => e.userId.equals(currentUser.userId));
-    List<int> teamIds = [];
-    for (var tuc in teamUserCombos) {
-      final tId = tuc.teamId;
-      if (!teamIds.contains(tId)) teamIds.add(tuc.teamId);
-    }
-    List<Team> teams = [];
-    for (var tid in teamIds) {
-      final newTeam = await Team.db.findById(session, tid);
-      if (newTeam != null) teams.add(newTeam);
-    }
-    return teams;
+  Future<List<Team>> readList(Session session, String? seach) async {
+    final user = await getCurrentUser(session);
+    final teamUsers = await TeamUser.db.find(
+      session,
+      where: (tu) => tu.userId.equals(user.userId),
+    );
+    return await Team.db.find(
+      session,
+      where: (team) =>
+          team.id.inSet(
+            Set.from(
+              teamUsers.map((e) => e.teamId).toList(),
+            ),
+          ) &
+          team.name.ilike('%$seach%'),
+    );
   }
 
-  Future<List<SimpleTeam>> simpleRead(Session session) async {
-    final currentUser = await getCurrentUser(session);
-    final teamUserCombos = await TeamUser.db
-        .find(session, where: (e) => e.userId.equals(currentUser.userId));
-    List<int> teamIds = [];
-    for (var tuc in teamUserCombos) {
-      final tId = tuc.teamId;
-      if (!teamIds.contains(tId)) teamIds.add(tuc.teamId);
-    }
-    List<SimpleTeam> teams = [];
-    for (var tid in teamIds) {
-      teams.addAll((await Team.db.find(session,
-              where: (team) =>
-                  team.id.equals(tid) & team.deletedAt.equals(null)))
-          .map((e) => e.toSimpleTeam)
-          .toList());
-    }
-    return teams;
-  }
-
-  Future<List<UserInfo>> userList(Session session, int id) async {
-    final userId = (await getCurrentUser(session)).userId;
-    final currentTeam = await Team.db.findById(session, id);
-    if (currentTeam == null) throwErr("Cannot find the team");
-    final teamUsers = await TeamUser.db.find(session);
-    if (teamUsers.isEmpty) throwErr("Somethign went wrong");
-    bool isPermited = false;
-    final List<UserInfo> users = [];
-    for (var teamUser in teamUsers) {
-      final user = await UserInfo.db.findById(session, teamUser.userId);
-      if (user == null) {
-        throwErr(
-            "Something went wrong with teamUser.userId: ${teamUser.userId}");
-      }
-      users.add(user);
-      if (teamUser.userId == userId) {
-        isPermited = true;
-        break;
-      }
-    }
-    if (!isPermited) throwErr("You are not included in this team");
-    return users;
+  Future<String> readNameOnly(Session session, int id) async {
+    await isInTeam(session, id);
+    final team = await Team.db.findById(session, id);
+    if (team == null) throwErr("Invalid team");
+    return team.name;
   }
 }

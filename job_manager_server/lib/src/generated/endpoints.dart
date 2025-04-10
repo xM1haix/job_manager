@@ -10,69 +10,295 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import '../endpoints/job_endpoint.dart' as _i2;
-import '../endpoints/teams_endpoints.dart' as _i3;
-import '../endpoints/user_data_endpoints.dart' as _i4;
-import '../endpoints/user_endpoints.dart' as _i5;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i6;
+import '../endpoints/jobs_endpoint.dart' as _i2;
+import '../endpoints/stages_endpoint.dart' as _i3;
+import '../endpoints/teams_endpoints.dart' as _i4;
+import '../endpoints/user_data_endpoints.dart' as _i5;
+import '../endpoints/user_endpoints.dart' as _i6;
+import 'package:job_manager_server/src/generated/stage.ymal.dart' as _i7;
+import 'package:job_manager_server/src/generated/user_role_enum.ymal.dart'
+    as _i8;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i9;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
   void initializeEndpoints(_i1.Server server) {
     var endpoints = <String, _i1.Endpoint>{
-      'job': _i2.JobEndpoint()
+      'jobs': _i2.JobsEndpoint()
         ..initialize(
           server,
-          'job',
+          'jobs',
           null,
         ),
-      'teamsEndpoints': _i3.TeamsEndpoints()
+      'stages': _i3.StagesEndpoint()
         ..initialize(
           server,
-          'teamsEndpoints',
+          'stages',
           null,
         ),
-      'userInfo': _i4.UserInfoEndpoint()
+      'teams': _i4.TeamsEndpoint()
+        ..initialize(
+          server,
+          'teams',
+          null,
+        ),
+      'userInfo': _i5.UserInfoEndpoint()
         ..initialize(
           server,
           'userInfo',
           null,
         ),
-      'userEndpoints': _i5.UserEndpoints()
+      'userEndpoints': _i6.UserEndpoints()
         ..initialize(
           server,
           'userEndpoints',
           null,
         ),
     };
-    connectors['job'] = _i1.EndpointConnector(
-      name: 'job',
-      endpoint: endpoints['job']!,
+    connectors['jobs'] = _i1.EndpointConnector(
+      name: 'jobs',
+      endpoint: endpoints['jobs']!,
       methodConnectors: {
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'teamId': _i1.ParameterDescription(
+              name: 'teamId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'name': _i1.ParameterDescription(
+              name: 'name',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['jobs'] as _i2.JobsEndpoint).create(
+            session,
+            params['teamId'],
+            params['name'],
+          ),
+        ),
         'readJobs': _i1.MethodConnector(
           name: 'readJobs',
           params: {
             'teamId': _i1.ParameterDescription(
               name: 'teamId',
-              type: _i1.getType<int?>(),
-              nullable: true,
+              type: _i1.getType<int>(),
+              nullable: false,
             )
           },
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['job'] as _i2.JobEndpoint).readJobs(
+              (endpoints['jobs'] as _i2.JobsEndpoint).readJobs(
             session,
             params['teamId'],
           ),
-        )
+        ),
+        'readNameOnly': _i1.MethodConnector(
+          name: 'readNameOnly',
+          params: {
+            'teamId': _i1.ParameterDescription(
+              name: 'teamId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['jobs'] as _i2.JobsEndpoint).readNameOnly(
+            session,
+            params['teamId'],
+            params['id'],
+          ),
+        ),
       },
     );
-    connectors['teamsEndpoints'] = _i1.EndpointConnector(
-      name: 'teamsEndpoints',
-      endpoint: endpoints['teamsEndpoints']!,
+    connectors['stages'] = _i1.EndpointConnector(
+      name: 'stages',
+      endpoint: endpoints['stages']!,
       methodConnectors: {
+        'check': _i1.MethodConnector(
+          name: 'check',
+          params: {
+            'teamId': _i1.ParameterDescription(
+              name: 'teamId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'jobId': _i1.ParameterDescription(
+              name: 'jobId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'stage': _i1.ParameterDescription(
+              name: 'stage',
+              type: _i1.getType<_i7.Stage>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['stages'] as _i3.StagesEndpoint).check(
+            session,
+            params['teamId'],
+            params['jobId'],
+            params['stage'],
+          ),
+        ),
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'teamId': _i1.ParameterDescription(
+              name: 'teamId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'jobId': _i1.ParameterDescription(
+              name: 'jobId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'name': _i1.ParameterDescription(
+              name: 'name',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['stages'] as _i3.StagesEndpoint).create(
+            session,
+            params['teamId'],
+            params['jobId'],
+            params['name'],
+          ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'teamId': _i1.ParameterDescription(
+              name: 'teamId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'jobId': _i1.ParameterDescription(
+              name: 'jobId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['stages'] as _i3.StagesEndpoint).delete(
+            session,
+            params['teamId'],
+            params['jobId'],
+            params['id'],
+          ),
+        ),
+        'readStages': _i1.MethodConnector(
+          name: 'readStages',
+          params: {
+            'teamId': _i1.ParameterDescription(
+              name: 'teamId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'jobId': _i1.ParameterDescription(
+              name: 'jobId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['stages'] as _i3.StagesEndpoint).readStages(
+            session,
+            params['teamId'],
+            params['jobId'],
+          ),
+        ),
+      },
+    );
+    connectors['teams'] = _i1.EndpointConnector(
+      name: 'teams',
+      endpoint: endpoints['teams']!,
+      methodConnectors: {
+        'addUser': _i1.MethodConnector(
+          name: 'addUser',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'userId': _i1.ParameterDescription(
+              name: 'userId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['teams'] as _i4.TeamsEndpoint).addUser(
+            session,
+            params['id'],
+            params['userId'],
+          ),
+        ),
+        'checkPerms': _i1.MethodConnector(
+          name: 'checkPerms',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'userRoleEnum': _i1.ParameterDescription(
+              name: 'userRoleEnum',
+              type: _i1.getType<_i8.UserRoleEnum>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['teams'] as _i4.TeamsEndpoint).checkPerms(
+            session,
+            params['id'],
+            params['userRoleEnum'],
+          ),
+        ),
         'create': _i1.MethodConnector(
           name: 'create',
           params: {
@@ -80,21 +306,15 @@ class Endpoints extends _i1.EndpointDispatch {
               name: 'name',
               type: _i1.getType<String>(),
               nullable: false,
-            ),
-            'isPrivate': _i1.ParameterDescription(
-              name: 'isPrivate',
-              type: _i1.getType<bool>(),
-              nullable: false,
-            ),
+            )
           },
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).create(
+              (endpoints['teams'] as _i4.TeamsEndpoint).create(
             session,
             params['name'],
-            params['isPrivate'],
           ),
         ),
         'delete': _i1.MethodConnector(
@@ -110,25 +330,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).delete(
-            session,
-            params['id'],
-          ),
-        ),
-        'hide': _i1.MethodConnector(
-          name: 'hide',
-          params: {
-            'id': _i1.ParameterDescription(
-              name: 'id',
-              type: _i1.getType<int>(),
-              nullable: false,
-            )
-          },
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).hide(
+              (endpoints['teams'] as _i4.TeamsEndpoint).delete(
             session,
             params['id'],
           ),
@@ -146,33 +348,31 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).read(
+              (endpoints['teams'] as _i4.TeamsEndpoint).read(
             session,
             params['id'],
           ),
         ),
         'readList': _i1.MethodConnector(
           name: 'readList',
-          params: {},
+          params: {
+            'seach': _i1.ParameterDescription(
+              name: 'seach',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            )
+          },
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints)
-                  .readList(session),
+              (endpoints['teams'] as _i4.TeamsEndpoint).readList(
+            session,
+            params['seach'],
+          ),
         ),
-        'simpleRead': _i1.MethodConnector(
-          name: 'simpleRead',
-          params: {},
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints)
-                  .simpleRead(session),
-        ),
-        'userList': _i1.MethodConnector(
-          name: 'userList',
+        'readNameOnly': _i1.MethodConnector(
+          name: 'readNameOnly',
           params: {
             'id': _i1.ParameterDescription(
               name: 'id',
@@ -184,7 +384,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['teamsEndpoints'] as _i3.TeamsEndpoints).userList(
+              (endpoints['teams'] as _i4.TeamsEndpoint).readNameOnly(
             session,
             params['id'],
           ),
@@ -202,7 +402,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['userInfo'] as _i4.UserInfoEndpoint)
+              (endpoints['userInfo'] as _i5.UserInfoEndpoint)
                   .getUsername(session),
         )
       },
@@ -224,13 +424,13 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['userEndpoints'] as _i5.UserEndpoints).searchByName(
+              (endpoints['userEndpoints'] as _i6.UserEndpoints).searchByName(
             session,
             params['key'],
           ),
         )
       },
     );
-    modules['serverpod_auth'] = _i6.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i9.Endpoints()..initializeEndpoints(server);
   }
 }

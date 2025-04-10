@@ -1,0 +1,226 @@
+{
+  "actions": [
+    {
+      "type": "alterTable",
+      "alterTable": {
+        "name": "roles",
+        "schema": "public",
+        "addColumns": [],
+        "deleteColumns": [
+          "userId"
+        ],
+        "modifyColumns": [
+          {
+            "columnName": "jobCreate",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "jobRead",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "jobUpdate",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "jobDelete",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "stageCreate",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "stageRead",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "stageUpdate",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "stageDelete",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "teamUpdate",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "teamDelete",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "roleCreate",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "roleRead",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "roleUpdate",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "roleDelete",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "teamUserCreate",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "teamUserRead",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "teamUserUpdate",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          },
+          {
+            "columnName": "teamUserDelete",
+            "addNullable": false,
+            "removeNullable": false,
+            "changeDefault": true,
+            "newDefault": "false"
+          }
+        ],
+        "addIndexes": [],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [
+          "roles_fk_1"
+        ],
+        "warnings": [
+          {
+            "type": "columnDropped",
+            "message": "Column \"userId\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "userId"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"isPrivate\" of table \"teams\" will be dropped.",
+            "table": "teams",
+            "columns": [
+              "isPrivate"
+            ],
+            "destrucive": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "alterTable",
+      "alterTable": {
+        "name": "teams",
+        "schema": "public",
+        "addColumns": [],
+        "deleteColumns": [
+          "isPrivate"
+        ],
+        "modifyColumns": [],
+        "addIndexes": [],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [],
+        "warnings": [
+          {
+            "type": "columnDropped",
+            "message": "Column \"userId\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "userId"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"isPrivate\" of table \"teams\" will be dropped.",
+            "table": "teams",
+            "columns": [
+              "isPrivate"
+            ],
+            "destrucive": true
+          }
+        ]
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "columnDropped",
+      "message": "Column \"userId\" of table \"roles\" will be dropped.",
+      "table": "roles",
+      "columns": [
+        "userId"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"isPrivate\" of table \"teams\" will be dropped.",
+      "table": "teams",
+      "columns": [
+        "isPrivate"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

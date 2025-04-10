@@ -1,0 +1,760 @@
+{
+  "actions": [
+    {
+      "type": "alterTable",
+      "alterTable": {
+        "name": "jobs",
+        "schema": "public",
+        "addColumns": [],
+        "deleteColumns": [
+          "deletedAt"
+        ],
+        "modifyColumns": [],
+        "addIndexes": [],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [],
+        "warnings": [
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"jobs\" will be dropped.",
+            "table": "jobs",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"jobHide\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "jobHide"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"stageHide\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "stageHide"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"teamHide\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "teamHide"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "tableDropped",
+            "message": "One or more columns are added to table \"roles\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+            "table": "roles",
+            "columns": [
+              "roleCreate"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"stages\" will be dropped.",
+            "table": "stages",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"team_users\" will be dropped.",
+            "table": "team_users",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"permission\" of table \"team_users\" will be dropped.",
+            "table": "team_users",
+            "columns": [
+              "permission"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "tableDropped",
+            "message": "One or more columns are added to table \"team_users\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+            "table": "team_users",
+            "columns": [
+              "roleId"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"teams\" will be dropped.",
+            "table": "teams",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "deleteTable",
+      "deleteTable": "roles"
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "roles",
+        "dartName": "UserRole",
+        "module": "job_manager",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 6,
+            "isNullable": false,
+            "columnDefault": "nextval('roles_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "name",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          },
+          {
+            "name": "teamId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "userId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "jobCreate",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "jobRead",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "jobUpdate",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "jobDelete",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "stageCreate",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "stageRead",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "stageUpdate",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "stageDelete",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "teamUpdate",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "teamDelete",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "roleCreate",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "roleRead",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "roleUpdate",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "roleDelete",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "teamUserCreate",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "teamUserRead",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "teamUserUpdate",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          },
+          {
+            "name": "teamUserDelete",
+            "columnType": 1,
+            "isNullable": false,
+            "dartType": "bool"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "constraintName": "roles_fk_0",
+            "columns": [
+              "teamId"
+            ],
+            "referenceTable": "teams",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          },
+          {
+            "constraintName": "roles_fk_1",
+            "columns": [
+              "userId"
+            ],
+            "referenceTable": "serverpod_user_info",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          }
+        ],
+        "indexes": [
+          {
+            "indexName": "roles_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    },
+    {
+      "type": "alterTable",
+      "alterTable": {
+        "name": "stages",
+        "schema": "public",
+        "addColumns": [],
+        "deleteColumns": [
+          "deletedAt"
+        ],
+        "modifyColumns": [],
+        "addIndexes": [],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [],
+        "warnings": [
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"jobs\" will be dropped.",
+            "table": "jobs",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"jobHide\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "jobHide"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"stageHide\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "stageHide"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"teamHide\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "teamHide"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "tableDropped",
+            "message": "One or more columns are added to table \"roles\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+            "table": "roles",
+            "columns": [
+              "roleCreate"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"stages\" will be dropped.",
+            "table": "stages",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"team_users\" will be dropped.",
+            "table": "team_users",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"permission\" of table \"team_users\" will be dropped.",
+            "table": "team_users",
+            "columns": [
+              "permission"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "tableDropped",
+            "message": "One or more columns are added to table \"team_users\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+            "table": "team_users",
+            "columns": [
+              "roleId"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"teams\" will be dropped.",
+            "table": "teams",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "deleteTable",
+      "deleteTable": "team_users"
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "team_users",
+        "dartName": "TeamUser",
+        "module": "job_manager",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 6,
+            "isNullable": false,
+            "columnDefault": "nextval('team_users_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "teamId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "userId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "roleId",
+            "columnType": 6,
+            "isNullable": false,
+            "dartType": "int"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "constraintName": "team_users_fk_0",
+            "columns": [
+              "teamId"
+            ],
+            "referenceTable": "teams",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          },
+          {
+            "constraintName": "team_users_fk_1",
+            "columns": [
+              "userId"
+            ],
+            "referenceTable": "serverpod_user_info",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          },
+          {
+            "constraintName": "team_users_fk_2",
+            "columns": [
+              "roleId"
+            ],
+            "referenceTable": "roles",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          }
+        ],
+        "indexes": [
+          {
+            "indexName": "team_users_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          },
+          {
+            "indexName": "team_user_unique_idx",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "teamId"
+              },
+              {
+                "type": 0,
+                "definition": "userId"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": false
+          }
+        ],
+        "managed": true
+      }
+    },
+    {
+      "type": "alterTable",
+      "alterTable": {
+        "name": "teams",
+        "schema": "public",
+        "addColumns": [],
+        "deleteColumns": [
+          "deletedAt"
+        ],
+        "modifyColumns": [],
+        "addIndexes": [],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [],
+        "warnings": [
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"jobs\" will be dropped.",
+            "table": "jobs",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"jobHide\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "jobHide"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"stageHide\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "stageHide"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"teamHide\" of table \"roles\" will be dropped.",
+            "table": "roles",
+            "columns": [
+              "teamHide"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "tableDropped",
+            "message": "One or more columns are added to table \"roles\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+            "table": "roles",
+            "columns": [
+              "roleCreate"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"stages\" will be dropped.",
+            "table": "stages",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"team_users\" will be dropped.",
+            "table": "team_users",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"permission\" of table \"team_users\" will be dropped.",
+            "table": "team_users",
+            "columns": [
+              "permission"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "tableDropped",
+            "message": "One or more columns are added to table \"team_users\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+            "table": "team_users",
+            "columns": [
+              "roleId"
+            ],
+            "destrucive": true
+          },
+          {
+            "type": "columnDropped",
+            "message": "Column \"deletedAt\" of table \"teams\" will be dropped.",
+            "table": "teams",
+            "columns": [
+              "deletedAt"
+            ],
+            "destrucive": true
+          }
+        ]
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "columnDropped",
+      "message": "Column \"deletedAt\" of table \"jobs\" will be dropped.",
+      "table": "jobs",
+      "columns": [
+        "deletedAt"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"deletedAt\" of table \"roles\" will be dropped.",
+      "table": "roles",
+      "columns": [
+        "deletedAt"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"jobHide\" of table \"roles\" will be dropped.",
+      "table": "roles",
+      "columns": [
+        "jobHide"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"stageHide\" of table \"roles\" will be dropped.",
+      "table": "roles",
+      "columns": [
+        "stageHide"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"teamHide\" of table \"roles\" will be dropped.",
+      "table": "roles",
+      "columns": [
+        "teamHide"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "tableDropped",
+      "message": "One or more columns are added to table \"roles\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+      "table": "roles",
+      "columns": [
+        "roleCreate"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"deletedAt\" of table \"stages\" will be dropped.",
+      "table": "stages",
+      "columns": [
+        "deletedAt"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"deletedAt\" of table \"team_users\" will be dropped.",
+      "table": "team_users",
+      "columns": [
+        "deletedAt"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"permission\" of table \"team_users\" will be dropped.",
+      "table": "team_users",
+      "columns": [
+        "permission"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "tableDropped",
+      "message": "One or more columns are added to table \"team_users\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+      "table": "team_users",
+      "columns": [
+        "roleId"
+      ],
+      "destrucive": true
+    },
+    {
+      "type": "columnDropped",
+      "message": "Column \"deletedAt\" of table \"teams\" will be dropped.",
+      "table": "teams",
+      "columns": [
+        "deletedAt"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

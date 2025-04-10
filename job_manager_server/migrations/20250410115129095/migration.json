@@ -1,0 +1,51 @@
+{
+  "actions": [
+    {
+      "type": "deleteTable",
+      "deleteTable": "teams"
+    },
+    {
+      "type": "deleteTable",
+      "deleteTable": "team_users"
+    },
+    {
+      "type": "deleteTable",
+      "deleteTable": "roles"
+    },
+    {
+      "type": "deleteTable",
+      "deleteTable": "jobs"
+    }
+  ],
+  "warnings": [
+    {
+      "type": "tableDropped",
+      "message": "Table \"teams\" will be dropped.",
+      "table": "teams",
+      "columns": [],
+      "destrucive": true
+    },
+    {
+      "type": "tableDropped",
+      "message": "Table \"team_users\" will be dropped.",
+      "table": "team_users",
+      "columns": [],
+      "destrucive": true
+    },
+    {
+      "type": "tableDropped",
+      "message": "Table \"roles\" will be dropped.",
+      "table": "roles",
+      "columns": [],
+      "destrucive": true
+    },
+    {
+      "type": "tableDropped",
+      "message": "Table \"jobs\" will be dropped.",
+      "table": "jobs",
+      "columns": [],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

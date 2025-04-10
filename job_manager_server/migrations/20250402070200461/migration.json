@@ -1,0 +1,45 @@
+{
+  "actions": [
+    {
+      "type": "alterTable",
+      "alterTable": {
+        "name": "teams",
+        "schema": "public",
+        "addColumns": [],
+        "deleteColumns": [
+          "ownerId"
+        ],
+        "modifyColumns": [],
+        "addIndexes": [],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [
+          "teams_fk_0"
+        ],
+        "warnings": [
+          {
+            "type": "columnDropped",
+            "message": "Column \"ownerId\" of table \"teams\" will be dropped.",
+            "table": "teams",
+            "columns": [
+              "ownerId"
+            ],
+            "destrucive": true
+          }
+        ]
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "columnDropped",
+      "message": "Column \"ownerId\" of table \"teams\" will be dropped.",
+      "table": "teams",
+      "columns": [
+        "ownerId"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

@@ -1,6 +1,0 @@
-class: SimpleTeam
-fields:
-  id: int
-  name: String
-  isPrivate: bool
-  ownerId: int

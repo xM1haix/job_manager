@@ -3,8 +3,7 @@ table: team_users
 fields:
     teamId: int, relation(parent=teams)
     userId: int, relation(parent=serverpod_user_info)
-    deletedAt: DateTime?
-    permission: UserPermission, default = viewer
+    roleId: int, relation(parent=roles)
 indexes:
     team_user_unique_idx:
         fields: teamId, userId

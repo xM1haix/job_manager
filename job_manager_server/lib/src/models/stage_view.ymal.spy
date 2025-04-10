@@ -1,0 +1,4 @@
+class: StageView
+fields:
+    stages: List<Stage>
+    perms: StagePerms

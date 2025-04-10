@@ -1,0 +1,21 @@
+enum: UserRoleEnum
+serialized: byName  
+values:
+ - jobCreate
+ - jobRead
+ - jobUpdate
+ - jobDelete
+ - stageCreate
+ - stageRead
+ - stageUpdate
+ - stageDelete
+ - teamUpdate
+ - teamDelete
+ - roleCreate
+ - roleRead
+ - roleUpdate
+ - roleDelete
+ - teamUserCreate
+ - teamUserRead
+ - teamUserUpdate
+ - teamUserDelete

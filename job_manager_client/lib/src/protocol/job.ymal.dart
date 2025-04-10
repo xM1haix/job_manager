@@ -17,7 +17,6 @@ abstract class Job implements _i1.SerializableModel {
     required this.name,
     this.status,
     required this.teamId,
-    this.deletedAt,
   });
 
   factory Job({
@@ -25,7 +24,6 @@ abstract class Job implements _i1.SerializableModel {
     required String name,
     bool? status,
     required int teamId,
-    DateTime? deletedAt,
   }) = _JobImpl;
 
   factory Job.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -34,9 +32,6 @@ abstract class Job implements _i1.SerializableModel {
       name: jsonSerialization['name'] as String,
       status: jsonSerialization['status'] as bool?,
       teamId: jsonSerialization['teamId'] as int,
-      deletedAt: jsonSerialization['deletedAt'] == null
-          ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
     );
   }
 
@@ -51,8 +46,6 @@ abstract class Job implements _i1.SerializableModel {
 
   int teamId;
 
-  DateTime? deletedAt;
-
   /// Returns a shallow copy of this [Job]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
@@ -61,7 +54,6 @@ abstract class Job implements _i1.SerializableModel {
     String? name,
     bool? status,
     int? teamId,
-    DateTime? deletedAt,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -70,7 +62,6 @@ abstract class Job implements _i1.SerializableModel {
       'name': name,
       if (status != null) 'status': status,
       'teamId': teamId,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
     };
   }
 
@@ -88,13 +79,11 @@ class _JobImpl extends Job {
     required String name,
     bool? status,
     required int teamId,
-    DateTime? deletedAt,
   }) : super._(
           id: id,
           name: name,
           status: status,
           teamId: teamId,
-          deletedAt: deletedAt,
         );
 
   /// Returns a shallow copy of this [Job]
@@ -106,14 +95,12 @@ class _JobImpl extends Job {
     String? name,
     Object? status = _Undefined,
     int? teamId,
-    Object? deletedAt = _Undefined,
   }) {
     return Job(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
       status: status is bool? ? status : this.status,
       teamId: teamId ?? this.teamId,
-      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
     );
   }
 }

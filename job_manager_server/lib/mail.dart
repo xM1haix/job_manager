@@ -1,6 +1,6 @@
-import 'package:job_manager_server/error.dart';
+import 'package:job_manager_server/tools/error.dart';
 import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:serverpod/serverpod.dart';
 
 Future<SendReport> sendMail(

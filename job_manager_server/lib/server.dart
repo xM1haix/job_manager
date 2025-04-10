@@ -10,11 +10,20 @@ void run(List<String> args) async {
     args,
     Protocol(),
     Endpoints(),
+    healthCheckHandler: (serverpod, timestamp) async => [
+      ServerHealthMetric(
+        granularity: 0,
+        name: DateTime.now().toString(),
+        serverId: serverpod.serverId,
+        timestamp: timestamp,
+        isHealthy: true,
+        value: 1.0,
+      ),
+    ],
     authenticationHandler: auth.authenticationHandler,
   );
   auth.AuthConfig.set(
     auth.AuthConfig(
-      onUserCreated: (session, userInfo) async {},
       sendValidationEmail: (session, email, validationCode) async {
         await sendMail(session, email, 'Register code', validationCode);
         return true;

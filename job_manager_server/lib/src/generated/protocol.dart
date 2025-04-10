@@ -14,21 +14,24 @@ import 'package:serverpod/protocol.dart' as _i2;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 import 'custom_exception.ymal.dart' as _i4;
 import 'job.ymal.dart' as _i5;
-import 'simple_team.ymal.dart' as _i6;
-import 'stage.ymal.dart' as _i7;
-import 'team.ymal.dart' as _i8;
-import 'team_user.ymal.dart' as _i9;
-import 'user_permission.ymal.dart' as _i10;
-import 'package:job_manager_server/src/generated/job.ymal.dart' as _i11;
-import 'package:job_manager_server/src/generated/team.ymal.dart' as _i12;
-import 'package:job_manager_server/src/generated/simple_team.ymal.dart' as _i13;
+import 'stage.ymal.dart' as _i6;
+import 'stage_perms.ymal.dart' as _i7;
+import 'stage_view.ymal.dart' as _i8;
+import 'team.ymal.dart' as _i9;
+import 'team_user.ymal.dart' as _i10;
+import 'user_role.ymal.dart' as _i11;
+import 'user_role_enum.ymal.dart' as _i12;
+import 'package:job_manager_server/src/generated/job.ymal.dart' as _i13;
+import 'package:job_manager_server/src/generated/team.ymal.dart' as _i14;
 export 'custom_exception.ymal.dart';
 export 'job.ymal.dart';
-export 'simple_team.ymal.dart';
 export 'stage.ymal.dart';
+export 'stage_perms.ymal.dart';
+export 'stage_view.ymal.dart';
 export 'team.ymal.dart';
 export 'team_user.ymal.dart';
-export 'user_permission.ymal.dart';
+export 'user_role.ymal.dart';
+export 'user_role_enum.ymal.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
@@ -69,12 +72,6 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
-          name: 'deletedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: true,
-          dartType: 'DateTime?',
-        ),
       ],
       foreignKeys: [
         _i2.ForeignKeyDefinition(
@@ -91,6 +88,194 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'jobs_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'roles',
+      dartName: 'UserRole',
+      schema: 'public',
+      module: 'job_manager',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'roles_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'name',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'teamId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'jobCreate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'jobRead',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'jobUpdate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'jobDelete',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'stageCreate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'stageRead',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'stageUpdate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'stageDelete',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'stageProgressUpdate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'teamUpdate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'teamDelete',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'roleCreate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'roleRead',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'roleUpdate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'roleDelete',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'teamUserCreate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'teamUserRead',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'teamUserUpdate',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+        _i2.ColumnDefinition(
+          name: 'teamUserDelete',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'roles_fk_0',
+          columns: ['teamId'],
+          referenceTable: 'teams',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        )
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'roles_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -127,14 +312,9 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ColumnDefinition(
           name: 'status',
           columnType: _i2.ColumnType.boolean,
-          isNullable: true,
-          dartType: 'bool?',
-        ),
-        _i2.ColumnDefinition(
-          name: 'deletedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: true,
-          dartType: 'DateTime?',
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
         ),
         _i2.ColumnDefinition(
           name: 'jobId',
@@ -198,17 +378,10 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'deletedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: true,
-          dartType: 'DateTime?',
-        ),
-        _i2.ColumnDefinition(
-          name: 'permission',
+          name: 'roleId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
-          dartType: 'protocol:UserPermission',
-          columnDefault: '0',
+          dartType: 'int',
         ),
       ],
       foreignKeys: [
@@ -226,6 +399,16 @@ class Protocol extends _i1.SerializationManagerServer {
           constraintName: 'team_users_fk_1',
           columns: ['userId'],
           referenceTable: 'serverpod_user_info',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'team_users_fk_2',
+          columns: ['roleId'],
+          referenceTable: 'roles',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.noAction,
@@ -286,38 +469,8 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
-          name: 'isPrivate',
-          columnType: _i2.ColumnType.boolean,
-          isNullable: false,
-          dartType: 'bool',
-          columnDefault: 'false',
-        ),
-        _i2.ColumnDefinition(
-          name: 'deletedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: true,
-          dartType: 'DateTime?',
-        ),
-        _i2.ColumnDefinition(
-          name: 'ownerId',
-          columnType: _i2.ColumnType.bigint,
-          isNullable: false,
-          dartType: 'int',
-        ),
       ],
-      foreignKeys: [
-        _i2.ForeignKeyDefinition(
-          constraintName: 'teams_fk_0',
-          columns: ['ownerId'],
-          referenceTable: 'serverpod_user_info',
-          referenceTableSchema: 'public',
-          referenceColumns: ['id'],
-          onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.noAction,
-          matchType: null,
-        )
-      ],
+      foreignKeys: [],
       indexes: [
         _i2.IndexDefinition(
           indexName: 'teams_pkey',
@@ -351,20 +504,26 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i5.Job) {
       return _i5.Job.fromJson(data) as T;
     }
-    if (t == _i6.SimpleTeam) {
-      return _i6.SimpleTeam.fromJson(data) as T;
+    if (t == _i6.Stage) {
+      return _i6.Stage.fromJson(data) as T;
     }
-    if (t == _i7.Stage) {
-      return _i7.Stage.fromJson(data) as T;
+    if (t == _i7.StagePerms) {
+      return _i7.StagePerms.fromJson(data) as T;
     }
-    if (t == _i8.Team) {
-      return _i8.Team.fromJson(data) as T;
+    if (t == _i8.StageView) {
+      return _i8.StageView.fromJson(data) as T;
     }
-    if (t == _i9.TeamUser) {
-      return _i9.TeamUser.fromJson(data) as T;
+    if (t == _i9.Team) {
+      return _i9.Team.fromJson(data) as T;
     }
-    if (t == _i10.UserPermission) {
-      return _i10.UserPermission.fromJson(data) as T;
+    if (t == _i10.TeamUser) {
+      return _i10.TeamUser.fromJson(data) as T;
+    }
+    if (t == _i11.UserRole) {
+      return _i11.UserRole.fromJson(data) as T;
+    }
+    if (t == _i12.UserRoleEnum) {
+      return _i12.UserRoleEnum.fromJson(data) as T;
     }
     if (t == _i1.getType<_i4.CustomException?>()) {
       return (data != null ? _i4.CustomException.fromJson(data) : null) as T;
@@ -372,30 +531,35 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i5.Job?>()) {
       return (data != null ? _i5.Job.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.SimpleTeam?>()) {
-      return (data != null ? _i6.SimpleTeam.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.Stage?>()) {
+      return (data != null ? _i6.Stage.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.Stage?>()) {
-      return (data != null ? _i7.Stage.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.StagePerms?>()) {
+      return (data != null ? _i7.StagePerms.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.Team?>()) {
-      return (data != null ? _i8.Team.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.StageView?>()) {
+      return (data != null ? _i8.StageView.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.TeamUser?>()) {
-      return (data != null ? _i9.TeamUser.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.Team?>()) {
+      return (data != null ? _i9.Team.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.UserPermission?>()) {
-      return (data != null ? _i10.UserPermission.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.TeamUser?>()) {
+      return (data != null ? _i10.TeamUser.fromJson(data) : null) as T;
     }
-    if (t == List<_i11.Job>) {
-      return (data as List).map((e) => deserialize<_i11.Job>(e)).toList() as T;
+    if (t == _i1.getType<_i11.UserRole?>()) {
+      return (data != null ? _i11.UserRole.fromJson(data) : null) as T;
     }
-    if (t == List<_i12.Team>) {
-      return (data as List).map((e) => deserialize<_i12.Team>(e)).toList() as T;
+    if (t == _i1.getType<_i12.UserRoleEnum?>()) {
+      return (data != null ? _i12.UserRoleEnum.fromJson(data) : null) as T;
     }
-    if (t == List<_i13.SimpleTeam>) {
-      return (data as List).map((e) => deserialize<_i13.SimpleTeam>(e)).toList()
-          as T;
+    if (t == List<_i6.Stage>) {
+      return (data as List).map((e) => deserialize<_i6.Stage>(e)).toList() as T;
+    }
+    if (t == List<_i13.Job>) {
+      return (data as List).map((e) => deserialize<_i13.Job>(e)).toList() as T;
+    }
+    if (t == List<_i14.Team>) {
+      return (data as List).map((e) => deserialize<_i14.Team>(e)).toList() as T;
     }
     if (t == List<_i3.UserInfo>) {
       return (data as List).map((e) => deserialize<_i3.UserInfo>(e)).toList()
@@ -420,20 +584,26 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i5.Job) {
       return 'Job';
     }
-    if (data is _i6.SimpleTeam) {
-      return 'SimpleTeam';
-    }
-    if (data is _i7.Stage) {
+    if (data is _i6.Stage) {
       return 'Stage';
     }
-    if (data is _i8.Team) {
+    if (data is _i7.StagePerms) {
+      return 'StagePerms';
+    }
+    if (data is _i8.StageView) {
+      return 'StageView';
+    }
+    if (data is _i9.Team) {
       return 'Team';
     }
-    if (data is _i9.TeamUser) {
+    if (data is _i10.TeamUser) {
       return 'TeamUser';
     }
-    if (data is _i10.UserPermission) {
-      return 'UserPermission';
+    if (data is _i11.UserRole) {
+      return 'UserRole';
+    }
+    if (data is _i12.UserRoleEnum) {
+      return 'UserRoleEnum';
     }
     className = _i2.Protocol().getClassNameForObject(data);
     if (className != null) {
@@ -458,20 +628,26 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName == 'Job') {
       return deserialize<_i5.Job>(data['data']);
     }
-    if (dataClassName == 'SimpleTeam') {
-      return deserialize<_i6.SimpleTeam>(data['data']);
-    }
     if (dataClassName == 'Stage') {
-      return deserialize<_i7.Stage>(data['data']);
+      return deserialize<_i6.Stage>(data['data']);
+    }
+    if (dataClassName == 'StagePerms') {
+      return deserialize<_i7.StagePerms>(data['data']);
+    }
+    if (dataClassName == 'StageView') {
+      return deserialize<_i8.StageView>(data['data']);
     }
     if (dataClassName == 'Team') {
-      return deserialize<_i8.Team>(data['data']);
+      return deserialize<_i9.Team>(data['data']);
     }
     if (dataClassName == 'TeamUser') {
-      return deserialize<_i9.TeamUser>(data['data']);
+      return deserialize<_i10.TeamUser>(data['data']);
     }
-    if (dataClassName == 'UserPermission') {
-      return deserialize<_i10.UserPermission>(data['data']);
+    if (dataClassName == 'UserRole') {
+      return deserialize<_i11.UserRole>(data['data']);
+    }
+    if (dataClassName == 'UserRoleEnum') {
+      return deserialize<_i12.UserRoleEnum>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -501,12 +677,14 @@ class Protocol extends _i1.SerializationManagerServer {
     switch (t) {
       case _i5.Job:
         return _i5.Job.t;
-      case _i7.Stage:
-        return _i7.Stage.t;
-      case _i8.Team:
-        return _i8.Team.t;
-      case _i9.TeamUser:
-        return _i9.TeamUser.t;
+      case _i6.Stage:
+        return _i6.Stage.t;
+      case _i9.Team:
+        return _i9.Team.t;
+      case _i10.TeamUser:
+        return _i10.TeamUser.t;
+      case _i11.UserRole:
+        return _i11.UserRole.t;
     }
     return null;
   }

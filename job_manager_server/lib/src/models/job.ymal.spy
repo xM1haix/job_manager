@@ -4,4 +4,3 @@ fields:
   name: String
   status: bool?
   teamId: int, relation(parent=teams)
-  deletedAt: DateTime?

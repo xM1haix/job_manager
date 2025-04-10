@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:job_manager_client/job_manager_client.dart';
-import 'package:job_manager_flutter/connect/connect.dart';
-import 'package:job_manager_flutter/job_list.dart';
+import 'package:job_manager_flutter/pages/connect/connect.dart';
+import 'package:job_manager_flutter/pages/teams_list_page.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Work Manager',
       theme: ThemeData.dark().copyWith(
+        segmentedButtonTheme: SegmentedButtonThemeData(),
         appBarTheme: AppBarTheme(centerTitle: true),
         scaffoldBackgroundColor: Colors.black,
         tooltipTheme: TooltipThemeData(
@@ -44,7 +45,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: sessionManager.isSignedIn ? const JobList() : const Connect(),
+      home: sessionManager.isSignedIn ? const TeamsListPage() : const Connect(),
     );
   }
 

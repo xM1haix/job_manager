@@ -1,5 +1,0 @@
-enum: UserPermission
-values:
-  - viewer
-  - member
-  - admin

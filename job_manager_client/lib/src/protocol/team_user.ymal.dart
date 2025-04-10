@@ -10,23 +10,20 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'user_permission.ymal.dart' as _i2;
 
 abstract class TeamUser implements _i1.SerializableModel {
   TeamUser._({
     this.id,
     required this.teamId,
     required this.userId,
-    this.deletedAt,
-    _i2.UserPermission? permission,
-  }) : permission = permission ?? _i2.UserPermission.viewer;
+    required this.roleId,
+  });
 
   factory TeamUser({
     int? id,
     required int teamId,
     required int userId,
-    DateTime? deletedAt,
-    _i2.UserPermission? permission,
+    required int roleId,
   }) = _TeamUserImpl;
 
   factory TeamUser.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -34,11 +31,7 @@ abstract class TeamUser implements _i1.SerializableModel {
       id: jsonSerialization['id'] as int?,
       teamId: jsonSerialization['teamId'] as int,
       userId: jsonSerialization['userId'] as int,
-      deletedAt: jsonSerialization['deletedAt'] == null
-          ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
-      permission:
-          _i2.UserPermission.fromJson((jsonSerialization['permission'] as int)),
+      roleId: jsonSerialization['roleId'] as int,
     );
   }
 
@@ -51,9 +44,7 @@ abstract class TeamUser implements _i1.SerializableModel {
 
   int userId;
 
-  DateTime? deletedAt;
-
-  _i2.UserPermission permission;
+  int roleId;
 
   /// Returns a shallow copy of this [TeamUser]
   /// with some or all fields replaced by the given arguments.
@@ -62,8 +53,7 @@ abstract class TeamUser implements _i1.SerializableModel {
     int? id,
     int? teamId,
     int? userId,
-    DateTime? deletedAt,
-    _i2.UserPermission? permission,
+    int? roleId,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -71,8 +61,7 @@ abstract class TeamUser implements _i1.SerializableModel {
       if (id != null) 'id': id,
       'teamId': teamId,
       'userId': userId,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
-      'permission': permission.toJson(),
+      'roleId': roleId,
     };
   }
 
@@ -89,14 +78,12 @@ class _TeamUserImpl extends TeamUser {
     int? id,
     required int teamId,
     required int userId,
-    DateTime? deletedAt,
-    _i2.UserPermission? permission,
+    required int roleId,
   }) : super._(
           id: id,
           teamId: teamId,
           userId: userId,
-          deletedAt: deletedAt,
-          permission: permission,
+          roleId: roleId,
         );
 
   /// Returns a shallow copy of this [TeamUser]
@@ -107,15 +94,13 @@ class _TeamUserImpl extends TeamUser {
     Object? id = _Undefined,
     int? teamId,
     int? userId,
-    Object? deletedAt = _Undefined,
-    _i2.UserPermission? permission,
+    int? roleId,
   }) {
     return TeamUser(
       id: id is int? ? id : this.id,
       teamId: teamId ?? this.teamId,
       userId: userId ?? this.userId,
-      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
-      permission: permission ?? this.permission,
+      roleId: roleId ?? this.roleId,
     );
   }
 }

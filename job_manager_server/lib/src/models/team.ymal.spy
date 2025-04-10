@@ -2,6 +2,3 @@ class: Team
 table: teams
 fields:
   name: String
-  isPrivate: bool, default = false
-  deletedAt: DateTime?
-  ownerId: int, relation(parent=serverpod_user_info)

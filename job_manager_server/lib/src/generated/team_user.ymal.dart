@@ -10,23 +10,21 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import 'user_permission.ymal.dart' as _i2;
 
-abstract class TeamUser implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class TeamUser
+    implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   TeamUser._({
     this.id,
     required this.teamId,
     required this.userId,
-    this.deletedAt,
-    _i2.UserPermission? permission,
-  }) : permission = permission ?? _i2.UserPermission.viewer;
+    required this.roleId,
+  });
 
   factory TeamUser({
     int? id,
     required int teamId,
     required int userId,
-    DateTime? deletedAt,
-    _i2.UserPermission? permission,
+    required int roleId,
   }) = _TeamUserImpl;
 
   factory TeamUser.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -34,11 +32,7 @@ abstract class TeamUser implements _i1.TableRow, _i1.ProtocolSerialization {
       id: jsonSerialization['id'] as int?,
       teamId: jsonSerialization['teamId'] as int,
       userId: jsonSerialization['userId'] as int,
-      deletedAt: jsonSerialization['deletedAt'] == null
-          ? null
-          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['deletedAt']),
-      permission:
-          _i2.UserPermission.fromJson((jsonSerialization['permission'] as int)),
+      roleId: jsonSerialization['roleId'] as int,
     );
   }
 
@@ -53,12 +47,10 @@ abstract class TeamUser implements _i1.TableRow, _i1.ProtocolSerialization {
 
   int userId;
 
-  DateTime? deletedAt;
-
-  _i2.UserPermission permission;
+  int roleId;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [TeamUser]
   /// with some or all fields replaced by the given arguments.
@@ -67,8 +59,7 @@ abstract class TeamUser implements _i1.TableRow, _i1.ProtocolSerialization {
     int? id,
     int? teamId,
     int? userId,
-    DateTime? deletedAt,
-    _i2.UserPermission? permission,
+    int? roleId,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -76,8 +67,7 @@ abstract class TeamUser implements _i1.TableRow, _i1.ProtocolSerialization {
       if (id != null) 'id': id,
       'teamId': teamId,
       'userId': userId,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
-      'permission': permission.toJson(),
+      'roleId': roleId,
     };
   }
 
@@ -87,8 +77,7 @@ abstract class TeamUser implements _i1.TableRow, _i1.ProtocolSerialization {
       if (id != null) 'id': id,
       'teamId': teamId,
       'userId': userId,
-      if (deletedAt != null) 'deletedAt': deletedAt?.toJson(),
-      'permission': permission.toJson(),
+      'roleId': roleId,
     };
   }
 
@@ -129,14 +118,12 @@ class _TeamUserImpl extends TeamUser {
     int? id,
     required int teamId,
     required int userId,
-    DateTime? deletedAt,
-    _i2.UserPermission? permission,
+    required int roleId,
   }) : super._(
           id: id,
           teamId: teamId,
           userId: userId,
-          deletedAt: deletedAt,
-          permission: permission,
+          roleId: roleId,
         );
 
   /// Returns a shallow copy of this [TeamUser]
@@ -147,20 +134,18 @@ class _TeamUserImpl extends TeamUser {
     Object? id = _Undefined,
     int? teamId,
     int? userId,
-    Object? deletedAt = _Undefined,
-    _i2.UserPermission? permission,
+    int? roleId,
   }) {
     return TeamUser(
       id: id is int? ? id : this.id,
       teamId: teamId ?? this.teamId,
       userId: userId ?? this.userId,
-      deletedAt: deletedAt is DateTime? ? deletedAt : this.deletedAt,
-      permission: permission ?? this.permission,
+      roleId: roleId ?? this.roleId,
     );
   }
 }
 
-class TeamUserTable extends _i1.Table {
+class TeamUserTable extends _i1.Table<int> {
   TeamUserTable({super.tableRelation}) : super(tableName: 'team_users') {
     teamId = _i1.ColumnInt(
       'teamId',
@@ -170,15 +155,9 @@ class TeamUserTable extends _i1.Table {
       'userId',
       this,
     );
-    deletedAt = _i1.ColumnDateTime(
-      'deletedAt',
+    roleId = _i1.ColumnInt(
+      'roleId',
       this,
-    );
-    permission = _i1.ColumnEnum(
-      'permission',
-      this,
-      _i1.EnumSerialization.byIndex,
-      hasDefault: true,
     );
   }
 
@@ -186,17 +165,14 @@ class TeamUserTable extends _i1.Table {
 
   late final _i1.ColumnInt userId;
 
-  late final _i1.ColumnDateTime deletedAt;
-
-  late final _i1.ColumnEnum<_i2.UserPermission> permission;
+  late final _i1.ColumnInt roleId;
 
   @override
   List<_i1.Column> get columns => [
         id,
         teamId,
         userId,
-        deletedAt,
-        permission,
+        roleId,
       ];
 }
 
@@ -207,7 +183,7 @@ class TeamUserInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => TeamUser.t;
+  _i1.Table<int> get table => TeamUser.t;
 }
 
 class TeamUserIncludeList extends _i1.IncludeList {
@@ -227,7 +203,7 @@ class TeamUserIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => TeamUser.t;
+  _i1.Table<int> get table => TeamUser.t;
 }
 
 class TeamUserRepository {

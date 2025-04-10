@@ -1,13 +1,20 @@
-job:
+jobs:
+  - create:
   - readJobs:
-teamsEndpoints:
+  - readNameOnly:
+stages:
+  - check:
   - create:
   - delete:
-  - hide:
+  - readStages:
+teams:
+  - addUser:
+  - checkPerms:
+  - create:
+  - delete:
   - read:
   - readList:
-  - simpleRead:
-  - userList:
+  - readNameOnly:
 userInfo:
   - getUsername:
 userEndpoints:
