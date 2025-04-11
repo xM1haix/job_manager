@@ -16,12 +16,14 @@ abstract class StagePerms implements _i1.SerializableModel {
     required this.update,
     required this.delete,
     required this.progress,
+    required this.progressRevoke,
   });
 
   factory StagePerms({
     required bool update,
     required bool delete,
     required bool progress,
+    required bool progressRevoke,
   }) = _StagePermsImpl;
 
   factory StagePerms.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -29,6 +31,7 @@ abstract class StagePerms implements _i1.SerializableModel {
       update: jsonSerialization['update'] as bool,
       delete: jsonSerialization['delete'] as bool,
       progress: jsonSerialization['progress'] as bool,
+      progressRevoke: jsonSerialization['progressRevoke'] as bool,
     );
   }
 
@@ -38,6 +41,8 @@ abstract class StagePerms implements _i1.SerializableModel {
 
   bool progress;
 
+  bool progressRevoke;
+
   /// Returns a shallow copy of this [StagePerms]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
@@ -45,6 +50,7 @@ abstract class StagePerms implements _i1.SerializableModel {
     bool? update,
     bool? delete,
     bool? progress,
+    bool? progressRevoke,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -52,6 +58,7 @@ abstract class StagePerms implements _i1.SerializableModel {
       'update': update,
       'delete': delete,
       'progress': progress,
+      'progressRevoke': progressRevoke,
     };
   }
 
@@ -66,10 +73,12 @@ class _StagePermsImpl extends StagePerms {
     required bool update,
     required bool delete,
     required bool progress,
+    required bool progressRevoke,
   }) : super._(
           update: update,
           delete: delete,
           progress: progress,
+          progressRevoke: progressRevoke,
         );
 
   /// Returns a shallow copy of this [StagePerms]
@@ -80,11 +89,13 @@ class _StagePermsImpl extends StagePerms {
     bool? update,
     bool? delete,
     bool? progress,
+    bool? progressRevoke,
   }) {
     return StagePerms(
       update: update ?? this.update,
       delete: delete ?? this.delete,
       progress: progress ?? this.progress,
+      progressRevoke: progressRevoke ?? this.progressRevoke,
     );
   }
 }

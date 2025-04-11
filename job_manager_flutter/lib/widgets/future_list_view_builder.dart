@@ -26,7 +26,7 @@ class _FutureListViewBuilderState<T> extends State<FutureListViewBuilder<T>> {
     return CustomFutureBuilder(
       future: widget.future,
       success: (elements) => RefreshListViewBuilder(
-        element: widget.element,
+        builder: widget.element,
         list: elements,
         onRefresh: widget.onRefresh,
         type: widget.type,

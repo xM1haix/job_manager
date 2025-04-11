@@ -40,6 +40,7 @@ class StagesEndpoint extends Endpoint {
       update: x.stageUpdate,
       delete: x.stageDelete,
       progress: x.stageProgressUpdate,
+      progressRevoke: x.stageProgressRevoke,
     );
     await jobIsInTeam(session, teamId, jobId);
     final stages = await Stage.db.find(

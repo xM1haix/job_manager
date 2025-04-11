@@ -26,6 +26,7 @@ abstract class UserRole
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -45,6 +46,7 @@ abstract class UserRole
         stageUpdate = stageUpdate ?? false,
         stageDelete = stageDelete ?? false,
         stageProgressUpdate = stageProgressUpdate ?? false,
+        stageProgressRevoke = stageProgressRevoke ?? false,
         teamUpdate = teamUpdate ?? false,
         teamDelete = teamDelete ?? false,
         roleCreate = roleCreate ?? false,
@@ -69,6 +71,7 @@ abstract class UserRole
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -95,6 +98,7 @@ abstract class UserRole
       stageUpdate: jsonSerialization['stageUpdate'] as bool,
       stageDelete: jsonSerialization['stageDelete'] as bool,
       stageProgressUpdate: jsonSerialization['stageProgressUpdate'] as bool,
+      stageProgressRevoke: jsonSerialization['stageProgressRevoke'] as bool,
       teamUpdate: jsonSerialization['teamUpdate'] as bool,
       teamDelete: jsonSerialization['teamDelete'] as bool,
       roleCreate: jsonSerialization['roleCreate'] as bool,
@@ -137,6 +141,8 @@ abstract class UserRole
 
   bool stageProgressUpdate;
 
+  bool stageProgressRevoke;
+
   bool teamUpdate;
 
   bool teamDelete;
@@ -176,6 +182,7 @@ abstract class UserRole
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -202,6 +209,7 @@ abstract class UserRole
       'stageUpdate': stageUpdate,
       'stageDelete': stageDelete,
       'stageProgressUpdate': stageProgressUpdate,
+      'stageProgressRevoke': stageProgressRevoke,
       'teamUpdate': teamUpdate,
       'teamDelete': teamDelete,
       'roleCreate': roleCreate,
@@ -230,6 +238,7 @@ abstract class UserRole
       'stageUpdate': stageUpdate,
       'stageDelete': stageDelete,
       'stageProgressUpdate': stageProgressUpdate,
+      'stageProgressRevoke': stageProgressRevoke,
       'teamUpdate': teamUpdate,
       'teamDelete': teamDelete,
       'roleCreate': roleCreate,
@@ -289,6 +298,7 @@ class _UserRoleImpl extends UserRole {
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -312,6 +322,7 @@ class _UserRoleImpl extends UserRole {
           stageUpdate: stageUpdate,
           stageDelete: stageDelete,
           stageProgressUpdate: stageProgressUpdate,
+          stageProgressRevoke: stageProgressRevoke,
           teamUpdate: teamUpdate,
           teamDelete: teamDelete,
           roleCreate: roleCreate,
@@ -341,6 +352,7 @@ class _UserRoleImpl extends UserRole {
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -365,6 +377,7 @@ class _UserRoleImpl extends UserRole {
       stageUpdate: stageUpdate ?? this.stageUpdate,
       stageDelete: stageDelete ?? this.stageDelete,
       stageProgressUpdate: stageProgressUpdate ?? this.stageProgressUpdate,
+      stageProgressRevoke: stageProgressRevoke ?? this.stageProgressRevoke,
       teamUpdate: teamUpdate ?? this.teamUpdate,
       teamDelete: teamDelete ?? this.teamDelete,
       roleCreate: roleCreate ?? this.roleCreate,
@@ -431,6 +444,11 @@ class UserRoleTable extends _i1.Table<int> {
     );
     stageProgressUpdate = _i1.ColumnBool(
       'stageProgressUpdate',
+      this,
+      hasDefault: true,
+    );
+    stageProgressRevoke = _i1.ColumnBool(
+      'stageProgressRevoke',
       this,
       hasDefault: true,
     );
@@ -508,6 +526,8 @@ class UserRoleTable extends _i1.Table<int> {
 
   late final _i1.ColumnBool stageProgressUpdate;
 
+  late final _i1.ColumnBool stageProgressRevoke;
+
   late final _i1.ColumnBool teamUpdate;
 
   late final _i1.ColumnBool teamDelete;
@@ -542,6 +562,7 @@ class UserRoleTable extends _i1.Table<int> {
         stageUpdate,
         stageDelete,
         stageProgressUpdate,
+        stageProgressRevoke,
         teamUpdate,
         teamDelete,
         roleCreate,

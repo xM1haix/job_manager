@@ -47,8 +47,10 @@ class _StagesListPageState extends State<StagesListPage> {
       body: CustomFutureBuilder(
         future: _getStages,
         success: (x) => RefreshListViewBuilder(
+          onRefresh: () async => _readStages(),
+          type: "stages",
           list: x.stages,
-          element: (e, i) => e.id == null
+          builder: (e, i) => e.id == null
               ? SizedBox.shrink()
               : Padding(
                   padding: const EdgeInsets.all(5),
@@ -71,6 +73,7 @@ class _StagesListPageState extends State<StagesListPage> {
                             AnimatedSwitcher(
                               duration: Duration(seconds: 1),
                               child: Icon(
+                                key: Key(e.status.toString()),
                                 e.status
                                     ? Icons.check_box_outlined
                                     : Icons.check_box_outline_blank,
@@ -102,8 +105,6 @@ class _StagesListPageState extends State<StagesListPage> {
                     ),
                   ),
                 ),
-          onRefresh: () async => _readStages(),
-          type: "stages",
         ),
       ),
     );
@@ -143,8 +144,7 @@ class _StagesListPageState extends State<StagesListPage> {
 
   Future<void> _goToSettings() async {
     // await nav(context, TeamSettings(widget.id));
-    //TODO
-    //FIX THIS
+    //TODO FIX GO TO SETTINGS
     await nav(context, Scaffold());
   }
 

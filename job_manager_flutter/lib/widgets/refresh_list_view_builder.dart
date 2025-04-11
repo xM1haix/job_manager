@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class RefreshListViewBuilder<T> extends StatelessWidget {
-  final Widget Function(T e, int i) element;
+  final Widget Function(T e, int i) builder;
   final List<T> list;
   final Future<void> Function() onRefresh;
   final String type;
   const RefreshListViewBuilder(
       {super.key,
-      required this.element,
+      required this.builder,
       required this.list,
       required this.onRefresh,
       required this.type});
@@ -22,7 +22,7 @@ class RefreshListViewBuilder<T> extends StatelessWidget {
             )
           : ListView.builder(
               itemCount: list.length,
-              itemBuilder: (context, i) => element(list[i], i),
+              itemBuilder: (context, i) => builder(list[i], i),
             ),
     );
   }

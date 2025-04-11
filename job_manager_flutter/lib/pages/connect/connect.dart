@@ -32,6 +32,7 @@ class _ConnectState extends State<Connect> {
             child: AnimatedSwitcher(
               duration: const Duration(seconds: 1),
               child: Column(
+                key: Key(_isLogin.toString()),
                 children: [
                   const SizedBox(height: 20),
                   Text(

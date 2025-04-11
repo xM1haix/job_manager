@@ -3,3 +3,5 @@ fields:
     update: bool
     delete: bool
     progress: bool
+    progressRevoke: bool
+

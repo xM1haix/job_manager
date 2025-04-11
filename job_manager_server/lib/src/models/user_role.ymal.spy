@@ -12,6 +12,7 @@ fields:
   stageUpdate: bool, default = false
   stageDelete: bool, default = false
   stageProgressUpdate: bool, default = false
+  stageProgressRevoke: bool, default = false
   teamUpdate: bool, default = false
   teamDelete: bool, default = false
   roleCreate: bool, default = false

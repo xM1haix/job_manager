@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:job_manager_client/job_manager_client.dart';
 import 'package:job_manager_flutter/main.dart';
 import 'package:job_manager_flutter/pages/jobs_list_page.dart';
+import 'package:job_manager_flutter/pages/settings_page.dart';
 import 'package:job_manager_flutter/widgets/fab_add.dart';
 import 'package:job_manager_flutter/widgets/future_list_view_builder.dart';
 import 'package:job_manager_flutter/widgets/nav.dart';
@@ -24,14 +25,21 @@ class _TeamsListPageState extends State<TeamsListPage> {
     return Scaffold(
       floatingActionButton: _isSeachOn
           ? null
-          : FabAdd(tooltip: "Create a new team", onPressed: _createTeam),
+          : FabAdd(
+              tooltip: "Create a new team",
+              onPressed: _createTeam,
+            ),
       appBar: AppBar(
-        leading: _isSeachOn
-            ? IconButton(
-                onPressed: _closeSeach,
-                icon: Icon(Icons.arrow_back),
-              )
-            : null,
+        leading: AnimatedSwitcher(
+          duration: Duration(milliseconds: 100),
+          child: IconButton(
+            key: Key(_isSeachOn.toString()),
+            onPressed: _isSeachOn ? _closeSeach : _goToSettings,
+            icon: Icon(
+              _isSeachOn ? Icons.close : Icons.account_circle_outlined,
+            ),
+          ),
+        ),
         title: _isSeachOn
             ? Expanded(
                 child: TextField(
@@ -108,6 +116,10 @@ class _TeamsListPageState extends State<TeamsListPage> {
       type: 'team',
     );
     _init();
+  }
+
+  void _goToSettings() {
+    nav(context, SettingsPage());
   }
 
   void _init() {

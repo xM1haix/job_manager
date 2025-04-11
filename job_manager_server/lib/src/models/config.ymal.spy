@@ -1,0 +1,6 @@
+class: ServerConfig
+table: server_config
+fields:
+    key: String
+    value: String
+    userId: int, relation(parent=serverpod_user_info)

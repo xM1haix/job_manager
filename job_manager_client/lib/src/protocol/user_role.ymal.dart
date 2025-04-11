@@ -25,6 +25,7 @@ abstract class UserRole implements _i1.SerializableModel {
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -44,6 +45,7 @@ abstract class UserRole implements _i1.SerializableModel {
         stageUpdate = stageUpdate ?? false,
         stageDelete = stageDelete ?? false,
         stageProgressUpdate = stageProgressUpdate ?? false,
+        stageProgressRevoke = stageProgressRevoke ?? false,
         teamUpdate = teamUpdate ?? false,
         teamDelete = teamDelete ?? false,
         roleCreate = roleCreate ?? false,
@@ -68,6 +70,7 @@ abstract class UserRole implements _i1.SerializableModel {
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -94,6 +97,7 @@ abstract class UserRole implements _i1.SerializableModel {
       stageUpdate: jsonSerialization['stageUpdate'] as bool,
       stageDelete: jsonSerialization['stageDelete'] as bool,
       stageProgressUpdate: jsonSerialization['stageProgressUpdate'] as bool,
+      stageProgressRevoke: jsonSerialization['stageProgressRevoke'] as bool,
       teamUpdate: jsonSerialization['teamUpdate'] as bool,
       teamDelete: jsonSerialization['teamDelete'] as bool,
       roleCreate: jsonSerialization['roleCreate'] as bool,
@@ -134,6 +138,8 @@ abstract class UserRole implements _i1.SerializableModel {
 
   bool stageProgressUpdate;
 
+  bool stageProgressRevoke;
+
   bool teamUpdate;
 
   bool teamDelete;
@@ -170,6 +176,7 @@ abstract class UserRole implements _i1.SerializableModel {
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -196,6 +203,7 @@ abstract class UserRole implements _i1.SerializableModel {
       'stageUpdate': stageUpdate,
       'stageDelete': stageDelete,
       'stageProgressUpdate': stageProgressUpdate,
+      'stageProgressRevoke': stageProgressRevoke,
       'teamUpdate': teamUpdate,
       'teamDelete': teamDelete,
       'roleCreate': roleCreate,
@@ -231,6 +239,7 @@ class _UserRoleImpl extends UserRole {
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -254,6 +263,7 @@ class _UserRoleImpl extends UserRole {
           stageUpdate: stageUpdate,
           stageDelete: stageDelete,
           stageProgressUpdate: stageProgressUpdate,
+          stageProgressRevoke: stageProgressRevoke,
           teamUpdate: teamUpdate,
           teamDelete: teamDelete,
           roleCreate: roleCreate,
@@ -283,6 +293,7 @@ class _UserRoleImpl extends UserRole {
     bool? stageUpdate,
     bool? stageDelete,
     bool? stageProgressUpdate,
+    bool? stageProgressRevoke,
     bool? teamUpdate,
     bool? teamDelete,
     bool? roleCreate,
@@ -307,6 +318,7 @@ class _UserRoleImpl extends UserRole {
       stageUpdate: stageUpdate ?? this.stageUpdate,
       stageDelete: stageDelete ?? this.stageDelete,
       stageProgressUpdate: stageProgressUpdate ?? this.stageProgressUpdate,
+      stageProgressRevoke: stageProgressRevoke ?? this.stageProgressRevoke,
       teamUpdate: teamUpdate ?? this.teamUpdate,
       teamDelete: teamDelete ?? this.teamDelete,
       roleCreate: roleCreate ?? this.roleCreate,

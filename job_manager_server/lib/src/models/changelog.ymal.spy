@@ -1,0 +1,6 @@
+class: Chnagelog
+table: changelog
+fields:
+    version: String
+    details: String
+    datetime: int
