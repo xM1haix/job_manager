@@ -12,7 +12,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class Chnagelog
-    implements _i1.TableRow<int>, _i1.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Chnagelog._({
     this.id,
     required this.version,
@@ -50,7 +50,7 @@ abstract class Chnagelog
   int datetime;
 
   @override
-  _i1.Table<int> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Chnagelog]
   /// with some or all fields replaced by the given arguments.
@@ -145,7 +145,7 @@ class _ChnagelogImpl extends Chnagelog {
   }
 }
 
-class ChnagelogTable extends _i1.Table<int> {
+class ChnagelogTable extends _i1.Table<int?> {
   ChnagelogTable({super.tableRelation}) : super(tableName: 'changelog') {
     version = _i1.ColumnString(
       'version',
@@ -183,7 +183,7 @@ class ChnagelogInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table<int> get table => Chnagelog.t;
+  _i1.Table<int?> get table => Chnagelog.t;
 }
 
 class ChnagelogIncludeList extends _i1.IncludeList {
@@ -203,7 +203,7 @@ class ChnagelogIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int> get table => Chnagelog.t;
+  _i1.Table<int?> get table => Chnagelog.t;
 }
 
 class ChnagelogRepository {

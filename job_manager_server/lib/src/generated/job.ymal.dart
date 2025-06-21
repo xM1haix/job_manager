@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Job implements _i1.TableRow<int>, _i1.ProtocolSerialization {
+abstract class Job implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Job._({
     this.id,
     required this.name,
@@ -49,7 +49,7 @@ abstract class Job implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   int teamId;
 
   @override
-  _i1.Table<int> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Job]
   /// with some or all fields replaced by the given arguments.
@@ -144,7 +144,7 @@ class _JobImpl extends Job {
   }
 }
 
-class JobTable extends _i1.Table<int> {
+class JobTable extends _i1.Table<int?> {
   JobTable({super.tableRelation}) : super(tableName: 'jobs') {
     name = _i1.ColumnString(
       'name',
@@ -182,7 +182,7 @@ class JobInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table<int> get table => Job.t;
+  _i1.Table<int?> get table => Job.t;
 }
 
 class JobIncludeList extends _i1.IncludeList {
@@ -202,7 +202,7 @@ class JobIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int> get table => Job.t;
+  _i1.Table<int?> get table => Job.t;
 }
 
 class JobRepository {

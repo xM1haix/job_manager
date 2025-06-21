@@ -12,7 +12,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class ServerConfig
-    implements _i1.TableRow<int>, _i1.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   ServerConfig._({
     this.id,
     required this.key,
@@ -50,7 +50,7 @@ abstract class ServerConfig
   int userId;
 
   @override
-  _i1.Table<int> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [ServerConfig]
   /// with some or all fields replaced by the given arguments.
@@ -145,7 +145,7 @@ class _ServerConfigImpl extends ServerConfig {
   }
 }
 
-class ServerConfigTable extends _i1.Table<int> {
+class ServerConfigTable extends _i1.Table<int?> {
   ServerConfigTable({super.tableRelation}) : super(tableName: 'server_config') {
     key = _i1.ColumnString(
       'key',
@@ -183,7 +183,7 @@ class ServerConfigInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table<int> get table => ServerConfig.t;
+  _i1.Table<int?> get table => ServerConfig.t;
 }
 
 class ServerConfigIncludeList extends _i1.IncludeList {
@@ -203,7 +203,7 @@ class ServerConfigIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int> get table => ServerConfig.t;
+  _i1.Table<int?> get table => ServerConfig.t;
 }
 
 class ServerConfigRepository {

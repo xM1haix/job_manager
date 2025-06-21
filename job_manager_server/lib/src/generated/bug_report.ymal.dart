@@ -12,15 +12,17 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class BugReport
-    implements _i1.TableRow<int>, _i1.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   BugReport._({
     this.id,
+    this.userId,
     required this.title,
     required this.details,
   });
 
   factory BugReport({
     int? id,
+    int? userId,
     required String title,
     required String details,
   }) = _BugReportImpl;
@@ -28,6 +30,7 @@ abstract class BugReport
   factory BugReport.fromJson(Map<String, dynamic> jsonSerialization) {
     return BugReport(
       id: jsonSerialization['id'] as int?,
+      userId: jsonSerialization['userId'] as int?,
       title: jsonSerialization['title'] as String,
       details: jsonSerialization['details'] as String,
     );
@@ -40,18 +43,21 @@ abstract class BugReport
   @override
   int? id;
 
+  int? userId;
+
   String title;
 
   String details;
 
   @override
-  _i1.Table<int> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [BugReport]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   BugReport copyWith({
     int? id,
+    int? userId,
     String? title,
     String? details,
   });
@@ -59,6 +65,7 @@ abstract class BugReport
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      if (userId != null) 'userId': userId,
       'title': title,
       'details': details,
     };
@@ -68,6 +75,7 @@ abstract class BugReport
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
+      if (userId != null) 'userId': userId,
       'title': title,
       'details': details,
     };
@@ -108,10 +116,12 @@ class _Undefined {}
 class _BugReportImpl extends BugReport {
   _BugReportImpl({
     int? id,
+    int? userId,
     required String title,
     required String details,
   }) : super._(
           id: id,
+          userId: userId,
           title: title,
           details: details,
         );
@@ -122,19 +132,25 @@ class _BugReportImpl extends BugReport {
   @override
   BugReport copyWith({
     Object? id = _Undefined,
+    Object? userId = _Undefined,
     String? title,
     String? details,
   }) {
     return BugReport(
       id: id is int? ? id : this.id,
+      userId: userId is int? ? userId : this.userId,
       title: title ?? this.title,
       details: details ?? this.details,
     );
   }
 }
 
-class BugReportTable extends _i1.Table<int> {
+class BugReportTable extends _i1.Table<int?> {
   BugReportTable({super.tableRelation}) : super(tableName: 'bug_report') {
+    userId = _i1.ColumnInt(
+      'userId',
+      this,
+    );
     title = _i1.ColumnString(
       'title',
       this,
@@ -145,6 +161,8 @@ class BugReportTable extends _i1.Table<int> {
     );
   }
 
+  late final _i1.ColumnInt userId;
+
   late final _i1.ColumnString title;
 
   late final _i1.ColumnString details;
@@ -152,6 +170,7 @@ class BugReportTable extends _i1.Table<int> {
   @override
   List<_i1.Column> get columns => [
         id,
+        userId,
         title,
         details,
       ];
@@ -164,7 +183,7 @@ class BugReportInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table<int> get table => BugReport.t;
+  _i1.Table<int?> get table => BugReport.t;
 }
 
 class BugReportIncludeList extends _i1.IncludeList {
@@ -184,7 +203,7 @@ class BugReportIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int> get table => BugReport.t;
+  _i1.Table<int?> get table => BugReport.t;
 }
 
 class BugReportRepository {

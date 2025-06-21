@@ -61,6 +61,12 @@ class Protocol extends _i1.SerializationManagerServer {
           columnDefault: 'nextval(\'bug_report_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
+          name: 'userId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: true,
+          dartType: 'int?',
+        ),
+        _i2.ColumnDefinition(
           name: 'title',
           columnType: _i2.ColumnType.text,
           isNullable: false,
@@ -73,7 +79,18 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'String',
         ),
       ],
-      foreignKeys: [],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'bug_report_fk_0',
+          columns: ['userId'],
+          referenceTable: 'serverpod_user_info',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        )
+      ],
       indexes: [
         _i2.IndexDefinition(
           indexName: 'bug_report_pkey',

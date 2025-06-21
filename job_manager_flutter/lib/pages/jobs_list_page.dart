@@ -27,7 +27,7 @@ class _JobsListPageState extends State<JobsListPage> {
       appBar: AppBar(
         title: CustomFutureBuilder(
           future: _getName,
-          success: (x) => Text("$x's jobs"),
+          success: (x) => Text("Team $x - Jobs"),
         ),
         actions: [
           IconButton(
@@ -94,7 +94,12 @@ class _JobsListPageState extends State<JobsListPage> {
   Future<void> _goToSettings() async {
     // await nav(context, TeamSettings(widget.id));
     //TODO FIX THIS
-    await nav(context, Scaffold());
+    await nav(
+      context,
+      Scaffold(
+        appBar: AppBar(),
+      ),
+    );
   }
 
   void _init() {

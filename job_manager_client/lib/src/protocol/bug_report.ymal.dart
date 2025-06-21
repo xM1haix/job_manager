@@ -14,12 +14,14 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class BugReport implements _i1.SerializableModel {
   BugReport._({
     this.id,
+    this.userId,
     required this.title,
     required this.details,
   });
 
   factory BugReport({
     int? id,
+    int? userId,
     required String title,
     required String details,
   }) = _BugReportImpl;
@@ -27,6 +29,7 @@ abstract class BugReport implements _i1.SerializableModel {
   factory BugReport.fromJson(Map<String, dynamic> jsonSerialization) {
     return BugReport(
       id: jsonSerialization['id'] as int?,
+      userId: jsonSerialization['userId'] as int?,
       title: jsonSerialization['title'] as String,
       details: jsonSerialization['details'] as String,
     );
@@ -37,6 +40,8 @@ abstract class BugReport implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
+  int? userId;
+
   String title;
 
   String details;
@@ -46,6 +51,7 @@ abstract class BugReport implements _i1.SerializableModel {
   @_i1.useResult
   BugReport copyWith({
     int? id,
+    int? userId,
     String? title,
     String? details,
   });
@@ -53,6 +59,7 @@ abstract class BugReport implements _i1.SerializableModel {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      if (userId != null) 'userId': userId,
       'title': title,
       'details': details,
     };
@@ -69,10 +76,12 @@ class _Undefined {}
 class _BugReportImpl extends BugReport {
   _BugReportImpl({
     int? id,
+    int? userId,
     required String title,
     required String details,
   }) : super._(
           id: id,
+          userId: userId,
           title: title,
           details: details,
         );
@@ -83,11 +92,13 @@ class _BugReportImpl extends BugReport {
   @override
   BugReport copyWith({
     Object? id = _Undefined,
+    Object? userId = _Undefined,
     String? title,
     String? details,
   }) {
     return BugReport(
       id: id is int? ? id : this.id,
+      userId: userId is int? ? userId : this.userId,
       title: title ?? this.title,
       details: details ?? this.details,
     );

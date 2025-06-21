@@ -16,7 +16,37 @@ var client = Client(
   'http://$localhost:8080/',
   authenticationKeyManager: FlutterAuthenticationKeyManager(),
 )..connectivityMonitor = FlutterConnectivityMonitor();
+final darkTheme = ThemeData.dark().copyWith(
+  segmentedButtonTheme: SegmentedButtonThemeData(),
+  appBarTheme: AppBarTheme(centerTitle: true),
+  scaffoldBackgroundColor: Colors.black,
+  tooltipTheme: TooltipThemeData(
+    enableFeedback: true,
+    textStyle: TextStyle(
+      color: Colors.white,
+    ),
+    decoration: BoxDecoration(
+      color: Colors.transparent,
+    ),
+  ),
+);
+
 late SessionManager sessionManager;
+
+final theme = ThemeData(
+  segmentedButtonTheme: SegmentedButtonThemeData(),
+  appBarTheme: AppBarTheme(centerTitle: true),
+  // scaffoldBackgroundColor: Colors.black,
+  tooltipTheme: TooltipThemeData(
+    enableFeedback: true,
+    textStyle: TextStyle(
+        // color: Colors.white,
+        ),
+    decoration: BoxDecoration(
+      color: Colors.transparent,
+    ),
+  ),
+);
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -30,20 +60,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Work Manager',
-      theme: ThemeData.dark().copyWith(
-        segmentedButtonTheme: SegmentedButtonThemeData(),
-        appBarTheme: AppBarTheme(centerTitle: true),
-        scaffoldBackgroundColor: Colors.black,
-        tooltipTheme: TooltipThemeData(
-          enableFeedback: true,
-          textStyle: TextStyle(
-            color: Colors.white,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-          ),
-        ),
-      ),
+      theme: theme,
+      darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
       home: sessionManager.isSignedIn ? const TeamsListPage() : const Connect(),
     );

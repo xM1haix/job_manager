@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Stage implements _i1.TableRow<int>, _i1.ProtocolSerialization {
+abstract class Stage implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Stage._({
     this.id,
     required this.name,
@@ -49,7 +49,7 @@ abstract class Stage implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   int jobId;
 
   @override
-  _i1.Table<int> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Stage]
   /// with some or all fields replaced by the given arguments.
@@ -144,7 +144,7 @@ class _StageImpl extends Stage {
   }
 }
 
-class StageTable extends _i1.Table<int> {
+class StageTable extends _i1.Table<int?> {
   StageTable({super.tableRelation}) : super(tableName: 'stages') {
     name = _i1.ColumnString(
       'name',
@@ -183,7 +183,7 @@ class StageInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table<int> get table => Stage.t;
+  _i1.Table<int?> get table => Stage.t;
 }
 
 class StageIncludeList extends _i1.IncludeList {
@@ -203,7 +203,7 @@ class StageIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int> get table => Stage.t;
+  _i1.Table<int?> get table => Stage.t;
 }
 
 class StageRepository {

@@ -3,6 +3,7 @@ import 'package:job_manager_client/job_manager_client.dart';
 import 'package:job_manager_flutter/main.dart';
 import 'package:job_manager_flutter/pages/jobs_list_page.dart';
 import 'package:job_manager_flutter/pages/settings_page.dart';
+import 'package:job_manager_flutter/widgets/app_bar.dart';
 import 'package:job_manager_flutter/widgets/fab_add.dart';
 import 'package:job_manager_flutter/widgets/future_list_view_builder.dart';
 import 'package:job_manager_flutter/widgets/nav.dart';
@@ -19,48 +20,23 @@ class _TeamsListPageState extends State<TeamsListPage> {
   late Future<List<Team>> _future;
   final _seachFocusNode = FocusNode();
   final _searchControlller = TextEditingController();
-  bool _isSeachOn = false;
+  bool _isSearchOn = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: _isSeachOn
+      floatingActionButton: _isSearchOn
           ? null
           : FabAdd(
               tooltip: "Create a new team",
               onPressed: _createTeam,
             ),
-      appBar: AppBar(
-        leading: AnimatedSwitcher(
-          duration: Duration(milliseconds: 100),
-          child: IconButton(
-            key: Key(_isSeachOn.toString()),
-            onPressed: _isSeachOn ? _closeSeach : _goToSettings,
-            icon: Icon(
-              _isSeachOn ? Icons.close : Icons.account_circle_outlined,
-            ),
-          ),
-        ),
-        title: _isSeachOn
-            ? Expanded(
-                child: TextField(
-                  focusNode: _seachFocusNode,
-                  minLines: 1,
-                  onSubmitted: (value) => _init(),
-                  onEditingComplete: _init,
-                  controller: _searchControlller,
-                  decoration: InputDecoration(
-                    hintText: "Seach...",
-                    border: InputBorder.none,
-                  ),
-                ),
-              )
-            : Text("Your teams!"),
-        actions: [
-          IconButton(
-            onPressed: _showSearch,
-            icon: Icon(Icons.search),
-          ),
-        ],
+      appBar: CustomAppBar(
+        switchToSearch: _showSearch,
+        isSearchOn: _isSearchOn,
+        controller: _searchControlller,
+        closeSeach: _closeSeach,
+        goToSettings: _goToSettings,
+        focusNode: _seachFocusNode,
       ),
       body: FutureListViewBuilder(
         onRefresh: () async => _init(),
@@ -75,7 +51,7 @@ class _TeamsListPageState extends State<TeamsListPage> {
               child: InkWell(
                 hoverColor: Color(0xFFC0C0C0),
                 splashColor: Colors.green,
-                onTap: () async => _navToTeam(e.id),
+                onTap: () async => await _navToTeam(e.id),
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
                   margin: const EdgeInsets.all(5),
@@ -104,7 +80,7 @@ class _TeamsListPageState extends State<TeamsListPage> {
 
   void _closeSeach() {
     setState(() {
-      _isSeachOn = false;
+      _isSearchOn = false;
       _searchControlller.clear();
     });
   }
@@ -135,12 +111,12 @@ class _TeamsListPageState extends State<TeamsListPage> {
   }
 
   void _showSearch() {
-    if (_isSeachOn) {
+    if (_isSearchOn) {
       _init();
       return;
     }
     setState(() {
-      _isSeachOn = true;
+      _isSearchOn = true;
       _seachFocusNode.requestFocus();
     });
   }

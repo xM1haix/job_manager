@@ -12,7 +12,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class UserRole
-    implements _i1.TableRow<int>, _i1.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   UserRole._({
     this.id,
     required this.name,
@@ -164,7 +164,7 @@ abstract class UserRole
   bool teamUserDelete;
 
   @override
-  _i1.Table<int> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [UserRole]
   /// with some or all fields replaced by the given arguments.
@@ -392,7 +392,7 @@ class _UserRoleImpl extends UserRole {
   }
 }
 
-class UserRoleTable extends _i1.Table<int> {
+class UserRoleTable extends _i1.Table<int?> {
   UserRoleTable({super.tableRelation}) : super(tableName: 'roles') {
     name = _i1.ColumnString(
       'name',
@@ -583,7 +583,7 @@ class UserRoleInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table<int> get table => UserRole.t;
+  _i1.Table<int?> get table => UserRole.t;
 }
 
 class UserRoleIncludeList extends _i1.IncludeList {
@@ -603,7 +603,7 @@ class UserRoleIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int> get table => UserRole.t;
+  _i1.Table<int?> get table => UserRole.t;
 }
 
 class UserRoleRepository {

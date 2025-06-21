@@ -12,7 +12,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class TeamUser
-    implements _i1.TableRow<int>, _i1.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   TeamUser._({
     this.id,
     required this.teamId,
@@ -50,7 +50,7 @@ abstract class TeamUser
   int roleId;
 
   @override
-  _i1.Table<int> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [TeamUser]
   /// with some or all fields replaced by the given arguments.
@@ -145,7 +145,7 @@ class _TeamUserImpl extends TeamUser {
   }
 }
 
-class TeamUserTable extends _i1.Table<int> {
+class TeamUserTable extends _i1.Table<int?> {
   TeamUserTable({super.tableRelation}) : super(tableName: 'team_users') {
     teamId = _i1.ColumnInt(
       'teamId',
@@ -183,7 +183,7 @@ class TeamUserInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table<int> get table => TeamUser.t;
+  _i1.Table<int?> get table => TeamUser.t;
 }
 
 class TeamUserIncludeList extends _i1.IncludeList {
@@ -203,7 +203,7 @@ class TeamUserIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int> get table => TeamUser.t;
+  _i1.Table<int?> get table => TeamUser.t;
 }
 
 class TeamUserRepository {

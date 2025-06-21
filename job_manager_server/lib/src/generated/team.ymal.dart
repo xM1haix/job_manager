@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Team implements _i1.TableRow<int>, _i1.ProtocolSerialization {
+abstract class Team implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Team._({
     this.id,
     required this.name,
@@ -39,7 +39,7 @@ abstract class Team implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   String name;
 
   @override
-  _i1.Table<int> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Team]
   /// with some or all fields replaced by the given arguments.
@@ -120,7 +120,7 @@ class _TeamImpl extends Team {
   }
 }
 
-class TeamTable extends _i1.Table<int> {
+class TeamTable extends _i1.Table<int?> {
   TeamTable({super.tableRelation}) : super(tableName: 'teams') {
     name = _i1.ColumnString(
       'name',
@@ -144,7 +144,7 @@ class TeamInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table<int> get table => Team.t;
+  _i1.Table<int?> get table => Team.t;
 }
 
 class TeamIncludeList extends _i1.IncludeList {
@@ -164,7 +164,7 @@ class TeamIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int> get table => Team.t;
+  _i1.Table<int?> get table => Team.t;
 }
 
 class TeamRepository {

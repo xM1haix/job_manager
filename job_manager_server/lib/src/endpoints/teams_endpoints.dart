@@ -102,14 +102,11 @@ class TeamsEndpoint extends Endpoint {
       session,
       where: (tu) => tu.userId.equals(user.userId),
     );
+
     return await Team.db.find(
       session,
       where: (team) =>
-          team.id.inSet(
-            Set.from(
-              teamUsers.map((e) => e.teamId).toList(),
-            ),
-          ) &
+          team.id.inSet(teamUsers.map((e) => e.teamId).toSet()) &
           team.name.ilike('%$seach%'),
     );
   }
