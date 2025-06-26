@@ -9,9 +9,9 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  late final _future = _getString();
+  late final _future = _getUserEmail();
   final _email = TextEditingController();
-  bool _editEmail = false;
+  var _editEmail = true;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,14 @@ class _SettingsPageState extends State<SettingsPage> {
                     labelText: 'Email',
                     suffix: IconButton(
                       onPressed: _onEmailSuffix,
-                      icon: Icon(Icons.edit),
+                      icon: AnimatedSwitcher(
+                        duration: Duration(seconds: 1),
+                        child: Icon(
+                          key: Key(_editEmail.toString()),
+                          _editEmail ? Icons.edit : Icons.done,
+                          color: _editEmail ? Colors.white : Colors.green,
+                        ),
+                      ),
                     ),
                   ),
                 );
@@ -70,13 +77,13 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _changePassword() async {}
-  Future<String> _getString() async => 'this is your email';
+  Future<String> _getUserEmail() async => 'this is your email';
 
   Future<void> _logout() async {}
   Future<void> _onEmailSuffix() async {
-    if (!_editEmail) {
+    if (_editEmail) {
       setState(() {
-        _editEmail = true;
+        _editEmail = false;
       });
       return;
     }

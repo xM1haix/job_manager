@@ -97,7 +97,9 @@ class _JobsListPageState extends State<JobsListPage> {
     await nav(
       context,
       Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text("job_list_page"),
+        ),
       ),
     );
   }

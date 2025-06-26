@@ -17,7 +17,6 @@ var client = Client(
   authenticationKeyManager: FlutterAuthenticationKeyManager(),
 )..connectivityMonitor = FlutterConnectivityMonitor();
 final darkTheme = ThemeData.dark().copyWith(
-  segmentedButtonTheme: SegmentedButtonThemeData(),
   appBarTheme: AppBarTheme(centerTitle: true),
   scaffoldBackgroundColor: Colors.black,
   tooltipTheme: TooltipThemeData(
@@ -34,7 +33,6 @@ final darkTheme = ThemeData.dark().copyWith(
 late SessionManager sessionManager;
 
 final theme = ThemeData(
-  segmentedButtonTheme: SegmentedButtonThemeData(),
   appBarTheme: AppBarTheme(centerTitle: true),
   // scaffoldBackgroundColor: Colors.black,
   tooltipTheme: TooltipThemeData(

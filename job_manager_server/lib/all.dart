@@ -1,6 +1,7 @@
 import 'package:job_manager_server/src/generated/protocol.dart';
 import 'package:job_manager_server/tools/error.dart';
 import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_auth_server/serverpod_auth_server.dart';
 
 Future<Team> existTeam(Session session, int id) async {
   final team = await Team.db.findById(session, id);
@@ -12,6 +13,13 @@ Future<AuthenticationInfo> getCurrentUser(Session session) async {
   final user = await session.authenticated;
   if (user == null) throwErr("User not sign in!");
   return user;
+}
+
+Future<UserInfo> getUserInfo(Session session) async {
+  final userInfo = await UserInfo.db
+      .findById(session, (await getCurrentUser(session)).userId);
+  if (userInfo == null) throwErr("No userInfo");
+  return userInfo;
 }
 
 Future<TeamUserData> isInTeam(Session session, int id) async {

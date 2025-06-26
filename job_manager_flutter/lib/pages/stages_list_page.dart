@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:job_manager_client/job_manager_client.dart';
 import 'package:job_manager_flutter/main.dart';
+import 'package:job_manager_flutter/pages/stage_settings_page.dart';
 import 'package:job_manager_flutter/widgets/fab_add.dart';
 import 'package:job_manager_flutter/widgets/future_builder.dart';
 import 'package:job_manager_flutter/widgets/nav.dart';
@@ -117,10 +118,22 @@ class _StagesListPageState extends State<StagesListPage> {
   }
 
   Future<void> _check(Stage e) async {
-    final x = await client.stages.check(widget.tid, widget.id, e);
-    setState(() {
-      e.status = x;
-    });
+    try {
+      final x = await client.stages.check(widget.tid, widget.id, e);
+      if (x != e.status) {
+        setState(() {
+          e.status = x;
+        });
+      }
+    } on CustomException catch (err) {
+      if (!mounted) return;
+      errorPopup(context, err.message);
+      return;
+    } catch (err) {
+      if (!mounted) return;
+      errorPopup(context, err);
+      return;
+    }
   }
 
   Future<void> _createStage() async {
@@ -143,9 +156,7 @@ class _StagesListPageState extends State<StagesListPage> {
   Future<void> _edit(Stage e) async {}
 
   Future<void> _goToSettings() async {
-    // await nav(context, TeamSettings(widget.id));
-    //TODO FIX GO TO SETTINGS
-    await nav(context, Scaffold());
+    await nav(context, StageSettingsPage(widget.id));
   }
 
   void _init() {
