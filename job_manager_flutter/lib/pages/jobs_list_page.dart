@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:job_manager_client/job_manager_client.dart';
 import 'package:job_manager_flutter/main.dart';
+import 'package:job_manager_flutter/pages/job_settigns_page.dart';
 import 'package:job_manager_flutter/pages/stages_list_page.dart';
+import 'package:job_manager_flutter/pages/team_user_page.dart';
 import 'package:job_manager_flutter/widgets/fab_add.dart';
 import 'package:job_manager_flutter/widgets/future_builder.dart';
 import 'package:job_manager_flutter/widgets/future_list_view_builder.dart';
@@ -30,6 +32,10 @@ class _JobsListPageState extends State<JobsListPage> {
           success: (x) => Text("Team $x - Jobs"),
         ),
         actions: [
+          IconButton(
+            onPressed: _goToTeamUsers,
+            icon: Icon(Icons.people),
+          ),
           IconButton(
             onPressed: _goToSettings,
             icon: Icon(Icons.settings),
@@ -92,16 +98,11 @@ class _JobsListPageState extends State<JobsListPage> {
   }
 
   Future<void> _goToSettings() async {
-    // await nav(context, TeamSettings(widget.id));
-    //TODO FIX THIS
-    await nav(
-      context,
-      Scaffold(
-        appBar: AppBar(
-          title: Text("job_list_page"),
-        ),
-      ),
-    );
+    await nav(context, JobSettingsPage(widget.id));
+  }
+
+  Future<void> _goToTeamUsers() async {
+    await nav(context, TeamUsersPage(widget.id));
   }
 
   void _init() {

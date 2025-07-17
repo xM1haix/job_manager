@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:job_manager_client/job_manager_client.dart';
 import 'package:job_manager_flutter/main.dart';
 import 'package:job_manager_flutter/pages/stage_settings_page.dart';
+import 'package:job_manager_flutter/widgets/del_btn.dart';
 import 'package:job_manager_flutter/widgets/fab_add.dart';
 import 'package:job_manager_flutter/widgets/future_builder.dart';
 import 'package:job_manager_flutter/widgets/nav.dart';
@@ -86,12 +87,8 @@ class _StagesListPageState extends State<StagesListPage> {
                               e.name,
                             ),
                             Spacer(),
-                            IconButton(
+                            DelBtn(
                               onPressed: () => _delete(x.stages, i),
-                              icon: Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
                             ),
                             IconButton(
                               onPressed: () => _edit(e),

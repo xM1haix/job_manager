@@ -12,10 +12,13 @@ teams:
   - checkPerms:
   - create:
   - delete:
+  - getCRUDUsers:
+  - getTheUserList:
   - read:
   - readList:
   - readNameOnly:
 userInfo:
+  - checkIfEmailIsFree:
   - getUsername:
-userEndpoints:
+  - getUserSettings:
   - searchByName:

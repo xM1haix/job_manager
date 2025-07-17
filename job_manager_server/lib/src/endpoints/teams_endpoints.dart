@@ -90,6 +90,27 @@ class TeamsEndpoint extends Endpoint {
     return true;
   }
 
+  Future<CRUDUsersPermission> getCRUDUsers(Session session, int id) async {
+    final x = (await isInTeam(session, id)).userRole;
+    return CRUDUsersPermission(
+      teamUserCreate: x.teamUserCreate,
+      teamUserRead: x.teamUserRead,
+      teamUserUpdate: x.teamUserUpdate,
+      teamUserDelete: x.teamUserDelete,
+    );
+  }
+
+  Future<List<int>> getTheUserList(Session session, int id) async {
+    final x = await isInTeam(session, id);
+    if (!x.userRole.teamUserRead) {
+      throw CustomException(
+          message: "You do not have permission to read the user list");
+    }
+    final teamUsers = await TeamUser.db
+        .find(session, where: (teamUser) => teamUser.teamId.equals(x.team.id));
+    return teamUsers.map((e) => e.userId).toList();
+  }
+
   Future<Team> read(Session session, int id) async {
     final team = await existTeam(session, id);
     await isInTeam(session, id);

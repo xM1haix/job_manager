@@ -14,11 +14,10 @@ import '../endpoints/jobs_endpoint.dart' as _i2;
 import '../endpoints/stages_endpoint.dart' as _i3;
 import '../endpoints/teams_endpoints.dart' as _i4;
 import '../endpoints/user_data_endpoints.dart' as _i5;
-import '../endpoints/user_endpoints.dart' as _i6;
-import 'package:job_manager_server/src/generated/stage.ymal.dart' as _i7;
+import 'package:job_manager_server/src/generated/stage.ymal.dart' as _i6;
 import 'package:job_manager_server/src/generated/user_role_enum.ymal.dart'
-    as _i8;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i9;
+    as _i7;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i8;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -46,12 +45,6 @@ class Endpoints extends _i1.EndpointDispatch {
         ..initialize(
           server,
           'userInfo',
-          null,
-        ),
-      'userEndpoints': _i6.UserEndpoints()
-        ..initialize(
-          server,
-          'userEndpoints',
           null,
         ),
     };
@@ -146,7 +139,7 @@ class Endpoints extends _i1.EndpointDispatch {
             ),
             'stage': _i1.ParameterDescription(
               name: 'stage',
-              type: _i1.getType<_i7.Stage>(),
+              type: _i1.getType<_i6.Stage>(),
               nullable: false,
             ),
           },
@@ -285,7 +278,7 @@ class Endpoints extends _i1.EndpointDispatch {
             ),
             'userRoleEnum': _i1.ParameterDescription(
               name: 'userRoleEnum',
-              type: _i1.getType<_i8.UserRoleEnum>(),
+              type: _i1.getType<_i7.UserRoleEnum>(),
               nullable: false,
             ),
           },
@@ -331,6 +324,42 @@ class Endpoints extends _i1.EndpointDispatch {
             Map<String, dynamic> params,
           ) async =>
               (endpoints['teams'] as _i4.TeamsEndpoint).delete(
+            session,
+            params['id'],
+          ),
+        ),
+        'getCRUDUsers': _i1.MethodConnector(
+          name: 'getCRUDUsers',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['teams'] as _i4.TeamsEndpoint).getCRUDUsers(
+            session,
+            params['id'],
+          ),
+        ),
+        'getTheUserList': _i1.MethodConnector(
+          name: 'getTheUserList',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['teams'] as _i4.TeamsEndpoint).getTheUserList(
             session,
             params['id'],
           ),
@@ -395,6 +424,25 @@ class Endpoints extends _i1.EndpointDispatch {
       name: 'userInfo',
       endpoint: endpoints['userInfo']!,
       methodConnectors: {
+        'checkIfEmailIsFree': _i1.MethodConnector(
+          name: 'checkIfEmailIsFree',
+          params: {
+            'email': _i1.ParameterDescription(
+              name: 'email',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['userInfo'] as _i5.UserInfoEndpoint)
+                  .checkIfEmailIsFree(
+            session,
+            params['email'],
+          ),
+        ),
         'getUsername': _i1.MethodConnector(
           name: 'getUsername',
           params: {},
@@ -404,13 +452,17 @@ class Endpoints extends _i1.EndpointDispatch {
           ) async =>
               (endpoints['userInfo'] as _i5.UserInfoEndpoint)
                   .getUsername(session),
-        )
-      },
-    );
-    connectors['userEndpoints'] = _i1.EndpointConnector(
-      name: 'userEndpoints',
-      endpoint: endpoints['userEndpoints']!,
-      methodConnectors: {
+        ),
+        'getUserSettings': _i1.MethodConnector(
+          name: 'getUserSettings',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['userInfo'] as _i5.UserInfoEndpoint)
+                  .getUserSettings(session),
+        ),
         'searchByName': _i1.MethodConnector(
           name: 'searchByName',
           params: {
@@ -424,13 +476,13 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['userEndpoints'] as _i6.UserEndpoints).searchByName(
+              (endpoints['userInfo'] as _i5.UserInfoEndpoint).searchByName(
             session,
             params['key'],
           ),
-        )
+        ),
       },
     );
-    modules['serverpod_auth'] = _i9.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i8.Endpoints()..initializeEndpoints(server);
   }
 }

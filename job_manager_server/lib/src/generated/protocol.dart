@@ -12,20 +12,23 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
-import 'bug_report.ymal.dart' as _i4;
-import 'changelog.ymal.dart' as _i5;
-import 'config.ymal.dart' as _i6;
-import 'custom_exception.ymal.dart' as _i7;
-import 'job.ymal.dart' as _i8;
-import 'stage.ymal.dart' as _i9;
-import 'stage_perms.ymal.dart' as _i10;
-import 'stage_view.ymal.dart' as _i11;
-import 'team.ymal.dart' as _i12;
-import 'team_user.ymal.dart' as _i13;
-import 'user_role.ymal.dart' as _i14;
-import 'user_role_enum.ymal.dart' as _i15;
-import 'package:job_manager_server/src/generated/job.ymal.dart' as _i16;
-import 'package:job_manager_server/src/generated/team.ymal.dart' as _i17;
+import 'CRUD_users_permission.ymal.dart' as _i4;
+import 'bug_report.ymal.dart' as _i5;
+import 'changelog.ymal.dart' as _i6;
+import 'config.ymal.dart' as _i7;
+import 'custom_exception.ymal.dart' as _i8;
+import 'job.ymal.dart' as _i9;
+import 'stage.ymal.dart' as _i10;
+import 'stage_perms.ymal.dart' as _i11;
+import 'stage_view.ymal.dart' as _i12;
+import 'team.ymal.dart' as _i13;
+import 'team_user.ymal.dart' as _i14;
+import 'user_role.ymal.dart' as _i15;
+import 'user_role_enum.ymal.dart' as _i16;
+import 'user_settings.ymal.dart' as _i17;
+import 'package:job_manager_server/src/generated/job.ymal.dart' as _i18;
+import 'package:job_manager_server/src/generated/team.ymal.dart' as _i19;
+export 'CRUD_users_permission.ymal.dart';
 export 'bug_report.ymal.dart';
 export 'changelog.ymal.dart';
 export 'config.ymal.dart';
@@ -38,6 +41,7 @@ export 'team.ymal.dart';
 export 'team_user.ymal.dart';
 export 'user_role.ymal.dart';
 export 'user_role_enum.ymal.dart';
+export 'user_settings.ymal.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
@@ -683,86 +687,103 @@ class Protocol extends _i1.SerializationManagerServer {
     Type? t,
   ]) {
     t ??= T;
-    if (t == _i4.BugReport) {
-      return _i4.BugReport.fromJson(data) as T;
+    if (t == _i4.CRUDUsersPermission) {
+      return _i4.CRUDUsersPermission.fromJson(data) as T;
     }
-    if (t == _i5.Chnagelog) {
-      return _i5.Chnagelog.fromJson(data) as T;
+    if (t == _i5.BugReport) {
+      return _i5.BugReport.fromJson(data) as T;
     }
-    if (t == _i6.ServerConfig) {
-      return _i6.ServerConfig.fromJson(data) as T;
+    if (t == _i6.Chnagelog) {
+      return _i6.Chnagelog.fromJson(data) as T;
     }
-    if (t == _i7.CustomException) {
-      return _i7.CustomException.fromJson(data) as T;
+    if (t == _i7.ServerConfig) {
+      return _i7.ServerConfig.fromJson(data) as T;
     }
-    if (t == _i8.Job) {
-      return _i8.Job.fromJson(data) as T;
+    if (t == _i8.CustomException) {
+      return _i8.CustomException.fromJson(data) as T;
     }
-    if (t == _i9.Stage) {
-      return _i9.Stage.fromJson(data) as T;
+    if (t == _i9.Job) {
+      return _i9.Job.fromJson(data) as T;
     }
-    if (t == _i10.StagePerms) {
-      return _i10.StagePerms.fromJson(data) as T;
+    if (t == _i10.Stage) {
+      return _i10.Stage.fromJson(data) as T;
     }
-    if (t == _i11.StageView) {
-      return _i11.StageView.fromJson(data) as T;
+    if (t == _i11.StagePerms) {
+      return _i11.StagePerms.fromJson(data) as T;
     }
-    if (t == _i12.Team) {
-      return _i12.Team.fromJson(data) as T;
+    if (t == _i12.StageView) {
+      return _i12.StageView.fromJson(data) as T;
     }
-    if (t == _i13.TeamUser) {
-      return _i13.TeamUser.fromJson(data) as T;
+    if (t == _i13.Team) {
+      return _i13.Team.fromJson(data) as T;
     }
-    if (t == _i14.UserRole) {
-      return _i14.UserRole.fromJson(data) as T;
+    if (t == _i14.TeamUser) {
+      return _i14.TeamUser.fromJson(data) as T;
     }
-    if (t == _i15.UserRoleEnum) {
-      return _i15.UserRoleEnum.fromJson(data) as T;
+    if (t == _i15.UserRole) {
+      return _i15.UserRole.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i4.BugReport?>()) {
-      return (data != null ? _i4.BugReport.fromJson(data) : null) as T;
+    if (t == _i16.UserRoleEnum) {
+      return _i16.UserRoleEnum.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i5.Chnagelog?>()) {
-      return (data != null ? _i5.Chnagelog.fromJson(data) : null) as T;
+    if (t == _i17.UserSettings) {
+      return _i17.UserSettings.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i6.ServerConfig?>()) {
-      return (data != null ? _i6.ServerConfig.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i4.CRUDUsersPermission?>()) {
+      return (data != null ? _i4.CRUDUsersPermission.fromJson(data) : null)
+          as T;
     }
-    if (t == _i1.getType<_i7.CustomException?>()) {
-      return (data != null ? _i7.CustomException.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.BugReport?>()) {
+      return (data != null ? _i5.BugReport.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.Job?>()) {
-      return (data != null ? _i8.Job.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.Chnagelog?>()) {
+      return (data != null ? _i6.Chnagelog.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.Stage?>()) {
-      return (data != null ? _i9.Stage.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.ServerConfig?>()) {
+      return (data != null ? _i7.ServerConfig.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.StagePerms?>()) {
-      return (data != null ? _i10.StagePerms.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.CustomException?>()) {
+      return (data != null ? _i8.CustomException.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.StageView?>()) {
-      return (data != null ? _i11.StageView.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.Job?>()) {
+      return (data != null ? _i9.Job.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.Team?>()) {
-      return (data != null ? _i12.Team.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.Stage?>()) {
+      return (data != null ? _i10.Stage.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i13.TeamUser?>()) {
-      return (data != null ? _i13.TeamUser.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.StagePerms?>()) {
+      return (data != null ? _i11.StagePerms.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i14.UserRole?>()) {
-      return (data != null ? _i14.UserRole.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i12.StageView?>()) {
+      return (data != null ? _i12.StageView.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i15.UserRoleEnum?>()) {
-      return (data != null ? _i15.UserRoleEnum.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i13.Team?>()) {
+      return (data != null ? _i13.Team.fromJson(data) : null) as T;
     }
-    if (t == List<_i9.Stage>) {
-      return (data as List).map((e) => deserialize<_i9.Stage>(e)).toList() as T;
+    if (t == _i1.getType<_i14.TeamUser?>()) {
+      return (data != null ? _i14.TeamUser.fromJson(data) : null) as T;
     }
-    if (t == List<_i16.Job>) {
-      return (data as List).map((e) => deserialize<_i16.Job>(e)).toList() as T;
+    if (t == _i1.getType<_i15.UserRole?>()) {
+      return (data != null ? _i15.UserRole.fromJson(data) : null) as T;
     }
-    if (t == List<_i17.Team>) {
-      return (data as List).map((e) => deserialize<_i17.Team>(e)).toList() as T;
+    if (t == _i1.getType<_i16.UserRoleEnum?>()) {
+      return (data != null ? _i16.UserRoleEnum.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i17.UserSettings?>()) {
+      return (data != null ? _i17.UserSettings.fromJson(data) : null) as T;
+    }
+    if (t == List<_i10.Stage>) {
+      return (data as List).map((e) => deserialize<_i10.Stage>(e)).toList()
+          as T;
+    }
+    if (t == List<_i18.Job>) {
+      return (data as List).map((e) => deserialize<_i18.Job>(e)).toList() as T;
+    }
+    if (t == List<int>) {
+      return (data as List).map((e) => deserialize<int>(e)).toList() as T;
+    }
+    if (t == List<_i19.Team>) {
+      return (data as List).map((e) => deserialize<_i19.Team>(e)).toList() as T;
     }
     if (t == List<_i3.UserInfo>) {
       return (data as List).map((e) => deserialize<_i3.UserInfo>(e)).toList()
@@ -781,41 +802,47 @@ class Protocol extends _i1.SerializationManagerServer {
   String? getClassNameForObject(Object? data) {
     String? className = super.getClassNameForObject(data);
     if (className != null) return className;
-    if (data is _i4.BugReport) {
+    if (data is _i4.CRUDUsersPermission) {
+      return 'CRUDUsersPermission';
+    }
+    if (data is _i5.BugReport) {
       return 'BugReport';
     }
-    if (data is _i5.Chnagelog) {
+    if (data is _i6.Chnagelog) {
       return 'Chnagelog';
     }
-    if (data is _i6.ServerConfig) {
+    if (data is _i7.ServerConfig) {
       return 'ServerConfig';
     }
-    if (data is _i7.CustomException) {
+    if (data is _i8.CustomException) {
       return 'CustomException';
     }
-    if (data is _i8.Job) {
+    if (data is _i9.Job) {
       return 'Job';
     }
-    if (data is _i9.Stage) {
+    if (data is _i10.Stage) {
       return 'Stage';
     }
-    if (data is _i10.StagePerms) {
+    if (data is _i11.StagePerms) {
       return 'StagePerms';
     }
-    if (data is _i11.StageView) {
+    if (data is _i12.StageView) {
       return 'StageView';
     }
-    if (data is _i12.Team) {
+    if (data is _i13.Team) {
       return 'Team';
     }
-    if (data is _i13.TeamUser) {
+    if (data is _i14.TeamUser) {
       return 'TeamUser';
     }
-    if (data is _i14.UserRole) {
+    if (data is _i15.UserRole) {
       return 'UserRole';
     }
-    if (data is _i15.UserRoleEnum) {
+    if (data is _i16.UserRoleEnum) {
       return 'UserRoleEnum';
+    }
+    if (data is _i17.UserSettings) {
+      return 'UserSettings';
     }
     className = _i2.Protocol().getClassNameForObject(data);
     if (className != null) {
@@ -834,41 +861,47 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
     }
+    if (dataClassName == 'CRUDUsersPermission') {
+      return deserialize<_i4.CRUDUsersPermission>(data['data']);
+    }
     if (dataClassName == 'BugReport') {
-      return deserialize<_i4.BugReport>(data['data']);
+      return deserialize<_i5.BugReport>(data['data']);
     }
     if (dataClassName == 'Chnagelog') {
-      return deserialize<_i5.Chnagelog>(data['data']);
+      return deserialize<_i6.Chnagelog>(data['data']);
     }
     if (dataClassName == 'ServerConfig') {
-      return deserialize<_i6.ServerConfig>(data['data']);
+      return deserialize<_i7.ServerConfig>(data['data']);
     }
     if (dataClassName == 'CustomException') {
-      return deserialize<_i7.CustomException>(data['data']);
+      return deserialize<_i8.CustomException>(data['data']);
     }
     if (dataClassName == 'Job') {
-      return deserialize<_i8.Job>(data['data']);
+      return deserialize<_i9.Job>(data['data']);
     }
     if (dataClassName == 'Stage') {
-      return deserialize<_i9.Stage>(data['data']);
+      return deserialize<_i10.Stage>(data['data']);
     }
     if (dataClassName == 'StagePerms') {
-      return deserialize<_i10.StagePerms>(data['data']);
+      return deserialize<_i11.StagePerms>(data['data']);
     }
     if (dataClassName == 'StageView') {
-      return deserialize<_i11.StageView>(data['data']);
+      return deserialize<_i12.StageView>(data['data']);
     }
     if (dataClassName == 'Team') {
-      return deserialize<_i12.Team>(data['data']);
+      return deserialize<_i13.Team>(data['data']);
     }
     if (dataClassName == 'TeamUser') {
-      return deserialize<_i13.TeamUser>(data['data']);
+      return deserialize<_i14.TeamUser>(data['data']);
     }
     if (dataClassName == 'UserRole') {
-      return deserialize<_i14.UserRole>(data['data']);
+      return deserialize<_i15.UserRole>(data['data']);
     }
     if (dataClassName == 'UserRoleEnum') {
-      return deserialize<_i15.UserRoleEnum>(data['data']);
+      return deserialize<_i16.UserRoleEnum>(data['data']);
+    }
+    if (dataClassName == 'UserSettings') {
+      return deserialize<_i17.UserSettings>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -896,22 +929,22 @@ class Protocol extends _i1.SerializationManagerServer {
       }
     }
     switch (t) {
-      case _i4.BugReport:
-        return _i4.BugReport.t;
-      case _i5.Chnagelog:
-        return _i5.Chnagelog.t;
-      case _i6.ServerConfig:
-        return _i6.ServerConfig.t;
-      case _i8.Job:
-        return _i8.Job.t;
-      case _i9.Stage:
-        return _i9.Stage.t;
-      case _i12.Team:
-        return _i12.Team.t;
-      case _i13.TeamUser:
-        return _i13.TeamUser.t;
-      case _i14.UserRole:
-        return _i14.UserRole.t;
+      case _i5.BugReport:
+        return _i5.BugReport.t;
+      case _i6.Chnagelog:
+        return _i6.Chnagelog.t;
+      case _i7.ServerConfig:
+        return _i7.ServerConfig.t;
+      case _i9.Job:
+        return _i9.Job.t;
+      case _i10.Stage:
+        return _i10.Stage.t;
+      case _i13.Team:
+        return _i13.Team.t;
+      case _i14.TeamUser:
+        return _i14.TeamUser.t;
+      case _i15.UserRole:
+        return _i15.UserRole.t;
     }
     return null;
   }

@@ -16,9 +16,12 @@ import 'package:job_manager_client/src/protocol/stage.ymal.dart' as _i4;
 import 'package:job_manager_client/src/protocol/stage_view.ymal.dart' as _i5;
 import 'package:job_manager_client/src/protocol/user_role_enum.ymal.dart'
     as _i6;
-import 'package:job_manager_client/src/protocol/team.ymal.dart' as _i7;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i8;
-import 'protocol.dart' as _i9;
+import 'package:job_manager_client/src/protocol/CRUD_users_permission.ymal.dart'
+    as _i7;
+import 'package:job_manager_client/src/protocol/team.ymal.dart' as _i8;
+import 'package:job_manager_client/src/protocol/user_settings.ymal.dart' as _i9;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i10;
+import 'protocol.dart' as _i11;
 
 /// {@category Endpoint}
 class EndpointJobs extends _i1.EndpointRef {
@@ -172,14 +175,28 @@ class EndpointTeams extends _i1.EndpointRef {
         {'id': id},
       );
 
-  _i2.Future<_i7.Team> read(int id) => caller.callServerEndpoint<_i7.Team>(
+  _i2.Future<_i7.CRUDUsersPermission> getCRUDUsers(int id) =>
+      caller.callServerEndpoint<_i7.CRUDUsersPermission>(
+        'teams',
+        'getCRUDUsers',
+        {'id': id},
+      );
+
+  _i2.Future<List<int>> getTheUserList(int id) =>
+      caller.callServerEndpoint<List<int>>(
+        'teams',
+        'getTheUserList',
+        {'id': id},
+      );
+
+  _i2.Future<_i8.Team> read(int id) => caller.callServerEndpoint<_i8.Team>(
         'teams',
         'read',
         {'id': id},
       );
 
-  _i2.Future<List<_i7.Team>> readList(String? seach) =>
-      caller.callServerEndpoint<List<_i7.Team>>(
+  _i2.Future<List<_i8.Team>> readList(String? seach) =>
+      caller.callServerEndpoint<List<_i8.Team>>(
         'teams',
         'readList',
         {'seach': seach},
@@ -199,23 +216,29 @@ class EndpointUserInfo extends _i1.EndpointRef {
   @override
   String get name => 'userInfo';
 
+  _i2.Future<String> checkIfEmailIsFree(String email) =>
+      caller.callServerEndpoint<String>(
+        'userInfo',
+        'checkIfEmailIsFree',
+        {'email': email},
+      );
+
   _i2.Future<String> getUsername() => caller.callServerEndpoint<String>(
         'userInfo',
         'getUsername',
         {},
       );
-}
 
-/// {@category Endpoint}
-class EndpointUserEndpoints extends _i1.EndpointRef {
-  EndpointUserEndpoints(_i1.EndpointCaller caller) : super(caller);
+  _i2.Future<_i9.UserSettings> getUserSettings() =>
+      caller.callServerEndpoint<_i9.UserSettings>(
+        'userInfo',
+        'getUserSettings',
+        {},
+      );
 
-  @override
-  String get name => 'userEndpoints';
-
-  _i2.Future<List<_i8.UserInfo>> searchByName(String key) =>
-      caller.callServerEndpoint<List<_i8.UserInfo>>(
-        'userEndpoints',
+  _i2.Future<List<_i10.UserInfo>> searchByName(String key) =>
+      caller.callServerEndpoint<List<_i10.UserInfo>>(
+        'userInfo',
         'searchByName',
         {'key': key},
       );
@@ -223,10 +246,10 @@ class EndpointUserEndpoints extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i8.Caller(client);
+    auth = _i10.Caller(client);
   }
 
-  late final _i8.Caller auth;
+  late final _i10.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -245,7 +268,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i9.Protocol(),
+          _i11.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -259,7 +282,6 @@ class Client extends _i1.ServerpodClientShared {
     stages = EndpointStages(this);
     teams = EndpointTeams(this);
     userInfo = EndpointUserInfo(this);
-    userEndpoints = EndpointUserEndpoints(this);
     modules = Modules(this);
   }
 
@@ -271,8 +293,6 @@ class Client extends _i1.ServerpodClientShared {
 
   late final EndpointUserInfo userInfo;
 
-  late final EndpointUserEndpoints userEndpoints;
-
   late final Modules modules;
 
   @override
@@ -281,7 +301,6 @@ class Client extends _i1.ServerpodClientShared {
         'stages': stages,
         'teams': teams,
         'userInfo': userInfo,
-        'userEndpoints': userEndpoints,
       };
 
   @override

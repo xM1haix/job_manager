@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:job_manager_client/job_manager_client.dart';
+import 'package:job_manager_flutter/main.dart';
+import 'package:job_manager_flutter/widgets/custom_input.dart';
+import 'package:job_manager_flutter/widgets/del_btn.dart';
 import 'package:job_manager_flutter/widgets/future_builder.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -9,10 +13,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  late final _future = _getUserEmail();
-  final _email = TextEditingController();
-  var _editEmail = true;
-
+  late Future<UserSettings> _future;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,64 +34,94 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: RefreshIndicator(
         onRefresh: _onRefresh,
-        child: ListView(
-          padding: EdgeInsets.all(20),
-          children: [
-            CustomFutureBuilder(
-              future: _future,
-              success: (x) {
-                _email.text = x;
-                return TextField(
-                  readOnly: _editEmail,
-                  controller: _email,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    suffix: IconButton(
-                      onPressed: _onEmailSuffix,
-                      icon: AnimatedSwitcher(
-                        duration: Duration(seconds: 1),
-                        child: Icon(
-                          key: Key(_editEmail.toString()),
-                          _editEmail ? Icons.edit : Icons.done,
-                          color: _editEmail ? Colors.white : Colors.green,
+        child: CustomFutureBuilder(
+          future: _future,
+          success: (x) {
+            return ListView(
+              padding: EdgeInsets.all(20),
+              children: [
+                CustomInput(
+                  label: "email",
+                  initValue: x.email,
+                  onUpdate: _setEmail,
+                  onCheck: _checkEmail,
+                ),
+                SizedBox(height: 20),
+                CustomInput(
+                  label: "username",
+                  initValue: x.username,
+                  onUpdate: _setUsername,
+                  onCheck: _checkUsername,
+                ),
+                TextButton(
+                  onPressed: _changePassword,
+                  child: Text("Change password!"),
+                ),
+                Wrap(
+                  alignment: WrapAlignment.spaceEvenly,
+                  children: [
+                    TextButton.icon(
+                      icon: Icon(
+                        Icons.power_settings_new,
+                        color: Colors.red,
+                        size: 30,
+                      ),
+                      onPressed: _logout,
+                      label: Text(
+                        "Logout",
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: DelIcon(size: 30),
+                      label: Text(
+                        "Delete account",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
-            ),
-            TextField(),
-            TextButton(
-              onPressed: _changePassword,
-              child: Text("Change password!"),
-            ),
-            TextButton(
-              onPressed: _logout,
-              child: Text("Logout"),
-            ),
-          ],
+                  ],
+                )
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Future<void> _changePassword() async {}
-  Future<String> _getUserEmail() async => 'this is your email';
-
-  Future<void> _logout() async {}
-  Future<void> _onEmailSuffix() async {
-    if (_editEmail) {
-      setState(() {
-        _editEmail = false;
-      });
-      return;
-    }
-    //TODO SAVE THE EMAIL
+  @override
+  void initState() {
+    super.initState();
+    _init();
   }
 
-  Future<void> _onRefresh() async {}
+  Future<void> _changePassword() async {}
+
+  Future<void> _checkEmail(String email) async {}
+  Future<void> _checkUsername(String email) async {}
+  Future<UserSettings> _getUserInfo() async =>
+      await client.userInfo.getUserSettings();
+  void _init() {
+    setState(() {
+      _future = _getUserInfo();
+    });
+  }
+
+  Future<void> _logout() async {}
+
+  Future<void> _onRefresh() async {
+    await Future.delayed(Duration(seconds: 3));
+    _init();
+  }
+
   Future<void> _reportBug() async {}
+
+  Future<void> _setEmail(String email) async {}
+
+  Future<void> _setUsername(String email) async {}
   void _showChangelog() {}
 }

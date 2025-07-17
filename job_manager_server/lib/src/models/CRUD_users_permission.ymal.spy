@@ -1,0 +1,6 @@
+class: CRUDUsersPermission
+fields:
+    teamUserCreate: bool
+    teamUserRead: bool
+    teamUserUpdate: bool
+    teamUserDelete: bool

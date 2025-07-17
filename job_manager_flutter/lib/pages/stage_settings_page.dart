@@ -16,7 +16,7 @@ class _StageSettingsPageState extends State<StageSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Job ${widget.id} settings"),
+        title: Text("stage ${widget.id} settings"),
       ),
     );
   }
