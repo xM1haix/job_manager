@@ -1,11 +1,10 @@
-import 'package:job_manager_server/mail.dart';
-import 'package:serverpod/serverpod.dart';
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as auth;
+import "package:job_manager_server/mail.dart";
+import "package:job_manager_server/src/generated/endpoints.dart";
+import "package:job_manager_server/src/generated/protocol.dart";
+import "package:serverpod/serverpod.dart";
+import "package:serverpod_auth_server/serverpod_auth_server.dart" as auth;
 
-import 'src/generated/endpoints.dart';
-import 'src/generated/protocol.dart';
-
-void run(List<String> args) async {
+Future<void> run(List<String> args) async {
   final pod = Serverpod(
     args,
     Protocol(),
@@ -17,7 +16,7 @@ void run(List<String> args) async {
         serverId: serverpod.serverId,
         timestamp: timestamp,
         isHealthy: true,
-        value: 1.0,
+        value: 1,
       ),
     ],
     authenticationHandler: auth.authenticationHandler,
@@ -25,13 +24,19 @@ void run(List<String> args) async {
   auth.AuthConfig.set(
     auth.AuthConfig(
       sendValidationEmail: (session, email, validationCode) async {
-        await sendMail(session, email, 'Register code', validationCode);
+        await sendMail(session, email, "Register code", validationCode);
         return true;
       },
       sendPasswordResetEmail: (session, userInfo, validationCode) async {
-        if (userInfo.email == null) throw 'No email';
+        if (userInfo.email == null) {
+          throw Exception("No email");
+        }
         await sendMail(
-            session, userInfo.email!, 'Register code', validationCode);
+          session,
+          userInfo.email!,
+          "Register code",
+          validationCode,
+        );
         return true;
       },
     ),

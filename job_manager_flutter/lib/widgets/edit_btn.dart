@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class EditBtn extends StatelessWidget {
+  const EditBtn({required this.onPressed, super.key, this.size});
   final void Function() onPressed;
   final double? size;
-  const EditBtn({super.key, this.size, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +15,8 @@ class EditBtn extends StatelessWidget {
 }
 
 class EditIcon extends StatelessWidget {
-  final double? size;
   const EditIcon({super.key, this.size});
+  final double? size;
 
   @override
   Widget build(BuildContext context) {

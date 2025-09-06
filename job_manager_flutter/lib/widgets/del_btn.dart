@@ -1,26 +1,26 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class DelBtn extends StatelessWidget {
-  final void Function() onPressed;
-  final double? size;
   const DelBtn({
+    required this.onPressed,
     super.key,
     this.size,
-    required this.onPressed,
   });
+  final void Function() onPressed;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: onPressed,
-      icon: DelIcon(),
+      icon: const DelIcon(),
     );
   }
 }
 
 class DelIcon extends StatelessWidget {
-  final double? size;
   const DelIcon({super.key, this.size});
+  final double? size;
 
   @override
   Widget build(BuildContext context) {

@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:job_manager_client/job_manager_client.dart';
-import 'package:job_manager_flutter/main.dart';
-import 'package:job_manager_flutter/widgets/del_btn.dart';
-import 'package:job_manager_flutter/widgets/edit_btn.dart';
-import 'package:job_manager_flutter/widgets/future_builder.dart';
+import "package:flutter/material.dart";
+import "package:job_manager_client/job_manager_client.dart";
+import "package:job_manager_flutter/main.dart";
+import "package:job_manager_flutter/widgets/del_btn.dart";
+import "package:job_manager_flutter/widgets/edit_btn.dart";
+import "package:job_manager_flutter/widgets/future_builder.dart";
 
 class TeamUsersPage extends StatefulWidget {
-  final int id;
   const TeamUsersPage(
     this.id, {
     super.key,
   });
+  final int id;
 
   @override
   State<TeamUsersPage> createState() => _TeamUsersPageState();
@@ -28,9 +28,9 @@ class _TeamUsersPageState extends State<TeamUsersPage> {
       body: CustomFutureBuilder(
         future: _getCRUDUsers,
         success: (perms) => !perms.teamUserRead
-            ? Center(
+            ? const Center(
                 child: Text(
-                  "Looks like you do not have the permissions to get the user list",
+                  """Looks like you do not have the permissions to get the user list""",
                 ),
               )
             : CustomFutureBuilder(
@@ -42,23 +42,23 @@ class _TeamUsersPageState extends State<TeamUsersPage> {
                     child: Tooltip(
                       message: "${users[i]}",
                       child: InkWell(
-                        hoverColor: Color(0xFFC0C0C0),
+                        hoverColor: const Color(0xFFC0C0C0),
                         splashColor: Colors.green,
                         onTap: _getMoreDetails,
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
                           margin: const EdgeInsets.all(5),
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xAA121212),
+                            color: const Color(0xAA121212),
                           ),
                           child: Row(
                             children: [
                               Text(
                                 "${users[i]}",
                               ),
-                              Spacer(),
+                              const Spacer(),
                               if (perms.teamUserUpdate)
                                 EditBtn(onPressed: _editUser),
                               if (perms.teamUserDelete)
@@ -81,11 +81,11 @@ class _TeamUsersPageState extends State<TeamUsersPage> {
     _init();
   }
 
-//TODO _deleteUser
+// TODO(xM1haix): _deleteUser.
   Future<void> _deleteUser() async {}
-//TODO _editUser
+// TODO(xM1haix): finish this.
   Future<void> _editUser() async {}
-//TODO _getMoreDetails
+// TODO(xM1haix): finish this.
   Future<void> _getMoreDetails() async {}
 
   void _init() {

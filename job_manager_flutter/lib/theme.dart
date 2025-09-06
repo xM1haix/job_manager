@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class CustomTheme {
   final centerTitle = true;
   final darkTheme = ThemeData.dark().copyWith(
-    appBarTheme: AppBarTheme(centerTitle: true),
+    appBarTheme: const AppBarTheme(centerTitle: true),
     scaffoldBackgroundColor: Colors.black,
-    tooltipTheme: TooltipThemeData(
+    tooltipTheme: const TooltipThemeData(
       enableFeedback: true,
       textStyle: TextStyle(
         color: Colors.white,
@@ -18,7 +18,7 @@ class CustomTheme {
   ThemeData get theme => ThemeData(
         appBarTheme: AppBarTheme(centerTitle: centerTitle),
         // scaffoldBackgroundColor: Colors.black,
-        tooltipTheme: TooltipThemeData(
+        tooltipTheme: const TooltipThemeData(
           enableFeedback: true,
           decoration: BoxDecoration(
             color: Colors.transparent,

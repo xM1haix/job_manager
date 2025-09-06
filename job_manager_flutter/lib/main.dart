@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:job_manager_client/job_manager_client.dart';
-import 'package:job_manager_flutter/pages/connect/connect.dart';
-import 'package:job_manager_flutter/pages/teams_list_page.dart';
-import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
-import 'package:serverpod_flutter/serverpod_flutter.dart';
+import "package:flutter/material.dart";
+import "package:job_manager_client/job_manager_client.dart";
+import "package:job_manager_flutter/pages/connect/connect.dart";
+import "package:job_manager_flutter/pages/teams_list_page.dart";
+import "package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart";
+import "package:serverpod_flutter/serverpod_flutter.dart";
 
 void main() async {
   sessionManager = SessionManager(caller: client.modules.auth);
@@ -13,13 +13,13 @@ void main() async {
 }
 
 var client = Client(
-  'http://$localhost:8080/',
+  "http://$localhost:8080/",
   authenticationKeyManager: FlutterAuthenticationKeyManager(),
 )..connectivityMonitor = FlutterConnectivityMonitor();
 final darkTheme = ThemeData.dark().copyWith(
-  appBarTheme: AppBarTheme(centerTitle: true),
+  appBarTheme: const AppBarTheme(centerTitle: true),
   scaffoldBackgroundColor: Colors.black,
-  tooltipTheme: TooltipThemeData(
+  tooltipTheme: const TooltipThemeData(
     enableFeedback: true,
     textStyle: TextStyle(
       color: Colors.white,
@@ -33,9 +33,9 @@ final darkTheme = ThemeData.dark().copyWith(
 late SessionManager sessionManager;
 
 final theme = ThemeData(
-  appBarTheme: AppBarTheme(centerTitle: true),
+  appBarTheme: const AppBarTheme(centerTitle: true),
   // scaffoldBackgroundColor: Colors.black,
-  tooltipTheme: TooltipThemeData(
+  tooltipTheme: const TooltipThemeData(
     enableFeedback: true,
     textStyle: TextStyle(
         // color: Colors.white,
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Work Manager',
+      title: "Work Manager",
       theme: theme,
       darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
@@ -69,6 +69,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     sessionManager.addListener(() => setState(() {}));
-    print(sessionManager.isSignedIn);
+    debugPrint(sessionManager.isSignedIn.toString());
   }
 }

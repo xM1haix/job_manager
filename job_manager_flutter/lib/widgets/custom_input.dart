@@ -1,33 +1,36 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter/material.dart';
-import 'package:job_manager_flutter/widgets/edit_btn.dart';
-import 'package:job_manager_flutter/widgets/popup.dart';
+import "package:flutter/material.dart";
+import "package:job_manager_flutter/widgets/edit_btn.dart";
+import "package:job_manager_flutter/widgets/popup.dart";
 
 class CustomInput extends StatefulWidget {
-  final String label;
-  final String? initValue;
-  final Future<void> Function(String) onUpdate, onCheck;
   const CustomInput({
-    super.key,
     required this.onUpdate,
     required this.onCheck,
     required this.label,
     required this.initValue,
+    super.key,
   });
+  final String label;
+  final String? initValue;
+  final Future<void> Function(String) onUpdate;
+  final Future<void> Function(String) onCheck;
 
   @override
   State<CustomInput> createState() => _CustomInputState();
 }
 
-//TODO: Use this to update the state of the suffixIcon
+// TODO(xM1haix): Use this to update the state of the suffixIcon.
 enum IconStatus { readOnly, editOn, checking, saving, saved }
 
 class _CustomInputState extends State<CustomInput> {
   late final _controller = TextEditingController(text: widget.initValue);
-  var _readOnly = true, _loading = false;
+  var _readOnly = true;
+  var _loading = false;
   Timer? _timer;
-  String? errorText, helperText;
+  String? errorText;
+  String? helperText;
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -36,18 +39,18 @@ class _CustomInputState extends State<CustomInput> {
       controller: _controller,
       decoration: InputDecoration(
         helperText: helperText,
-        helperStyle: TextStyle(color: Colors.green),
+        helperStyle: const TextStyle(color: Colors.green),
         errorText: errorText,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         labelText: widget.label,
         suffixIcon: Container(
           alignment: Alignment.center,
           height: 30,
           width: 30,
           child: AnimatedSwitcher(
-            duration: Duration(seconds: 1),
+            duration: const Duration(seconds: 1),
             child: _loading
-                ? CircularProgressIndicator(
+                ? const CircularProgressIndicator(
                     strokeWidth: 3,
                     color: Colors.green,
                     padding: EdgeInsets.all(10),
@@ -56,7 +59,7 @@ class _CustomInputState extends State<CustomInput> {
                     ? EditBtn(onPressed: _enableEdit)
                     : IconButton(
                         onPressed: _save,
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.done,
                           color: Colors.green,
                         ),
@@ -81,7 +84,7 @@ class _CustomInputState extends State<CustomInput> {
         });
       }
     }
-    _timer = Timer(Duration(seconds: 1), () async {
+    _timer = Timer(const Duration(seconds: 1), () async {
       if (value == widget.initValue) {
         setState(() {
           errorText = "Same value";
@@ -101,8 +104,10 @@ class _CustomInputState extends State<CustomInput> {
     try {
       await widget.onUpdate(_controller.text);
     } catch (e) {
-      if (!mounted) return;
-      errorPopup(context, e);
+      if (!mounted) {
+        return;
+      }
+      await errorPopup(context, e);
     }
   }
 }

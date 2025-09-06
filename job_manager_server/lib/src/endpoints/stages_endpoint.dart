@@ -1,11 +1,15 @@
-import 'package:job_manager_server/all.dart';
-import 'package:job_manager_server/src/generated/protocol.dart';
-import 'package:job_manager_server/tools/error.dart';
-import 'package:serverpod/serverpod.dart';
+import "package:job_manager_server/all.dart";
+import "package:job_manager_server/src/generated/protocol.dart";
+import "package:job_manager_server/tools/error.dart";
+import "package:serverpod/serverpod.dart";
 
 class StagesEndpoint extends Endpoint {
   Future<bool> check(
-      Session session, int teamId, int jobId, Stage stage) async {
+    Session session,
+    int teamId,
+    int jobId,
+    Stage stage,
+  ) async {
     final x = (await isInTeam(session, teamId)).userRole;
     if (!x.stageProgressUpdate) {
       throwErr("You don't have perms to update stages!");
@@ -16,7 +20,11 @@ class StagesEndpoint extends Endpoint {
   }
 
   Future<bool> create(
-      Session session, int teamId, int jobId, String name) async {
+    Session session,
+    int teamId,
+    int jobId,
+    String name,
+  ) async {
     final x = await isInTeam(session, teamId);
     if (!x.userRole.stageCreate) {
       throwErr("You don't have perms to create stages!");
@@ -28,14 +36,18 @@ class StagesEndpoint extends Endpoint {
 
   Future<bool> delete(Session session, int teamId, int jobId, int id) async {
     final x = (await isInTeam(session, teamId)).userRole;
-    if (!x.stageDelete) throwErr("You don't have perms to delete stages!");
+    if (!x.stageDelete) {
+      throwErr("You don't have perms to delete stages!");
+    }
     await Stage.db.deleteWhere(session, where: (s) => s.id.equals(id));
     return true;
   }
 
   Future<StageView> readStages(Session session, int teamId, int jobId) async {
     final x = (await isInTeam(session, teamId)).userRole;
-    if (!x.stageRead) throwErr("You don't have perms to read stages!");
+    if (!x.stageRead) {
+      throwErr("You don't have perms to read stages!");
+    }
     final perms = StagePerms(
       update: x.stageUpdate,
       delete: x.stageDelete,

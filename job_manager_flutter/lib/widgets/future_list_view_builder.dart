@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:job_manager_flutter/widgets/future_builder.dart';
-import 'package:job_manager_flutter/widgets/refresh_list_view_builder.dart';
+import "package:flutter/material.dart";
+import "package:job_manager_flutter/widgets/future_builder.dart";
+import "package:job_manager_flutter/widgets/refresh_list_view_builder.dart";
 
 class FutureListViewBuilder<T> extends StatefulWidget {
-  final Widget Function(T e, int i) element;
-  final Future<List<T>> future;
-  final Future<void> Function() onRefresh;
-  final String type;
   const FutureListViewBuilder({
-    super.key,
     required this.element,
     required this.type,
     required this.future,
     required this.onRefresh,
+    super.key,
   });
+  final Widget Function(T e, int i) element;
+  final Future<List<T>> future;
+  final Future<void> Function() onRefresh;
+  final String type;
 
   @override
   State<FutureListViewBuilder<T>> createState() =>

@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class StageSettingsPage extends StatefulWidget {
-  final int id;
   const StageSettingsPage(
     this.id, {
     super.key,
   });
+  final int id;
 
   @override
   State<StageSettingsPage> createState() => _StageSettingsPageState();

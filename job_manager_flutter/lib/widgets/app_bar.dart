@@ -1,22 +1,24 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final bool isSearchOn;
-  final void Function() closeSeach, goToSettings, switchToSearch;
-  final FocusNode focusNode;
-  final TextEditingController controller;
   const CustomAppBar({
-    super.key,
     required this.isSearchOn,
     required this.switchToSearch,
     required this.controller,
     required this.closeSeach,
     required this.goToSettings,
     required this.focusNode,
+    super.key,
   });
+  final bool isSearchOn;
+  final void Function() closeSeach;
+  final void Function() goToSettings;
+  final void Function() switchToSearch;
+  final FocusNode focusNode;
+  final TextEditingController controller;
 
   @override
-  Size get preferredSize => Size.fromHeight(50);
+  Size get preferredSize => const Size.fromHeight(50);
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -28,7 +30,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       backgroundColor: widget.isSearchOn ? Colors.transparent : null,
       leading: AnimatedSwitcher(
-        duration: Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 100),
         child: IconButton(
           key: Key(widget.isSearchOn.toString()),
           onPressed:
@@ -39,7 +41,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         ),
       ),
       title: AnimatedSwitcher(
-        duration: Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
         child: widget.isSearchOn
             ? SearchBar(
                 focusNode: widget.focusNode,
@@ -56,12 +58,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
                 // )
               )
-            : Text("Your teams!"),
+            : const Text("Your teams!"),
       ),
       actions: [
         IconButton(
           onPressed: widget.switchToSearch,
-          icon: Icon(Icons.search),
+          icon: const Icon(Icons.search),
         ),
       ],
     );

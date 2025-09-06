@@ -1,17 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:job_manager_client/job_manager_client.dart';
-import 'package:job_manager_flutter/main.dart';
-import 'package:job_manager_flutter/pages/stage_settings_page.dart';
-import 'package:job_manager_flutter/widgets/del_btn.dart';
-import 'package:job_manager_flutter/widgets/fab_add.dart';
-import 'package:job_manager_flutter/widgets/future_builder.dart';
-import 'package:job_manager_flutter/widgets/nav.dart';
-import 'package:job_manager_flutter/widgets/popup.dart';
-import 'package:job_manager_flutter/widgets/refresh_list_view_builder.dart';
+import "package:flutter/material.dart";
+import "package:job_manager_client/job_manager_client.dart";
+import "package:job_manager_flutter/main.dart";
+import "package:job_manager_flutter/pages/stage_settings_page.dart";
+import "package:job_manager_flutter/widgets/del_btn.dart";
+import "package:job_manager_flutter/widgets/fab_add.dart";
+import "package:job_manager_flutter/widgets/future_builder.dart";
+import "package:job_manager_flutter/widgets/nav.dart";
+import "package:job_manager_flutter/widgets/popup.dart";
+import "package:job_manager_flutter/widgets/refresh_list_view_builder.dart";
 
 class StagesListPage extends StatefulWidget {
-  final int tid, id;
   const StagesListPage(this.tid, this.id, {super.key});
+  final int tid;
+  final int id;
 
   @override
   State<StagesListPage> createState() => _StagesListPageState();
@@ -28,12 +29,12 @@ class _StagesListPageState extends State<StagesListPage> {
       appBar: AppBar(
         title: CustomFutureBuilder(
           future: _getName,
-          success: (x) => Text(x),
+          success: Text.new,
         ),
         actions: [
           IconButton(
             onPressed: _goToSettings,
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
           ),
         ],
       ),
@@ -44,7 +45,7 @@ class _StagesListPageState extends State<StagesListPage> {
                 tooltip: "Create new stage",
                 onPressed: _createStage,
               )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
       ),
       body: CustomFutureBuilder(
         future: _getStages,
@@ -53,27 +54,27 @@ class _StagesListPageState extends State<StagesListPage> {
           type: "stages",
           list: x.stages,
           builder: (e, i) => e.id == null
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : Padding(
                   padding: const EdgeInsets.all(5),
                   child: Tooltip(
                     message: e.name,
                     child: InkWell(
-                      hoverColor: Color(0xFFC0C0C0),
+                      hoverColor: const Color(0xFFC0C0C0),
                       splashColor: Colors.green,
                       onTap: () => _check(e),
                       borderRadius: BorderRadius.circular(10),
                       child: Container(
                         margin: const EdgeInsets.all(5),
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(0xAA121212),
+                          color: const Color(0xAA121212),
                         ),
                         child: Row(
                           children: [
                             AnimatedSwitcher(
-                              duration: Duration(seconds: 1),
+                              duration: const Duration(seconds: 1),
                               child: Icon(
                                 key: Key(e.status.toString()),
                                 e.status
@@ -82,17 +83,17 @@ class _StagesListPageState extends State<StagesListPage> {
                                 color: e.status ? Colors.green : Colors.grey,
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(
                               e.name,
                             ),
-                            Spacer(),
+                            const Spacer(),
                             DelBtn(
                               onPressed: () => _delete(x.stages, i),
                             ),
                             IconButton(
                               onPressed: () => _edit(e),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.edit,
                                 color: Colors.blue,
                               ),
@@ -123,12 +124,16 @@ class _StagesListPageState extends State<StagesListPage> {
         });
       }
     } on CustomException catch (err) {
-      if (!mounted) return;
-      errorPopup(context, err.message);
+      if (!mounted) {
+        return;
+      }
+      await errorPopup(context, err.message);
       return;
     } catch (err) {
-      if (!mounted) return;
-      errorPopup(context, err);
+      if (!mounted) {
+        return;
+      }
+      await errorPopup(context, err);
       return;
     }
   }
@@ -136,8 +141,8 @@ class _StagesListPageState extends State<StagesListPage> {
   Future<void> _createStage() async {
     await createSmallForum(
       context: context,
-      api: (s) async => await client.stages.create(widget.tid, widget.id, s),
-      type: 'stage',
+      api: (s) async => client.stages.create(widget.tid, widget.id, s),
+      type: "stage",
     );
     _init();
   }

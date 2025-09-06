@@ -1,11 +1,11 @@
-import 'package:job_manager_server/src/generated/protocol.dart';
-import 'package:job_manager_server/tools/error.dart';
-import 'package:serverpod/serverpod.dart';
+import "package:job_manager_server/src/generated/protocol.dart";
+import "package:job_manager_server/tools/error.dart";
+import "package:serverpod/serverpod.dart";
 
 UserRole getOwnerUserRole(int teamId) => UserRole(
       stageProgressUpdate: true,
       stageProgressRevoke: true,
-      name: 'OWNER',
+      name: "OWNER",
       teamId: teamId,
       jobCreate: true,
       jobRead: true,
@@ -31,11 +31,15 @@ Future<UserRole> getUserRole(Session session, int userId, int teamId) async {
     session,
     where: (tu) => tu.teamId.equals(teamId) & tu.userId.equals(userId),
   );
-  if (teamUser == null) throwErr("Combo userId and teamId doesn't exist");
+  if (teamUser == null) {
+    throwErr("Combo userId and teamId doesn't exist");
+  }
   final x = await UserRole.db.findById(
     session,
     teamUser.roleId,
   );
-  if (x == null) throwErr("UserRole doesn't exist");
+  if (x == null) {
+    throwErr("UserRole doesn't exist");
+  }
   return x;
 }

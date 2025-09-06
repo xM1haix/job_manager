@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:job_manager_client/job_manager_client.dart';
-import 'package:job_manager_flutter/main.dart';
-import 'package:job_manager_flutter/widgets/custom_input.dart';
-import 'package:job_manager_flutter/widgets/del_btn.dart';
-import 'package:job_manager_flutter/widgets/future_builder.dart';
+import "package:flutter/material.dart";
+import "package:job_manager_client/job_manager_client.dart";
+import "package:job_manager_flutter/main.dart";
+import "package:job_manager_flutter/widgets/custom_input.dart";
+import "package:job_manager_flutter/widgets/del_btn.dart";
+import "package:job_manager_flutter/widgets/future_builder.dart";
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -18,16 +18,16 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: const Text("Settings"),
         actions: [
           IconButton(
             tooltip: "Report a bug",
-            icon: Icon(Icons.bug_report_outlined),
+            icon: const Icon(Icons.bug_report_outlined),
             onPressed: _reportBug,
           ),
           IconButton(
             tooltip: "Changelog",
-            icon: Icon(Icons.info_outline),
+            icon: const Icon(Icons.info_outline),
             onPressed: _showChangelog,
           ),
         ],
@@ -38,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
           future: _future,
           success: (x) {
             return ListView(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               children: [
                 CustomInput(
                   label: "email",
@@ -46,7 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   onUpdate: _setEmail,
                   onCheck: _checkEmail,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 CustomInput(
                   label: "username",
                   initValue: x.username,
@@ -55,27 +55,27 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 TextButton(
                   onPressed: _changePassword,
-                  child: Text("Change password!"),
+                  child: const Text("Change password!"),
                 ),
                 Wrap(
                   alignment: WrapAlignment.spaceEvenly,
                   children: [
                     TextButton.icon(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.power_settings_new,
                         color: Colors.red,
                         size: 30,
                       ),
                       onPressed: _logout,
-                      label: Text(
+                      label: const Text(
                         "Logout",
                         style: TextStyle(color: Colors.white, fontSize: 30),
                       ),
                     ),
                     TextButton.icon(
                       onPressed: () {},
-                      icon: DelIcon(size: 30),
-                      label: Text(
+                      icon: const DelIcon(size: 30),
+                      label: const Text(
                         "Delete account",
                         style: TextStyle(
                           color: Colors.white,
@@ -84,7 +84,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             );
           },
@@ -104,7 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _checkEmail(String email) async {}
   Future<void> _checkUsername(String email) async {}
   Future<UserSettings> _getUserInfo() async =>
-      await client.userInfo.getUserSettings();
+      client.userInfo.getUserSettings();
   void _init() {
     setState(() {
       _future = _getUserInfo();
@@ -114,7 +114,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _logout() async {}
 
   Future<void> _onRefresh() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
     _init();
   }
 

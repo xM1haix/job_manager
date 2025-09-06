@@ -1,16 +1,17 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class RefreshListViewBuilder<T> extends StatelessWidget {
+  const RefreshListViewBuilder({
+    required this.builder,
+    required this.list,
+    required this.onRefresh,
+    required this.type,
+    super.key,
+  });
   final Widget Function(T e, int i) builder;
   final List<T> list;
   final Future<void> Function() onRefresh;
   final String type;
-  const RefreshListViewBuilder(
-      {super.key,
-      required this.builder,
-      required this.list,
-      required this.onRefresh,
-      required this.type});
 
   @override
   Widget build(BuildContext context) {

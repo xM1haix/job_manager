@@ -1,41 +1,40 @@
-import 'package:flutter/material.dart';
-import 'package:job_manager_flutter/main.dart';
-import 'package:job_manager_flutter/widgets/nav.dart';
-
-import '../../widgets/popup.dart';
+import "package:flutter/material.dart";
+import "package:job_manager_flutter/main.dart";
+import "package:job_manager_flutter/widgets/nav.dart";
+import "package:job_manager_flutter/widgets/popup.dart";
 
 class Register extends StatefulWidget {
-  final void Function() goBack;
   const Register(this.goBack, {super.key});
+  final void Function() goBack;
 
   @override
   State<Register> createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-  bool _obscureText = true;
-  final _email = TextEditingController(),
-      _username = TextEditingController(),
-      _password = TextEditingController();
+  var _obscureText = true;
+  final _email = TextEditingController();
+  final _username = TextEditingController();
+  final _password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         TextField(
           controller: _email,
-          decoration: const InputDecoration(labelText: 'Email'),
+          decoration: const InputDecoration(labelText: "Email"),
         ),
         const SizedBox(height: 20),
         TextField(
           controller: _username,
-          decoration: const InputDecoration(labelText: 'Username'),
+          decoration: const InputDecoration(labelText: "Username"),
         ),
         const SizedBox(height: 20),
         TextField(
           controller: _password,
           obscureText: _obscureText,
           decoration: InputDecoration(
-            labelText: 'Password',
+            labelText: "Password",
             suffixIcon: IconButton(
               onPressed: () => setState(() => _obscureText = !_obscureText),
               icon: Icon(
@@ -50,9 +49,16 @@ class _RegisterState extends State<Register> {
           onPressed: () async {
             try {
               final x = await client.modules.auth.email.createAccountRequest(
-                  _username.text, _email.text, _password.text);
-              if (!x) throw "Failed x is $x";
-              if (!context.mounted) return;
+                _username.text,
+                _email.text,
+                _password.text,
+              );
+              if (!x) {
+                throw Exception("Failed x is $x");
+              }
+              if (!context.mounted) {
+                return;
+              }
               await showDialog<void>(
                 barrierDismissible: false,
                 context: context,
@@ -69,7 +75,7 @@ class _RegisterState extends State<Register> {
                             controller: code,
                             decoration: InputDecoration(
                               errorText: errorText,
-                              labelText: 'Code',
+                              labelText: "Code",
                               suffixIcon: IconButton(
                                 onPressed: () async {
                                   setState(() {
@@ -77,7 +83,7 @@ class _RegisterState extends State<Register> {
                                   });
                                   if (code.text.isEmpty) {
                                     setState(() {
-                                      errorText = 'No code provided!';
+                                      errorText = "No code provided!";
                                     });
                                     return;
                                   }
@@ -86,15 +92,17 @@ class _RegisterState extends State<Register> {
                                       .createAccount(_email.text, code.text);
                                   if (sendCode == null) {
                                     setState(() {
-                                      errorText = 'No code provided!';
+                                      errorText = "No code provided!";
                                     });
                                     return;
                                   }
-                                  if (!context.mounted) return;
+                                  if (!context.mounted) {
+                                    return;
+                                  }
                                   back(context);
                                   widget.goBack();
                                 },
-                                icon: Icon(Icons.send_outlined),
+                                icon: const Icon(Icons.send_outlined),
                               ),
                             ),
                           );
@@ -105,11 +113,13 @@ class _RegisterState extends State<Register> {
                 },
               );
             } catch (e) {
-              if (!context.mounted) return;
-              errorPopup(context, e);
+              if (!context.mounted) {
+                return;
+              }
+              await errorPopup(context, e);
             }
           },
-          child: const Text('Register'),
+          child: const Text("Register"),
         ),
       ],
     );

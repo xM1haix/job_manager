@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:job_manager_client/job_manager_client.dart';
-import 'package:job_manager_flutter/main.dart';
-import 'package:job_manager_flutter/pages/jobs_list_page.dart';
-import 'package:job_manager_flutter/pages/settings_page.dart';
-import 'package:job_manager_flutter/widgets/app_bar.dart';
-import 'package:job_manager_flutter/widgets/fab_add.dart';
-import 'package:job_manager_flutter/widgets/future_list_view_builder.dart';
-import 'package:job_manager_flutter/widgets/nav.dart';
-import 'package:job_manager_flutter/widgets/popup.dart';
+import "dart:async";
+
+import "package:flutter/material.dart";
+import "package:job_manager_client/job_manager_client.dart";
+import "package:job_manager_flutter/main.dart";
+import "package:job_manager_flutter/pages/jobs_list_page.dart";
+import "package:job_manager_flutter/pages/settings_page.dart";
+import "package:job_manager_flutter/widgets/app_bar.dart";
+import "package:job_manager_flutter/widgets/fab_add.dart";
+import "package:job_manager_flutter/widgets/future_list_view_builder.dart";
+import "package:job_manager_flutter/widgets/nav.dart";
+import "package:job_manager_flutter/widgets/popup.dart";
 
 class TeamsListPage extends StatefulWidget {
   const TeamsListPage({super.key});
@@ -20,7 +22,7 @@ class _TeamsListPageState extends State<TeamsListPage> {
   late Future<List<Team>> _future;
   final _seachFocusNode = FocusNode();
   final _searchControlller = TextEditingController();
-  bool _isSearchOn = false;
+  var _isSearchOn = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,24 +43,26 @@ class _TeamsListPageState extends State<TeamsListPage> {
       body: FutureListViewBuilder(
         onRefresh: () async => _init(),
         future: _future,
-        type: 'teams',
+        type: "teams",
         element: (e, i) {
-          if (e.id == null) return SizedBox.shrink();
+          if (e.id == null) {
+            return const SizedBox.shrink();
+          }
           return Padding(
             padding: const EdgeInsets.all(5),
             child: Tooltip(
               message: e.name,
               child: InkWell(
-                hoverColor: Color(0xFFC0C0C0),
+                hoverColor: const Color(0xFFC0C0C0),
                 splashColor: Colors.green,
-                onTap: () async => await _navToTeam(e.id),
+                onTap: () async => _navToTeam(e.id),
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
                   margin: const EdgeInsets.all(5),
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xAA121212),
+                    color: const Color(0xAA121212),
                   ),
                   child: Text(
                     e.name,
@@ -88,14 +92,14 @@ class _TeamsListPageState extends State<TeamsListPage> {
   Future<void> _createTeam() async {
     await createSmallForum(
       context: context,
-      api: (s) async => await client.teams.create(s),
-      type: 'team',
+      api: (s) async => client.teams.create(s),
+      type: "team",
     );
     _init();
   }
 
   void _goToSettings() {
-    nav(context, SettingsPage());
+    unawaited(nav(context, const SettingsPage()));
   }
 
   void _init() {
@@ -105,7 +109,9 @@ class _TeamsListPageState extends State<TeamsListPage> {
   }
 
   Future<void> _navToTeam(int? id) async {
-    if (id == null) return;
+    if (id == null) {
+      return;
+    }
     await nav(context, JobsListPage(id));
     _init();
   }

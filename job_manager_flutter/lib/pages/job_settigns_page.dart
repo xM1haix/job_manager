@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class JobSettingsPage extends StatefulWidget {
-  final int id;
   const JobSettingsPage(
     this.id, {
     super.key,
   });
+  final int id;
 
   @override
   State<JobSettingsPage> createState() => _JobSettingsPageState();

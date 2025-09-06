@@ -1,20 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:job_manager_flutter/widgets/future_builder.dart';
+import "package:flutter/material.dart";
+import "package:job_manager_flutter/widgets/future_builder.dart";
 
 class ScaffoldFutureBuilder<T> extends StatelessWidget {
+  const ScaffoldFutureBuilder({
+    required this.future,
+    required this.success,
+    super.key,
+  });
   final Future<T> future;
   final Scaffold Function(T x) success;
-  const ScaffoldFutureBuilder(
-      {super.key, required this.future, required this.success});
 
   @override
   Widget build(BuildContext context) {
     return CustomFutureBuilder(
       future: future,
-      success: (x) => success(x),
+      success: success,
       error: (err) => Scaffold(
         appBar: AppBar(
-          title: Text("Something went wrong"),
+          title: const Text("Something went wrong"),
         ),
         body: Center(
           child: Text(
@@ -24,9 +27,9 @@ class ScaffoldFutureBuilder<T> extends StatelessWidget {
       ),
       loading: (loading) => Scaffold(
         appBar: AppBar(
-          title: Text("Loading..."),
+          title: const Text("Loading..."),
         ),
-        body: Center(
+        body: const Center(
           child: CircularProgressIndicator(),
         ),
       ),
